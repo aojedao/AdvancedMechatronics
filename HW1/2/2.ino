@@ -9,7 +9,7 @@ const byte push_button3 = 7;
 char buffer[64];
 
 
-int lastButtonState = HIGH; // Set HIGH because of INPUT_PULLUP
+int lastButtonState = LOW; 
 
 unsigned long lastDebounceTime ;
 const unsigned long debounceDelay = 50;
@@ -63,7 +63,7 @@ void binary_input(){
   unsigned long lastButtonPress ;
   Serial.println("Select the first binary input: ");
   Serial.println(arr[0]);
-  lastButtonState = HIGH;
+  lastButtonState = LOW;
   lastButtonPress = millis();
   while(millis() - lastButtonPress < 10000){
     int reading = digitalRead(push_button2);
@@ -72,7 +72,7 @@ void binary_input(){
     }
     delay(3);
     if((millis() - lastButtonPress) > 0){
-      if((reading == LOW) && (lastButtonState == HIGH)){
+      if((reading == HIGH) && (lastButtonState == LOW)){
         
       	arr[0] = !arr[0];
       	Serial.println(arr[0]);
@@ -86,7 +86,7 @@ void binary_input(){
   }
   Serial.println("Select the second binary input: ");
   Serial.println(arr[1]);
-  lastButtonState = HIGH;
+  lastButtonState = LOW;
   lastButtonPress = millis();
   while(millis() - lastButtonPress < 10000){
     int reading = digitalRead(push_button3);
@@ -96,7 +96,7 @@ void binary_input(){
     }
     delay(3);
     if((millis() - lastButtonPress) > 0){
-      if((reading == LOW) && (lastButtonState == HIGH)){
+      if((reading == HIGH) && (lastButtonState == LOW)){
         arr[1] = !arr[1];
         Serial.println(arr[1]);
       }
@@ -137,7 +137,7 @@ void debounce(bool& flag, int& counter) {
   	delay(3);
 
   if ((millis() - lastDebounceTime) > 0) {  // Ensure stability
-    if ((reading == LOW) && (lastButtonState == HIGH)) {  // Detect button press
+    if ((reading == HIGH) && (lastButtonState == LOW)) {  // Detect button press
       counter = ++counter%3; // Increment counter
       switch(counter){
       	case 0:
