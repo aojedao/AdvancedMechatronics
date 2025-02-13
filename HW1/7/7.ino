@@ -24,13 +24,10 @@ void loop() {
       Serial.println("LED OFF");
     } 
     else {
-      Serial.println("Invalid input! Use H/h or L/l");
+      Serial.println("Invalid input! Use H/h or L/l for ON and OFF respectively.");
     }
 
     // Clear remaining characters in buffer
     while (Serial.available() > 0) Serial.read();
-  }
-  else {
-    while(Serial.available()<=0); // Waiting for new serial input.
   }
 }
