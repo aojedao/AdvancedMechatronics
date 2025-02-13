@@ -8,6 +8,7 @@ const byte push_button3 = 7;
 
 char buffer[64];
 
+#define wait_time 5000
 
 int lastButtonState = LOW; 
 
@@ -26,9 +27,9 @@ void setup() {
   pinMode(XOR_led, OUTPUT);
   pinMode(OP, OUTPUT);
 
-  pinMode(push_button1, INPUT_PULLUP);
-  pinMode(push_button2, INPUT_PULLUP);
-  pinMode(push_button3, INPUT_PULLUP);
+  pinMode(push_button1, INPUT);
+  pinMode(push_button2, INPUT);
+  pinMode(push_button3, INPUT);
 }
 
 void loop() {
@@ -40,7 +41,7 @@ void loop() {
   	show_output(gate);
   	delay(100);
     Serial.println("Do you want to continue? (Y/N)");
-  	
+  	arr[0];arr[1] = 0;
     while (Serial.available() == 0) {
       // Do nothing, just wait for input
     }
@@ -65,7 +66,7 @@ void binary_input(){
   Serial.println(arr[0]);
   lastButtonState = LOW;
   lastButtonPress = millis();
-  while(millis() - lastButtonPress < 10000){
+  while(millis() - lastButtonPress < wait_time){
     int reading = digitalRead(push_button2);
     if(reading != lastButtonState){
       lastButtonPress = millis();
@@ -88,7 +89,7 @@ void binary_input(){
   Serial.println(arr[1]);
   lastButtonState = LOW;
   lastButtonPress = millis();
-  while(millis() - lastButtonPress < 10000){
+  while(millis() - lastButtonPress < wait_time){
     int reading = digitalRead(push_button3);
     
     if(reading != lastButtonState){
@@ -163,5 +164,5 @@ void debounce(bool& flag, int& counter) {
     
   }
   lastButtonState = reading;  // Update state after debounce
-  if(millis() - lastDebounceTime > 10000) flag = 1; 
+  if(millis() - lastDebounceTime > wait_time) flag = 1; 
 }
