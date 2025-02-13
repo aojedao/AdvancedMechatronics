@@ -1,4 +1,4 @@
-const int led = 9;
+const int led = 3;
 void setup()
 {
   pinMode(led,OUTPUT);
@@ -28,11 +28,8 @@ void loop(){
     frwd_flag = (i >= 255) ? 0 : (i <= 1) ? 1 : frwd_flag;
     i = frwd_flag?i<<1:i>>1;
     analogWrite(led,i);
+    delay(100);
     Serial.println(i);
   }
   
 }
-
-
-
-
