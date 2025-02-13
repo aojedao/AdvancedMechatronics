@@ -5,14 +5,14 @@
 const byte led = 8;
 void setup() {
   // put your setup code here, to run once:
-  DDRB |= (1<DDB0);
+  pinMode(led, OUTPUT);
   
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  PORTB ^= (1<<PB0);
+  digitalWrite(led, !digitalRead(led));
   delay(500); 
 
 }

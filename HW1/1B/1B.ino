@@ -5,7 +5,7 @@
 const byte led = 8;
 void setup() {
   // put your setup code here, to run once:
-  DDRB |= (1<DDB0);
+  DDRB |= (1<<DDB0);
   
 
 }
