@@ -26,7 +26,7 @@ void loop(){
   bool frwd_flag = 1;
   while(true){
     frwd_flag = (i >= 255) ? 0 : (i <= 1) ? 1 : frwd_flag;
-    i = frwd_flag?i+=1:i-=1;
+    i = frwd_flag?i+=5:i-=5;
     analogWrite(led,i);
     //delay(100);
     Serial.println(i);

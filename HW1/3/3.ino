@@ -13,16 +13,16 @@ void loop() {
   Serial.println("Starting Counter");
   unsigned long lastDebounceTime = 0;
   int lastButtonState = LOW;
-  long long count = 0;
   while(1){
-    counter(lastDebounceTime,lastButtonState,count);
+    counter(lastDebounceTime,lastButtonState);
     delay(100);
   }
   
 
 }
 
-void counter(unsigned long& lastDebounceTime, int& lastButtonState, long long& count){
+void counter(unsigned long& lastDebounceTime, int& lastButtonState ){
+  static long long count =0;
   int reading = digitalRead(push_button);
   //Serial.print(reading);
   if(reading != lastButtonState){
