@@ -6,5 +6,5 @@ void setup(){
 }
 
 void loop(){
-	PORTB = (PINB & (1<<PB0)) ? (PORTB | (1<<PB1)):(PORTB & ~(1<<PB1));
+	PORTB = (PINB & (1<<PB0)) ? (PORTB & ~(1<<PB1)): (PORTB | (1<<PB1));
 }

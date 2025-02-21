@@ -6,7 +6,7 @@ const byte push_button = 8;
 const byte LED = 9;
 void setup()
 {
-  pinMode(push_button, INPUT);//setup P8 as input pin
+  pinMode(push_button, INPUT_PULLUP);//setup P8 as input pin
   pinMode(LED,OUTPUT);
   Serial.begin(9600);
 }
