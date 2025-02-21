@@ -1,6 +1,6 @@
 #define WAIT_TIME 5000
 
-const byte led = 3;
+const byte led = 9;
 long long cur_time = 0;
 void setup(){
   pinMode(led,OUTPUT);
@@ -25,8 +25,8 @@ void loop(){
     //Serial.println(converted_val);
     
     //Write the alanog value to the Analog pins
-    analogWrite(led,255);
-    
+    analogWrite(led,converted_val);
+    Serial.println(converted_val);
     // wait for 5 secs
     delay(WAIT_TIME);
     
