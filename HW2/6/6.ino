@@ -18,8 +18,10 @@ void loop(){
   }
   
   String  ip = Serial.readString();
-  Serial.println(ip);
-  ip.replace(" ","");
+  ip.replace("\n","");
+  ip.replace("\r","");
+
+
   if(ip == "ON" || ip == "on") {
     blink_flag = false;
     on();
