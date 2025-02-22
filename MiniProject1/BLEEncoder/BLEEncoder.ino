@@ -24,7 +24,7 @@ BLEService commandService("180A");
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEFloatCharacteristic poseCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
-//BLECharCharacteristic xDist("0x2701"); //UUID for BLE meter distance  https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers.pdf?v=1740195215845
+BLECharCharacteristic xDist("0x2701", BLERead | BLEWrite); //UUID for BLE meter distance  https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers.pdf?v=1740195215845
 
 const int ledPin = LED_BUILTIN; // pin to use for the LED
 
@@ -48,9 +48,11 @@ void setup() {
 
   // add the characteristic to the service
   encService.addCharacteristic(poseCharacteristic);
+  commandService.addCharacteristic(xDist);
 
   // add service
   BLE.addService(encService);
+  BLE.addService(commandService);
 
   // set the initial value for the characeristic:
   poseCharacteristic.writeValue(0);
@@ -83,6 +85,11 @@ void loop() {
       }
       
       poseCharacteristic.writeValue(newPosition);
+      if (xDist.written()) {
+        if (xDist.value()) {   // any value other than 0
+          Serial.println(xDist.value());
+          } 
+      }
     }
 
     // when the central disconnects, print it out:
