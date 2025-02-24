@@ -11,6 +11,9 @@
 #include "EncoderControl.h"
 #include "MotorControl.h"
 
+const float angle_wiggle_room = 5.0;     // Adjust value as needed
+const float distance_wiggle_room = 10.0; // Adjust value as needed
+
 /** @brief BLE service instance for encoder data transmission. */
 BLEService encService(ENC_SERVICE_UUID);
 /** @brief BLE service instance for receiving command data. */

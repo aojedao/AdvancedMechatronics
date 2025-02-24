@@ -1,16 +1,15 @@
 #ifndef ENCODER_CONTROL_H
 #define ENCODER_CONTROL_H
-
 /**
  * @file EncoderControl.h
  * @brief Header file for encoder interrupt handling and setup.
  * @details Defines interrupt service routines (ISRs) to track encoder ticks and
  *          a setup function to configure encoder pins and interrupts.
  */
-
+#include <Arduino.h>
 #include "BLE_Robot.h"
 
-void IRAM_ATTR leftEncoderISR() {
+void leftEncoderISR() {
   if (digitalRead(ENC_LEFT_B) == digitalRead(ENC_LEFT_A)) {
     leftTicks++;
   } else {
@@ -18,7 +17,7 @@ void IRAM_ATTR leftEncoderISR() {
   }
 }
 
-void IRAM_ATTR rightEncoderISR() {
+void rightEncoderISR() {
   if (digitalRead(ENC_RIGHT_B) == digitalRead(ENC_RIGHT_A)) {
     rightTicks++;
   } else {
