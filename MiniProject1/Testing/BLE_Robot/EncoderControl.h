@@ -15,6 +15,8 @@ void leftEncoderISR() {
   } else {
     leftTicks--;
   }
+  Serial.print("Encoder left update:");
+  Serial.println(rightTicks);
 }
 
 void rightEncoderISR() {
@@ -23,16 +25,21 @@ void rightEncoderISR() {
   } else {
     rightTicks--;
   }
+  Serial.print("Encoder right update:");
+  Serial.println(rightTicks);
 }
 
 void setupEncoders() {
-  pinMode(ENC_LEFT_A, INPUT_PULLUP);
-  pinMode(ENC_LEFT_B, INPUT_PULLUP);
-  pinMode(ENC_RIGHT_A, INPUT_PULLUP);
-  pinMode(ENC_RIGHT_B, INPUT_PULLUP);
+  pinMode(ENC_LEFT_A, INPUT);
+  pinMode(ENC_LEFT_B, INPUT);
+  pinMode(ENC_RIGHT_A, INPUT);
+  pinMode(ENC_RIGHT_B, INPUT);
   
   attachInterrupt(digitalPinToInterrupt(ENC_LEFT_A), leftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_LEFT_B), leftEncoderISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ENC_RIGHT_A), rightEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_RIGHT_B), rightEncoderISR, CHANGE);
+  Serial.println("Encoders ready");
 }
 
 #endif // ENCODER_CONTROL_H

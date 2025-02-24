@@ -100,7 +100,7 @@ void loop() {
 
       if (wasdChar.written()) {
         char command = wasdChar.value();
-        followingWaypoints = false;  // Disable waypoint mode
+        //followingWaypoints = false;  // Disable waypoint mode
         switch (command) {
           case 'W':
             setMotorSpeeds(MAX_SPEED, MAX_SPEED);
@@ -119,7 +119,7 @@ void loop() {
             Serial.println("Turning Right");
             break;
           case 'X':
-            setMotorSpeeds(MAX_SPEED, MAX_SPEED);
+            setMotorSpeeds(-MAX_SPEED, -MAX_SPEED);
             Serial.println("Moving Backward");
             break;
           default:
