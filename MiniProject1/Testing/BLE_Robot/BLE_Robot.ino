@@ -54,9 +54,12 @@ void setup() {
   digitalWrite(LED_PIN, LOW);
 
   pinMode(MOTOR_LEFT_PWM, OUTPUT);
-  pinMode(MOTOR_LEFT_DIR, OUTPUT);
+  pinMode(MOTOR_LEFT_DIR_1, OUTPUT);
+  pinMode(MOTOR_LEFT_DIR_2, OUTPUT);
+  
   pinMode(MOTOR_RIGHT_PWM, OUTPUT);
-  pinMode(MOTOR_RIGHT_DIR, OUTPUT);
+  pinMode(MOTOR_RIGHT_DIR_1, OUTPUT);
+  pinMode(MOTOR_RIGHT_DIR_2, OUTPUT);
 
   if (!BLE.begin()) {
     Serial.println("BLE failed!");

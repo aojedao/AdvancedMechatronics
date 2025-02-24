@@ -18,15 +18,27 @@
 #define Y_DIST_CHAR_UUID "0x2702"
 #define WASD_CHAR_UUID   "0x2A00"
 
+
+
 // Pin Definitions
 #define ENC_LEFT_A  2
 #define ENC_LEFT_B  3
 #define ENC_RIGHT_A 4
 #define ENC_RIGHT_B 5
-#define MOTOR_LEFT_PWM  6
-#define MOTOR_LEFT_DIR  7
-#define MOTOR_RIGHT_PWM 9
-#define MOTOR_RIGHT_DIR 10
+
+// Motor A connections - Right
+int enA = 2;
+int in1 = 3;
+int in2 = 4;
+
+#define MOTOR_LEFT_PWM  7
+#define MOTOR_LEFT_DIR_1  8
+#define MOTOR_LEFT_DIR_2  9
+
+#define MOTOR_RIGHT_PWM 2
+#define MOTOR_RIGHT_DIR_1 3
+#define MOTOR_RIGHT_DIR_2 4
+
 #define LED_PIN LED_BUILTIN
 
 // Robot Parameters
