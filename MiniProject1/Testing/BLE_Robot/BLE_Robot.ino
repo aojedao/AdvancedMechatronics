@@ -8,8 +8,12 @@
  */
 
 #include "BLE_Robot.h"
-#include "EncoderControl.h"
 #include "MotorControl.h"
+
+#include <Encoder.h>
+
+Encoder leftEnc(ENC_LEFT_A, ENC_LEFT_B);
+Encoder rightEnc(ENC_RIGHT_A, ENC_RIGHT_B);
 
 const float angle_wiggle_room = 5.0;     // Adjust value as needed
 const float distance_wiggle_room = 10.0; // Adjust value as needed
@@ -79,7 +83,7 @@ void setup() {
   wasdChar.writeValue('S');  // Default to stop
   BLE.advertise();
 
-  setupEncoders();
+  //setupEncoders();
 
   Serial.println("BLE Robot Ready");
 }
@@ -95,7 +99,7 @@ void loop() {
     while (central.connected()) {
       if (followingWaypoints) {
         updatePose();  // Update pose in waypoint mode
-        poseChar.writeValue(leftTicks);  // Send encoder data
+        poseChar.writeValue(leftEnc.read());  // Send encoder data
       }
 
       if (wasdChar.written()) {
@@ -173,7 +177,7 @@ void loop() {
             Serial.print("Moving, distance off: ");
             Serial.println(distError);
           } else {
-            followingWaypoints = false;
+            //followingWaypoints = false;
             setMotorSpeeds(0, 0);
             Serial.println("Waypoint reached!");
           }
@@ -192,6 +196,15 @@ void loop() {
 
 void updatePose() {
   static long prevLeftTicks = 0, prevRightTicks = 0;
+
+  long leftTicks = leftEnc.read();
+  long rightTicks = rightEnc.read(); 
+
+  Serial.print("leftEnc: ");
+  Serial.println(leftTicks);
+  Serial.print("rightEnc: ");  
+  Serial.println(rightTicks);
+
   long deltaLeft = leftTicks - prevLeftTicks;
   long deltaRight = rightTicks - prevRightTicks;
   prevLeftTicks = leftTicks;
