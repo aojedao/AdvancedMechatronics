@@ -48,7 +48,6 @@ bool rotating = false;
 
 void setup() {
   Serial.begin(9600);  // Start serial communication at 9600 baud for debugging
-  while (!Serial);     // Wait for serial connection
 
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
@@ -56,7 +55,7 @@ void setup() {
   pinMode(MOTOR_LEFT_PWM, OUTPUT);
   pinMode(MOTOR_LEFT_DIR_1, OUTPUT);
   pinMode(MOTOR_LEFT_DIR_2, OUTPUT);
-  
+
   pinMode(MOTOR_RIGHT_PWM, OUTPUT);
   pinMode(MOTOR_RIGHT_DIR_1, OUTPUT);
   pinMode(MOTOR_RIGHT_DIR_2, OUTPUT);
@@ -112,12 +111,16 @@ void loop() {
             Serial.println("Stopped");
             break;
           case 'A':
-            setMotorSpeeds(-MAX_SPEED * 0.5, MAX_SPEED);
+            setMotorSpeeds(-MAX_SPEED * 0.5, MAX_SPEED * 0.5);
             Serial.println("Turning Left");
             break;
           case 'D':
-            setMotorSpeeds(MAX_SPEED, -MAX_SPEED * 0.5);
+            setMotorSpeeds(MAX_SPEED * 0.5, -MAX_SPEED * 0.5);
             Serial.println("Turning Right");
+            break;
+          case 'X':
+            setMotorSpeeds(MAX_SPEED, MAX_SPEED);
+            Serial.println("Moving Backward");
             break;
           default:
             setMotorSpeeds(0, 0);
