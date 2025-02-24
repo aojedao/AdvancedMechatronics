@@ -36,16 +36,10 @@ void setMotorSpeeds(float vL, float vR) {
   leftPWM = constrain(leftPWM, 0, 255);
   rightPWM = constrain(rightPWM, 0, 255);
 
-  Serial.print("vL:");
-  Serial.print(leftPWM);
-  Serial.print("vR:");
-  Serial.println(leftPWM);  
-
   if (vL != 0)
   {
     if (vL > 0)
     {
-      Serial.print("Moving Left fwd");
       digitalWrite(MOTOR_LEFT_DIR_1, LOW);
       digitalWrite(MOTOR_LEFT_DIR_2, HIGH);
     }
@@ -65,7 +59,6 @@ void setMotorSpeeds(float vL, float vR) {
   {
     if (vR > 0)
     {
-      Serial.print("Moving Right fwd");
       digitalWrite(MOTOR_RIGHT_DIR_1, LOW);
       digitalWrite(MOTOR_RIGHT_DIR_2, HIGH);
     }
