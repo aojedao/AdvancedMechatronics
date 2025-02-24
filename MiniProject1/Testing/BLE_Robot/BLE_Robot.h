@@ -21,10 +21,10 @@
 
 
 // Pin Definitions
-#define ENC_LEFT_A  2
-#define ENC_LEFT_B  3
-#define ENC_RIGHT_A 4
-#define ENC_RIGHT_B 5
+#define ENC_LEFT_A  10
+#define ENC_LEFT_B  11
+#define ENC_RIGHT_A 5
+#define ENC_RIGHT_B 6
 
 // Motor A connections - Right
 int enA = 2;
