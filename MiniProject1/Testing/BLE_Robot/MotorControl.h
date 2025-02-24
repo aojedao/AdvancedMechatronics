@@ -40,13 +40,13 @@ void setMotorSpeeds(float vL, float vR) {
   {
     if (vL > 0)
     {
-      digitalWrite(MOTOR_LEFT_DIR_1, HIGH);
-      digitalWrite(MOTOR_LEFT_DIR_2, LOW);
+      digitalWrite(MOTOR_LEFT_DIR_1, LOW);
+      digitalWrite(MOTOR_LEFT_DIR_2, HIGH);
     }
     else
     {
-      digitalWrite(MOTOR_LEFT_DIR_1, LOW);
-      digitalWrite(MOTOR_LEFT_DIR_2, HIGH);
+      digitalWrite(MOTOR_LEFT_DIR_1, HIGH);
+      digitalWrite(MOTOR_LEFT_DIR_2, LOW);
     }
   }
   else
@@ -59,13 +59,13 @@ void setMotorSpeeds(float vL, float vR) {
   {
     if (vR > 0)
     {
-      digitalWrite(MOTOR_RIGHT_DIR_1, HIGH);
-      digitalWrite(MOTOR_RIGHT_DIR_2, LOW);
+      digitalWrite(MOTOR_RIGHT_DIR_1, LOW);
+      digitalWrite(MOTOR_RIGHT_DIR_2, HIGH);
     }
     else
     {
-      digitalWrite(MOTOR_RIGHT_DIR_1, LOW);
-      digitalWrite(MOTOR_RIGHT_DIR_2, HIGH);
+      digitalWrite(MOTOR_RIGHT_DIR_1, HIGH);
+      digitalWrite(MOTOR_RIGHT_DIR_2, LOW);
     }
   }
   else
