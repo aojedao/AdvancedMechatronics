@@ -1,19 +1,23 @@
+#Simultaneous rotation and movement OR turn and go straight
+
 import numpy as np
 import matplotlib.pyplot as plt
 import tkinter as tk
 import time
 
 # Setup Constants
-wheel_size = 0.021  # m (radius, r)
-distance_between_wheels = 0.2  # m (wheelbase, s)
-encoder_ticks_per_spin = 48
-time_per_move = 0.05  # s
+wheel_size = 0.021  # m (radius)
+distance_between_wheels = 0.2  # m (wheelbase)
+encoder_ticks_per_spin = 48  # ticks per revolution
+time_per_move = 0.05  # s (control loop interval)
 move_speed = 0.223  # m/s (max linear speed)
-max_turn_speed = 1.0  # rad/s (max angular speed)
-angle_wiggle_room = 0.05  # rad
-distance_wiggle_room = 0.01  # m
-body_length = 0.3  # m
-body_width = distance_between_wheels  # m
+turn_speed = 1.0  # rad/s (max angular speed)
+angle_wiggle_room = 0.05  # rad (orientation tolerance)
+distance_wiggle_room = 0.01  # m (position tolerance)
+body_length = 0.3  # m (chassis length)
+body_width = distance_between_wheels  # m (chassis width)
+K_v = 1.0  # Proportional gain for distance
+K_theta = 1.5  # Proportional gain for orientation
 
 # Initial State
 x_pos, y_pos, direction = 0.0, 0.0, 0.0
@@ -25,20 +29,16 @@ time_data, x_data, y_data, vel_data = [0.0], [0.0], [0.0], [0.0]
 goal_x, goal_y = None, None
 heading_to_goal = False
 last_key = None
-theta_prev_error = 0.0
-theta_integral = 0.0  # For PID
+rotating = False  # For rotate-then-move mode
 
-# Control Gains
-K_theta_p = 1.5  # Proportional gain for orientation
-K_theta_i = 0.02  # Integral gain for orientation
-K_theta_d = 0.3  # Derivative gain for orientation
-K_v = 0.8  # Distance gain
+# Control Mode (Managed via GUI toggle)
+simultaneous_mode = True  # Default to simultaneous
 
 # Plot Setup
 plt.ion()
 fig, (ax_robot, ax_vel) = plt.subplots(2, 1, figsize=(8, 8), height_ratios=[3, 1])
-ax_robot.set_xlim(-0.5, 0.5)
-ax_robot.set_ylim(-0.5, 0.5)
+ax_robot.set_xlim(-2.5, 0.5)
+ax_robot.set_ylim(-2.5, 0.5)
 ax_robot.set_title('Robot Movement')
 ax_robot.set_xlabel('X (m)')
 ax_robot.set_ylabel('Y (m)')
@@ -59,6 +59,7 @@ vel_line, = ax_vel.plot([], [], 'g-', label='Speed')
 ax_vel.legend()
 
 def figure_out_ticks(left_speed, right_speed, time_step):
+    """Simulates encoder ticks and updates robot pose based on wheel speeds."""
     global x_pos, y_pos, direction, left_encoder_count, right_encoder_count, left_extra, right_extra, robot_path, time_data, x_data, y_data, vel_data
     left_turn = left_speed * time_step / wheel_size
     right_turn = right_speed * time_step / wheel_size
@@ -85,6 +86,7 @@ def figure_out_ticks(left_speed, right_speed, time_step):
     return left_ticks, right_ticks
 
 def draw_robot_and_vel():
+    """Updates the matplotlib plot with current robot position and velocity."""
     half_long = body_length / 2
     half_wide = body_width / 2
     corners = [(-half_long, -half_wide), (half_long, -half_wide),
@@ -124,11 +126,13 @@ def draw_robot_and_vel():
     plt.pause(0.001)
 
 def tell_me_where_we_are(left_ticks, right_ticks):
+    """Prints current encoder counts and robot pose for debugging."""
     print(f"Left Encoder: {left_encoder_count} (+{left_ticks}) | "
           f"Right Encoder: {right_encoder_count} (+{right_ticks})")
     print(f"At: x = {x_pos:.3f} m, y = {y_pos:.3f} m | Facing: {direction:.3f} rad")
 
 def catch_key_press(event):
+    """Handles WASD key presses for manual control."""
     global last_key, heading_to_goal
     if not heading_to_goal:
         key = event.keysym.lower()
@@ -136,11 +140,13 @@ def catch_key_press(event):
             last_key = key
 
 def pick_a_spot():
-    global goal_x, goal_y, heading_to_goal
+    """Sets a target waypoint from user input in Tkinter GUI."""
+    global goal_x, goal_y, heading_to_goal, rotating
     try:
         goal_x = float(x_input.get())
         goal_y = float(y_input.get())
         heading_to_goal = True
+        rotating = True if not simultaneous_mode else False  # Start in rotate phase if not simultaneous
         status_label.config(text=f"Aiming for: ({goal_x:.2f}, {goal_y:.2f})")
         print(f"Heading from ({x_pos:.3f}, {y_pos:.3f}) to ({goal_x:.3f}, {goal_y:.3f})")
         how_far = np.sqrt((goal_x - x_pos)**2 + (goal_y - y_pos)**2)
@@ -150,43 +156,63 @@ def pick_a_spot():
     except ValueError:
         status_label.config(text="Oops, bad X or Y number")
 
+def toggle_mode():
+    """Toggles between simultaneous and rotate-then-move modes."""
+    global simultaneous_mode
+    simultaneous_mode = not simultaneous_mode
+    mode_label.config(text=f"Mode: {'Simultaneous' if simultaneous_mode else 'Rotate-Then-Move'}")
+    print(f"Switched to {'Simultaneous' if simultaneous_mode else 'Rotate-Then-Move'} mode")
+
 def control_algorithm(target_angle, target_distance):
-    global left_speed, right_speed, theta_prev_error, theta_integral
-    # Observe state
-    x_t, y_t, theta_t = x_pos, y_pos, direction
-    x_D, y_D, theta_D = goal_x, goal_y, target_angle
-    
-    # Compute v_B
-    dist_error = np.sqrt((x_D - x_t)**2 + (y_D - y_t)**2)
-    v_B = K_v * dist_error
-    v_B = np.clip(v_B, 0, move_speed)  # No min speed, allow 0
-    
-    # Compute theta_dot with PID control
-    angle_error = target_angle - theta_t
-    if abs(angle_error) > np.pi: angle_error -= 2 * np.pi * np.sign(angle_error)  # Shortest path
-    theta_integral += angle_error * time_per_move
-    theta_integral = np.clip(theta_integral, -1.0, 1.0)  # Prevent windup
-    theta_deriv = (angle_error - theta_prev_error) / time_per_move
-    theta_dot = K_theta_p * angle_error + K_theta_i * theta_integral + K_theta_d * theta_deriv
-    theta_dot = np.clip(theta_dot, -max_turn_speed, max_turn_speed)
-    theta_prev_error = angle_error
-    
-    # Compute wheel angular velocities
-    r = wheel_size
-    s = distance_between_wheels
-    phi_dot_L = (v_B / r) - (s * theta_dot / (2 * r))
-    phi_dot_R = (v_B / r) + (s * theta_dot / (2 * r))
-    
-    # Convert to linear speeds
-    left_speed = r * phi_dot_L
-    right_speed = r * phi_dot_R
-    left_speed = np.clip(left_speed, -move_speed, move_speed)
-    right_speed = np.clip(right_speed, -move_speed, move_speed)
+    """Computes wheel speeds using P-control with Kv and Ktheta."""
+    global left_speed, right_speed, rotating
+    # Calculate errors
+    dist_error = np.sqrt((goal_x - x_pos)**2 + (goal_y - y_pos)**2)
+    angle_error = target_angle - direction
+    if abs(angle_error) > np.pi:
+        angle_error -= 2 * np.pi * np.sign(angle_error)
+
+    if simultaneous_mode:
+        # Simultaneous rotation and movement
+        v_B = K_v * dist_error
+        v_B = np.clip(v_B, 0, move_speed)
+        theta_dot = K_theta * angle_error
+        theta_dot = np.clip(theta_dot, -turn_speed, turn_speed)
+        left_speed = v_B - (distance_between_wheels * theta_dot / 2)
+        right_speed = v_B + (distance_between_wheels * theta_dot / 2)
+        left_speed = np.clip(left_speed, -move_speed, move_speed)
+        right_speed = np.clip(right_speed, -move_speed, move_speed)
+        status_label.config(text=f"Curving to: ({goal_x:.2f}, {goal_y:.2f})")
+    else:
+        # Rotate-then-move (separate phases)
+        if rotating:
+            if abs(angle_error) > angle_wiggle_room:
+                theta_dot = K_theta * angle_error
+                theta_dot = np.clip(theta_dot, -turn_speed, turn_speed)
+                left_speed = -distance_between_wheels * theta_dot / 2
+                right_speed = distance_between_wheels * theta_dot / 2
+                left_speed = np.clip(left_speed, -move_speed, move_speed)
+                right_speed = np.clip(right_speed, -move_speed, move_speed)
+                status_label.config(text=f"Rotating, off by {angle_error:.3f} rad")
+            else:
+                rotating = False
+                left_speed = right_speed = 0.0
+                status_label.config(text=f"Rotation done, moving to: ({goal_x:.2f}, {goal_y:.2f})")
+        else:
+            if dist_error > distance_wiggle_room:
+                v_B = K_v * dist_error
+                v_B = np.clip(v_B, 0, move_speed)
+                left_speed = right_speed = v_B
+                status_label.config(text=f"Moving, off by {dist_error:.3f} m")
+            else:
+                left_speed = right_speed = 0.0
+                status_label.config(text=f"Reached: ({goal_x:.2f}, {goal_y:.2f})")
 
 def keep_moving():
-    global last_key, heading_to_goal, goal_x, goal_y, left_speed, right_speed
-    print("Tap WASD to slide around, or drop X,Y and hit ‘Go’ (Q to yeet outta here):")
-    print("W: Zoom forward, A: Swerve left, S: Reverse it, D: Dip right")
+    """Main simulation loop handling manual control and waypoint navigation."""
+    global last_key, heading_to_goal, left_speed, right_speed, goal_x, goal_y
+    print("Tap WASD to slide around, or drop X,Y and hit ‘Go’ (Q to quit):")
+    print("W: Zoom forward, A: Swerve left, S: Reverse, D: Dip right")
     print("Starting fresh at x=0, y=0, facing 0, let’s gooo\n")
 
     update_count = 0
@@ -195,23 +221,25 @@ def keep_moving():
     while True:
         left_speed, right_speed = 0.0, 0.0
 
-        if heading_to_goal and goal_x is not None and goal_y is not None:
-            target_angle = np.arctan2(goal_y - y_pos, goal_x - x_pos)
-            target_distance = np.sqrt((goal_x - x_pos)**2 + (goal_y - y_pos)**2)
-            control_algorithm(target_angle, target_distance)
-            status_label.config(text=f"Control to: ({goal_x:.2f}, {goal_y:.2f})")
-            if abs(target_angle - direction) < angle_wiggle_room and abs(target_distance) < distance_wiggle_room:
-                heading_to_goal = False
-                goal_x, goal_y = None, None
-                status_label.config(text="Made it!")
-                print("Reached goal!")
+        if heading_to_goal:
+            if goal_x is None or goal_y is None:
+                heading_to_goal = False  # Reset if goals unset
+                status_label.config(text="WASD or type X,Y to move")
+            else:
+                target_angle = np.arctan2(goal_y - y_pos, goal_x - x_pos)
+                target_distance = np.sqrt((goal_x - x_pos)**2 + (goal_y - y_pos)**2)
+                control_algorithm(target_angle, target_distance)
+                if (abs(target_angle - direction) < angle_wiggle_room and 
+                    abs(target_distance) < distance_wiggle_room):
+                    heading_to_goal = False
+                    goal_x, goal_y = None, None
+                    status_label.config(text="Made it!")
+                    print("Reached goal!")
 
         elif last_key == 'w':
-            left_speed = move_speed
-            right_speed = move_speed
+            left_speed = right_speed = move_speed
         elif last_key == 's':
-            left_speed = -move_speed
-            right_speed = -move_speed
+            left_speed = right_speed = -move_speed
         elif last_key == 'a':
             left_speed = -move_speed * 0.5
             right_speed = move_speed
@@ -226,7 +254,6 @@ def keep_moving():
         if left_speed != 0 or right_speed != 0:
             left_ticks, right_ticks = figure_out_ticks(left_speed, right_speed, time_per_move)
             tell_me_where_we_are(left_ticks, right_ticks)
-
             update_count += 1
             if update_count % redraw_every == 0:
                 draw_robot_and_vel()
@@ -237,8 +264,8 @@ def keep_moving():
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Robot Buddy with Control Glow")
-    root.geometry("300x200")
+    root.title("Robot Buddy with P-Control")
+    root.geometry("300x250")
     root.bind("<KeyPress>", catch_key_press)
     tk.Label(root, text="Where to? X:").pack()
     x_input = tk.Entry(root)
@@ -247,6 +274,9 @@ if __name__ == "__main__":
     y_input = tk.Entry(root)
     y_input.pack()
     tk.Button(root, text="Go!", command=pick_a_spot).pack(pady=5)
+    tk.Button(root, text="Toggle Mode", command=toggle_mode).pack(pady=5)
+    mode_label = tk.Label(root, text=f"Mode: {'Simultaneous' if simultaneous_mode else 'Rotate-Then-Move'}")
+    mode_label.pack()
     status_label = tk.Label(root, text="WASD or type X,Y to move")
     status_label.pack()
     try:
