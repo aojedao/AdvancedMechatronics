@@ -100,8 +100,7 @@ void loop() {
     while (central.connected()) {
       if (followingWaypoints) {
         String poseMsg = updatePose();  // Update pose in waypoint mode
-        poseChar.writeValue(poseMsg);  // Send encoder data
-        //poseChar.writeValue("");
+        poseChar.writeValue(poseMsg);  // Send encoder data to Bluetooth
       }
 
       if (wasdChar.written()) {

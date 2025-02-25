@@ -46,7 +46,7 @@ int in2 = 4;
 #define WHEEL_RADIUS 0.021
 #define WHEEL_BASE   0.2
 #define TICKS_PER_REV 48
-#define MAX_SPEED    0.223
+#define MAX_SPEED    0.15
 #define MAX_TURN_SPEED 1.0
 #define K_THETA      1.5
 #define K_V          1.0
