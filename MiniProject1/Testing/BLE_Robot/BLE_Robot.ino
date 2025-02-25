@@ -23,7 +23,7 @@ BLEService encService(ENC_SERVICE_UUID);
 /** @brief BLE service instance for receiving command data. */
 BLEService commandService(COMMAND_SERVICE_UUID);
 /** @brief BLE characteristic for reading/writing encoder position data. */
-BLEFloatCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite);
+BLEStringCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite);
 /** @brief BLE characteristic for receiving X-coordinate waypoints. */
 BLEFloatCharacteristic xDistChar(X_DIST_CHAR_UUID, BLERead | BLEWrite);
 /** @brief BLE characteristic for receiving Y-coordinate waypoints. */
@@ -77,7 +77,7 @@ void setup() {
   commandService.addCharacteristic(wasdChar);
   BLE.addService(encService);
   BLE.addService(commandService);
-  poseChar.writeValue(0.0);
+  poseChar.writeValue('0');
   xDistChar.writeValue(0.0);
   yDistChar.writeValue(0.0);
   wasdChar.writeValue('S');  // Default to stop
@@ -95,11 +95,12 @@ void loop() {
     Serial.print("Connected to: ");
     Serial.println(central.address());
     digitalWrite(LED_PIN, HIGH);
+    ;
 
     while (central.connected()) {
       if (followingWaypoints) {
-        updatePose();  // Update pose in waypoint mode
-        poseChar.writeValue(leftEnc.read());  // Send encoder data
+        String poseMsg = updatePose();  // Update pose in waypoint mode
+        poseChar.writeValue(poseMsg);  // Send encoder data
       }
 
       if (wasdChar.written()) {
@@ -194,7 +195,7 @@ void loop() {
   }
 }
 
-void updatePose() {
+String updatePose() {
   static long prevLeftTicks = 0, prevRightTicks = 0;
 
   long leftTicks = leftEnc.read();
@@ -219,4 +220,7 @@ void updatePose() {
   yPos += dist * sin(theta + dTheta / 2);
   theta += dTheta;
   theta = atan2(sin(theta), cos(theta));
+  String poseMsg;
+  return poseMsg="x: "+String(xPos)+", y: "+String(yPos)+", t: "+theta; //Create the string of compiled x,y and theta
+    
 }
