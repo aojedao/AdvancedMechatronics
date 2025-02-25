@@ -23,7 +23,7 @@ BLEService encService(ENC_SERVICE_UUID);
 /** @brief BLE service instance for receiving command data. */
 BLEService commandService(COMMAND_SERVICE_UUID);
 /** @brief BLE characteristic for reading/writing encoder position data. */
-  BLEStringCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite,1);
+  BLEStringCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite,50);
 /** @brief BLE characteristic for receiving X-coordinate waypoints. */
 BLEFloatCharacteristic xDistChar(X_DIST_CHAR_UUID, BLERead | BLEWrite);
 /** @brief BLE characteristic for receiving Y-coordinate waypoints. */
@@ -95,12 +95,14 @@ void loop() {
     Serial.print("Connected to: ");
     Serial.println(central.address());
     digitalWrite(LED_PIN, HIGH);
-    ;
+    
+    String poseMsg = updatePose();  // Update pose in waypoint mode
+    Serial.println(poseMsg);
+    poseChar.writeValue(poseMsg);  // Send encoder data to Bluetooth
 
     while (central.connected()) {
       if (followingWaypoints) {
-        String poseMsg = updatePose();  // Update pose in waypoint mode
-        poseChar.writeValue(poseMsg);  // Send encoder data to Bluetooth
+        Serial.println("follow waypints on");
       }
 
       if (wasdChar.written()) {
