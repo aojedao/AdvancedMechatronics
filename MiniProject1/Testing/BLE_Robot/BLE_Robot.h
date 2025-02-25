@@ -57,7 +57,7 @@ extern volatile long rightTicks;
 extern float xPos, yPos, theta;
 extern BLEService encService;
 extern BLEService commandService;
-extern BLEFloatCharacteristic poseChar;
+extern BLEStringCharacteristic poseChar;
 extern BLEFloatCharacteristic xDistChar;
 extern BLEFloatCharacteristic yDistChar;
 extern BLECharCharacteristic wasdChar;

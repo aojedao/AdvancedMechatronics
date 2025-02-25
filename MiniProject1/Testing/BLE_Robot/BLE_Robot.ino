@@ -23,7 +23,7 @@ BLEService encService(ENC_SERVICE_UUID);
 /** @brief BLE service instance for receiving command data. */
 BLEService commandService(COMMAND_SERVICE_UUID);
 /** @brief BLE characteristic for reading/writing encoder position data. */
-BLEStringCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite);
+  BLEStringCharacteristic poseChar(POSE_CHAR_UUID, BLERead | BLEWrite,1);
 /** @brief BLE characteristic for receiving X-coordinate waypoints. */
 BLEFloatCharacteristic xDistChar(X_DIST_CHAR_UUID, BLERead | BLEWrite);
 /** @brief BLE characteristic for receiving Y-coordinate waypoints. */
@@ -77,7 +77,7 @@ void setup() {
   commandService.addCharacteristic(wasdChar);
   BLE.addService(encService);
   BLE.addService(commandService);
-  poseChar.writeValue('0');
+  poseChar.writeValue("");
   xDistChar.writeValue(0.0);
   yDistChar.writeValue(0.0);
   wasdChar.writeValue('S');  // Default to stop
@@ -101,6 +101,7 @@ void loop() {
       if (followingWaypoints) {
         String poseMsg = updatePose();  // Update pose in waypoint mode
         poseChar.writeValue(poseMsg);  // Send encoder data
+        //poseChar.writeValue("");
       }
 
       if (wasdChar.written()) {
