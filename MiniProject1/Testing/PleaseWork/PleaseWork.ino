@@ -25,6 +25,7 @@ Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 
 #define MAX_SPEED 128       // Adjusted PWM—try 255 if needed
 #define ROTATION_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
+#define LINEAR_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
 
 // Robot parameters
 const float WHEEL_RADIUS = 0.0485;  // m (~1 ft circumference)
@@ -39,6 +40,9 @@ float xPos = 0.0, yPos = 0.0, theta = 0.0;
 BLEService robotService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Service UUID
 BLECharCharacteristic commandChar("19B10002-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);  // WASDTQ: 'W' (0x57), 'A' (0x41), 'S' (0x53), 'D' (0x44), 'T' (0x54), 'Q' (0x51)
 BLEStringCharacteristic poseChar("19B10003-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite, 40);  // "Theta: theta; X: x; Y: y", max 40 chars
+BLEUnsignedIntCharacteristic rotTimeChar("19B10004-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
+BLEUnsignedIntCharacteristic linTimeChar("19B10005-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
+BLEUnsignedIntCharacteristic speedPWMChar("19B10006-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
 void setMotorSpeeds(int leftPWM, int rightPWM) {
   if (leftPWM >= 0) { 
@@ -112,11 +116,17 @@ void handleWASDT() {
       return;
     }
 
+    unsigned int rot_time = rotTimeChar.value();
+    unsigned int lin_time = linTimeChar.value();
+
+    Serial.println(lin_time);
+    Serial.println(rot_time);
+
     switch (command) {
-      case 'W': setMotorSpeeds(MAX_SPEED, MAX_SPEED); delay(ROTATION_TIME); break;  // Forward: 0x57
-      case 'S': setMotorSpeeds(-MAX_SPEED, -MAX_SPEED); delay(ROTATION_TIME); break;  // Backward: 0x53
-      case 'A': setMotorSpeeds(-MAX_SPEED, MAX_SPEED); delay(ROTATION_TIME); break;  // Left: 0x41
-      case 'D': setMotorSpeeds(MAX_SPEED, -MAX_SPEED); delay(ROTATION_TIME); break;  // Right: 0x44
+      case 'W': setMotorSpeeds(MAX_SPEED, MAX_SPEED); delay(lin_time); break;  // Forward: 0x57
+      case 'S': setMotorSpeeds(-MAX_SPEED, -MAX_SPEED); delay(lin_time); break;  // Backward: 0x53
+      case 'A': setMotorSpeeds(-MAX_SPEED, MAX_SPEED); delay(rot_time); break;  // Left: 0x41
+      case 'D': setMotorSpeeds(MAX_SPEED, -MAX_SPEED); delay(rot_time); break;  // Right: 0x44
       case 'T': setMotorSpeeds(0, 0); break;  // Stop: 0x54
       default: Serial.println("Invalid command"); return;
     }
@@ -146,9 +156,15 @@ void setup() {
   BLE.setAdvertisedService(robotService);
   robotService.addCharacteristic(commandChar);
   robotService.addCharacteristic(poseChar);
+  robotService.addCharacteristic(rotTimeChar);
+  robotService.addCharacteristic(linTimeChar);
+  robotService.addCharacteristic(speedPWMChar);
   BLE.addService(robotService);
   
   commandChar.writeValue('T'); // Default: Stop (0x54)
+  rotTimeChar.writeValue(ROTATION_TIME);
+  linTimeChar.writeValue(ROTATION_TIME);
+  speedPWMChar.writeValue(MAX_SPEED);
   poseChar.writeValue("Theta: 0.00; X: 0.00; Y: 0.00");  // Initial pose as string
   BLE.advertise();
 
