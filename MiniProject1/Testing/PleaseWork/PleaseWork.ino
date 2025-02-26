@@ -65,22 +65,23 @@ void setMotorSpeeds(int leftPWM, int rightPWM) {
 }
 
 void updatePose() {
-  static long prevLeftTicks = 0, prevRightTicks = 0, deltaLeft = 0, deltaRight = 0;
-  prevLeftTicks =  deltaLeft;
-  prevRightTicks = deltaRight;
-  deltaLeft = leftEnc.read() - prevLeftTicks;
-  deltaRight = rightEnc.read() - prevRightTicks;
+  static long deltaLeft = 0, deltaRight = 0;
 
+  deltaLeft = leftEnc.readAndReset();
+  deltaRight = rightEnc.readAndReset();
+  
 
   float leftDist = (deltaLeft * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
   float rightDist = (deltaRight * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
+
   float dist = (leftDist + rightDist) / 2.0;
   float dTheta = (rightDist - leftDist) / WHEEL_BASE;
 
   xPos += dist * cos(theta + dTheta / 2.0);
   yPos += dist * sin(theta + dTheta / 2.0);
+
   theta += dTheta;
-  theta = atan2(sin(theta), cos(theta));
+  theta = atan2(sin(theta), cos(theta)); // Normalizer Theta between -pi and pi
 
   Serial.println(xPos);
   Serial.println((yPos));
