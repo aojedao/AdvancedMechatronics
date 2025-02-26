@@ -18,6 +18,7 @@ Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 #define enA 7   // Left PWM
 #define in1 9   // Left DIR 1
 #define in2 8   // Left DIR 2
+
 #define enB 2   // Right PWM
 #define in3 4   // Right DIR 1
 #define in4 3   // Right DIR 2
@@ -40,23 +41,36 @@ BLECharCharacteristic commandChar("19B10002-E8F2-537E-4F6C-D104768A1214", BLERea
 BLEStringCharacteristic poseChar("19B10003-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite, 40);  // "Theta: theta; X: x; Y: y", max 40 chars
 
 void setMotorSpeeds(int leftPWM, int rightPWM) {
-  if (leftPWM >= 0) { digitalWrite(in1, HIGH); digitalWrite(in2, LOW); }
-  else { digitalWrite(in1, LOW); digitalWrite(in2, HIGH); leftPWM = -leftPWM; }
+  if (leftPWM >= 0) { 
+    digitalWrite(in1, HIGH);
+     digitalWrite(in2, LOW); 
+  }else{
+    digitalWrite(in1, LOW); 
+    digitalWrite(in2, HIGH);
+  }
   
-  if (rightPWM >= 0) { digitalWrite(in3, HIGH); digitalWrite(in4, LOW); }
-  else { digitalWrite(in3, LOW); digitalWrite(in4, HIGH); rightPWM = -rightPWM; }
+  if (rightPWM >= 0) { 
+    digitalWrite(in3, HIGH); 
+    digitalWrite(in4, LOW); 
+  }else{ 
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+  }
+
   Serial.print("LeftPWM: ");Serial.println(leftPWM);
   Serial.print("rightPWM: ");Serial.println(rightPWM);
-  analogWrite(enA, leftPWM);
-  analogWrite(enB, rightPWM);
+
+  analogWrite(enA, abs(leftPWM));
+  analogWrite(enB, abs(rightPWM));
 }
 
 void updatePose() {
-  static long prevLeftTicks = 0, prevRightTicks = 0;
-  long deltaLeft = leftEnc.read() - prevLeftTicks;
-  long deltaRight = rightEnc.read() - prevRightTicks;
-  prevLeftTicks = leftEnc.read();
-  prevRightTicks = rightEnc.read();
+  static long prevLeftTicks = 0, prevRightTicks = 0, deltaLeft = 0, deltaRight = 0;
+  prevLeftTicks =  deltaLeft;
+  prevRightTicks = deltaRight;
+  deltaLeft = leftEnc.read() - prevLeftTicks;
+  deltaRight = rightEnc.read() - prevRightTicks;
+
 
   float leftDist = (deltaLeft * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
   float rightDist = (deltaRight * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
@@ -126,7 +140,8 @@ void setup() {
     while (1);
   }
 
-  BLE.setLocalName("Robot_Arduino");
+  BLE.setDeviceName("Robot-BLE-DeadReckon");
+  BLE.setLocalName("Team3FirstRobot");
   BLE.setAdvertisedService(robotService);
   robotService.addCharacteristic(commandChar);
   robotService.addCharacteristic(poseChar);
