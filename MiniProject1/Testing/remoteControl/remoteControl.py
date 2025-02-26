@@ -22,12 +22,16 @@ def update_pose_label(pose):
 async def find_device():
     """Scan for the BLE device."""
     print("Scanning for BLE devices...")
-    devices = await BleakScanner.discover()
+    devices = await BleakScanner.discover(timeout=10.0)  # Increase scan time
     for device in devices:
-        print(f"Found device: {device.name} ({device.address})")
-        if device.name and "Robot-BLE-DeadReckon" in device.name:
-            print(f"Target device found: {device.name} ({device.address})")
+        device_name = device.name if device.name else "Unknown"
+        print(f"Found device: {device_name} ({device.address})")
+        # Check both possible names from Arduino
+        if device_name in ["Robot-BLE-DeadReckon", "Team3FirstRobot"]:
+            print(f"Target device found: {device_name} ({device.address})")
             return device.address
+        # Debug: Print advertisement data
+        print(f"Device details: {device.details}")
     print("Arduino Nano 33 BLE not found.")
     return None
 
