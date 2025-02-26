@@ -8,6 +8,8 @@
 #include <ArduinoBLE.h>
 #include <Encoder.h>
 
+//1883
+//1832
 // Encoder pins
 Encoder leftEnc(10, 11);  // Left encoder: Pin 10 (A), Pin 11 (B)
 Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
@@ -25,7 +27,8 @@ Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 
 // Robot parameters
 const float WHEEL_RADIUS = 0.0485;  // m (~1 ft circumference)
-const float WHEEL_BASE = 0.2;       // m (assumed—adjust)
+const float WHEEL_BASE = 0.17
+;       // m (assumed—adjust)
 const float TICKS_PER_REV = 1560;   // 19.5:1 × 80
 
 // Pose variables
@@ -55,15 +58,18 @@ void updatePose() {
   prevLeftTicks = leftEnc.read();
   prevRightTicks = rightEnc.read();
 
-  float leftDist = (deltaLeft * 2 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
-  float rightDist = (deltaRight * 2 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
-  float dist = (leftDist + rightDist) / 2;
+  float leftDist = (deltaLeft * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
+  float rightDist = (deltaRight * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
+  float dist = (leftDist + rightDist) / 2.0;
   float dTheta = (rightDist - leftDist) / WHEEL_BASE;
 
-  xPos += dist * cos(theta + dTheta / 2);
-  yPos += dist * sin(theta + dTheta / 2);
+  xPos += dist * cos(theta + dTheta / 2.0);
+  yPos += dist * sin(theta + dTheta / 2.0);
   theta += dTheta;
   theta = atan2(sin(theta), cos(theta));
+
+  Serial.println(xPos);
+  Serial.println((yPos));
 
   // Combine theta, x, y into a single string with labels
   String poseStr = "Theta: " + String(theta, 2) + "; X: " + String(xPos, 2) + "; Y: " + String(yPos, 2);
@@ -91,7 +97,6 @@ void handleWASDT() {
       return;
     }
 
-    leftEnc.write(0); rightEnc.write(0);
     switch (command) {
       case 'W': setMotorSpeeds(MAX_SPEED, MAX_SPEED); delay(ROTATION_TIME); break;  // Forward: 0x57
       case 'S': setMotorSpeeds(-MAX_SPEED, -MAX_SPEED); delay(ROTATION_TIME); break;  // Backward: 0x53
