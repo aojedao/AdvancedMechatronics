@@ -118,15 +118,16 @@ void handleWASDT() {
 
     unsigned int rot_time = rotTimeChar.value();
     unsigned int lin_time = linTimeChar.value();
+    unsigned int speed_pwm = speedPWMChar.value();
 
     Serial.println(lin_time);
     Serial.println(rot_time);
 
     switch (command) {
-      case 'W': setMotorSpeeds(MAX_SPEED, MAX_SPEED); delay(lin_time); break;  // Forward: 0x57
-      case 'S': setMotorSpeeds(-MAX_SPEED, -MAX_SPEED); delay(lin_time); break;  // Backward: 0x53
-      case 'A': setMotorSpeeds(-MAX_SPEED, MAX_SPEED); delay(rot_time); break;  // Left: 0x41
-      case 'D': setMotorSpeeds(MAX_SPEED, -MAX_SPEED); delay(rot_time); break;  // Right: 0x44
+      case 'W': setMotorSpeeds(speed_pwm, speed_pwm); delay(lin_time); break;  // Forward: 0x57
+      case 'S': setMotorSpeeds(-speed_pwm, -speed_pwm); delay(lin_time); break;  // Backward: 0x53
+      case 'A': setMotorSpeeds(-speed_pwm, speed_pwm); delay(rot_time); break;  // Left: 0x41
+      case 'D': setMotorSpeeds(speed_pwm, -speed_pwm); delay(rot_time); break;  // Right: 0x44
       case 'T': setMotorSpeeds(0, 0); break;  // Stop: 0x54
       default: Serial.println("Invalid command"); return;
     }
