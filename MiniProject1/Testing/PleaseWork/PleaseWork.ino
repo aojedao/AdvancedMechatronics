@@ -23,8 +23,8 @@ Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 #define in3 4   // Right DIR 1
 #define in4 3   // Right DIR 2
 
-#define MAX_SPEED 128       // Adjusted PWM—try 255 if needed
-#define ROTATION_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
+#define MAX_SPEED 100       // Adjusted PWM—try 255 if needed
+#define ROTATION_TIME 610  // ~1220 ms for ~1560 ticks (1 rev)
 #define LINEAR_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
 
 // Robot parameters
@@ -45,21 +45,37 @@ BLEUnsignedIntCharacteristic linTimeChar("19B10005-E8F2-537E-4F6C-D104768A1214",
 BLEUnsignedIntCharacteristic speedPWMChar("19B10006-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
 void setMotorSpeeds(int leftPWM, int rightPWM) {
-  if (leftPWM >= 0) { 
+  if(leftPWM != 0){
+    if (leftPWM > 0) { 
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW); 
+    }else{
+      digitalWrite(in1, LOW); 
+      digitalWrite(in2, HIGH);
+    }
+  }
+  else
+  {
     digitalWrite(in1, HIGH);
-     digitalWrite(in2, LOW); 
-  }else{
-    digitalWrite(in1, LOW); 
     digitalWrite(in2, HIGH);
   }
-  
-  if (rightPWM >= 0) { 
+    
+  if(rightPWM != 0)
+  {
+    if (rightPWM > 0) { 
+      digitalWrite(in3, HIGH); 
+      digitalWrite(in4, LOW); 
+    }else{ 
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, HIGH);
+    }
+  }
+  else
+  {
     digitalWrite(in3, HIGH); 
-    digitalWrite(in4, LOW); 
-  }else{ 
-    digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
   }
+
 
   Serial.print("LeftPWM: ");Serial.println(leftPWM);
   Serial.print("rightPWM: ");Serial.println(rightPWM);

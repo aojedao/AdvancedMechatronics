@@ -39,10 +39,28 @@ async def connect_to_robot(address):
     """Connect to the BLE device."""
     global client
     print(f"Attempting to connect to {address}...")
+    
     client = BleakClient(address, loop=loop)
     try:
         await client.connect()
         print("Connected to robot.")
+        
+        entry1.delete(0, tk.END)
+        entry2.delete(0, tk.END)
+        entry3.delete(0, tk.END)
+        
+        ent1 = await client.read_gatt_char(ROT_TIME_UINT_UUID)
+        ent2 = await client.read_gatt_char(LIN_TIME_UINT_UUID)
+        ent3 = await client.read_gatt_char(MOTORSPEED_UINT_UUID)
+        
+        entry1.insert(0,int.from_bytes(ent1, byteorder='little'))
+        entry2.insert(0,int.from_bytes(ent2, byteorder='little'))
+        entry3.insert(0,int.from_bytes(ent3, byteorder='little'))
+        
+        # entry1.insert(0,100)
+        # entry2.insert(0,610)
+        # entry3.insert(0,610)
+        
         await update_pose()  # Update pose after connecting
     except Exception as e:
         print(f"Failed to connect: {e}")
@@ -80,6 +98,7 @@ def send_command(command):
 def start_ble_connection():
     """Start the BLE connection process."""
     asyncio.run_coroutine_threadsafe(main(), loop)
+    
 
 async def set_characteristic(char_uuid, value):
     """Write a value to a specific BLE characteristic."""
@@ -165,6 +184,10 @@ btn_set.grid(row=3, column=0, columnspan=2, pady=10)
 # Connect Button
 btn_connect = tk.Button(window, text="Connect", command=start_ble_connection, height=2, width=10)
 btn_connect.pack(pady=10)
+
+# Connect Reset position button
+btn_right = tk.Button(window, text="Reset Location", command=lambda: send_command('Q'), height=2, width=10)
+btn_right.pack(pady=10)
 
 # Start the asyncio event loop in a separate thread
 threading.Thread(target=run_asyncio_loop, daemon=True).start()
