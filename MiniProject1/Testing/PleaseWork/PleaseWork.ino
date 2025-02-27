@@ -16,7 +16,7 @@ Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 
 // Motor pins
 #define enA 7   // Left PWM
-#define in1 9   // Left DIR 1
+#define in1 13   // Left DIR 1
 #define in2 8   // Left DIR 2
 
 #define enB 2   // Right PWM
@@ -56,8 +56,8 @@ void setMotorSpeeds(int leftPWM, int rightPWM) {
   }
   else
   {
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, HIGH);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
   }
     
   if(rightPWM != 0)
@@ -72,8 +72,8 @@ void setMotorSpeeds(int leftPWM, int rightPWM) {
   }
   else
   {
-    digitalWrite(in3, HIGH); 
-    digitalWrite(in4, HIGH);
+    digitalWrite(in3, LOW); 
+    digitalWrite(in4, LOW);
   }
 
 
