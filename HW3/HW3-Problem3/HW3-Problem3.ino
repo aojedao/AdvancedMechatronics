@@ -27,6 +27,8 @@ void sendNumber(unsigned long num) {
     num /= 10; // Move to the next digit
   } while (num > 0); // Repeat until all digits are processed
   
+  buffer[i++] = '\n'; // Add new line after the number;
+
   for (int j = i - 1; j >= 0; j--) { // Send digits in reverse order
     while (!(UCSR0A & (1 << UDRE0))); // Wait for UDR0 to be empty
     UDR0 = buffer[j]; // Send digit
