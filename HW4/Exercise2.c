@@ -35,6 +35,9 @@ float computeStandardDeviation(int arr[], int size, float average) {
 }
 
 int main() {
+    
+    pause(1000);
+    
     int arr[SIZE];
     generateRandomArray(arr, SIZE);
 
