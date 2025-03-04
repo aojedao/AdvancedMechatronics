@@ -15,6 +15,8 @@ void displayTemperatures(float fahrenheit, float celsius) {
 }
 
 int main() {
+    pause(1000);
+    
     printf("Fahrenheit (°F)  Celsius (°C)\n");
     printf("-----------------------------\n");
 
