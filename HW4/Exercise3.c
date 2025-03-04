@@ -11,6 +11,9 @@ float computeBMI(float weight, float height) {
 }
 
 int main() {
+    
+    pause(1000);
+    
     float feet, inches, weight;
     float heightInches, bmi;
 
