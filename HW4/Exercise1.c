@@ -11,6 +11,7 @@ int main() {
     float linearVelocity, distance;
 
     // Prompt user for input
+    pause(1000);
     printf("Enter angular velocity (rad/s): ");
     scanf("%f", &angularVelocity);
 
