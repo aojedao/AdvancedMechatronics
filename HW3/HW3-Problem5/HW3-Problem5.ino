@@ -15,12 +15,14 @@ void loop() {
   if (flag && (millis() - last >= 200)) {
     PORTB ^= (1 << PB0); // Toggle LED (PB0)
     flag = false;
-    last = millis();
+    last = millis(); // Save the last time that the led was toggled. to avoid toggling continuous 
   }
 }
 
 void isr() {
-  if (millis() - last >= 200) {
+  // We are only allowing to set the flag if last time was change was 200miliseconds ago.
+  // Debouncing is necessary  because of the mechanical contact the signal goes low multiple times for a single push.
+  if (millis() - last >= 200) { 
     flag = true;
   }
 }

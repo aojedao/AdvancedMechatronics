@@ -1,37 +1,24 @@
 /**
- * @file hopethisworks.ino
+ * @file BLEOdometryPlatform.ino
  * @brief Control differential drive robot via BLE with WASDT commands on Arduino Nano 33 BLE.
  * @details WASDT manual control with 'Q' exit—sends "Theta: theta; X: x; Y: y" via BLE.
- *          Left: enA 7, in1 9, in2 8; Right: enB 2, in3 4, in4 3; Encoders: Left 10,11, Right 6,5.
+ *          Left: enA 7, in1 13, in2 8; Right: enB 2, in3 4, in4 3; Encoders: Left 10,11, Right 6,5.
+ *          This Platform is the first mini project in a serie of 3 projects where 
+ *          the team is tring to build a ship yard automation system for handling cargo.
+ *          In this iterarioin a 2 wheeled robot mover around while being controlled by a BLE controller, and estimates its pose along the way using only necoder data.     
  */
 
 #include <ArduinoBLE.h>
 #include <Encoder.h>
 
-//1883
-//1832
+#include "config.h"
+#include "motorDriver.hpp"
+#include "poseEstimator.hpp"
+
 // Encoder pins
 Encoder leftEnc(10, 11);  // Left encoder: Pin 10 (A), Pin 11 (B)
 Encoder rightEnc(6, 5);   // Right encoder: Pin 6 (A), Pin 5 (B)
 
-// Motor pins
-#define enA 7   // Left PWM
-#define in1 9   // Left DIR 1
-#define in2 8   // Left DIR 2
-
-#define enB 2   // Right PWM
-#define in3 4   // Right DIR 1
-#define in4 3   // Right DIR 2
-
-#define MAX_SPEED 100       // Adjusted PWM—try 255 if needed
-#define ROTATION_TIME 610  // ~1220 ms for ~1560 ticks (1 rev)
-#define LINEAR_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
-
-// Robot parameters
-const float WHEEL_RADIUS = 0.0485;  // m (~1 ft circumference)
-const float WHEEL_BASE = 0.17
-;       // m (assumed—adjust)
-const float TICKS_PER_REV = 1560;   // 19.5:1 × 80
 
 // Pose variables
 float xPos = 0.0, yPos = 0.0, theta = 0.0;
@@ -40,82 +27,10 @@ float xPos = 0.0, yPos = 0.0, theta = 0.0;
 BLEService robotService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Service UUID
 BLECharCharacteristic commandChar("19B10002-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);  // WASDTQ: 'W' (0x57), 'A' (0x41), 'S' (0x53), 'D' (0x44), 'T' (0x54), 'Q' (0x51)
 BLEStringCharacteristic poseChar("19B10003-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite, 40);  // "Theta: theta; X: x; Y: y", max 40 chars
-BLEUnsignedIntCharacteristic rotTimeChar("19B10004-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
-BLEUnsignedIntCharacteristic linTimeChar("19B10005-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
-BLEUnsignedIntCharacteristic speedPWMChar("19B10006-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
+BLEUnsignedIntCharacteristic rotTimeChar("19B10004-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite); // Comand to share and receive the rotation Time
+BLEUnsignedIntCharacteristic linTimeChar("19B10005-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite); // Comand to share and receive the linear Time
+BLEUnsignedIntCharacteristic speedPWMChar("19B10006-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite); // Comand to share and receive the PWM set to the motors.
 
-void setMotorSpeeds(int leftPWM, int rightPWM) {
-  if(leftPWM != 0){
-    if (leftPWM > 0) { 
-      digitalWrite(in1, HIGH);
-      digitalWrite(in2, LOW); 
-    }else{
-      digitalWrite(in1, LOW); 
-      digitalWrite(in2, HIGH);
-    }
-  }
-  else
-  {
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, HIGH);
-  }
-    
-  if(rightPWM != 0)
-  {
-    if (rightPWM > 0) { 
-      digitalWrite(in3, HIGH); 
-      digitalWrite(in4, LOW); 
-    }else{ 
-      digitalWrite(in3, LOW);
-      digitalWrite(in4, HIGH);
-    }
-  }
-  else
-  {
-    digitalWrite(in3, HIGH); 
-    digitalWrite(in4, HIGH);
-  }
-
-
-  Serial.print("LeftPWM: ");Serial.println(leftPWM);
-  Serial.print("rightPWM: ");Serial.println(rightPWM);
-
-  analogWrite(enA, abs(leftPWM));
-  analogWrite(enB, abs(rightPWM));
-}
-
-void updatePose() {
-  static long deltaLeft = 0, deltaRight = 0;
-
-  deltaLeft = leftEnc.readAndReset();
-  deltaRight = rightEnc.readAndReset();
-  
-
-  float leftDist = (deltaLeft * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
-  float rightDist = (deltaRight * 2.0 * PI * WHEEL_RADIUS) / TICKS_PER_REV;
-
-  float dist = (leftDist + rightDist) / 2.0;
-  float dTheta = (rightDist - leftDist) / WHEEL_BASE;
-
-  xPos += dist * cos(theta + dTheta / 2.0);
-  yPos += dist * sin(theta + dTheta / 2.0);
-
-  theta += dTheta;
-  theta = atan2(sin(theta), cos(theta)); // Normalizer Theta between -pi and pi
-
-  Serial.println(xPos);
-  Serial.println((yPos));
-
-  // Combine theta, x, y into a single string with labels
-  String poseStr = "Theta: " + String(theta, 2) + "; X: " + String(xPos, 2) + "; Y: " + String(yPos, 2);
-
-  // Send combined string via BLE
-  poseChar.writeValue(poseStr);
-
-  // Display current theta, x, y on Serial for debugging
-  Serial.print("Pose sent via BLE: "); Serial.println(poseStr);
-  Serial.print("Ticks: "); Serial.print(leftEnc.read()); Serial.print(" | "); Serial.println(rightEnc.read());
-}
 
 // Function to handle WASDT commands
 void handleWASDT() {
@@ -128,7 +43,19 @@ void handleWASDT() {
       xPos = 0.0; yPos = 0.0; theta = 0.0;
       leftEnc.write(0); rightEnc.write(0);
       Serial.println("Exiting—position reset");
-      updatePose();
+      updatePose(xPos, yPos, theta, leftEnc, rightEnc);
+      Serial.println(xPos);
+      Serial.println((yPos));
+
+      // Combine theta, x, y into a single string with labels
+      String poseStr = "Theta: " + String(theta, 2) + "; X: " + String(xPos, 2) + "; Y: " + String(yPos, 2);
+
+      // Send combined string via BLE
+      poseChar.writeValue(poseStr);
+
+      // Display current theta, x, y on Serial for debugging
+      Serial.print("Pose sent via BLE: "); Serial.println(poseStr);
+      Serial.print("Ticks: "); Serial.print(leftEnc.read()); Serial.print(" | "); Serial.println(rightEnc.read());
       return;
     }
 
@@ -148,7 +75,19 @@ void handleWASDT() {
       default: Serial.println("Invalid command"); return;
     }
     setMotorSpeeds(0, 0);
-    updatePose();
+    updatePose(xPos, yPos, theta, leftEnc, rightEnc);
+    Serial.println(xPos);
+    Serial.println((yPos));
+
+    // Combine theta, x, y into a single string with labels
+    String poseStr = "Theta: " + String(theta, 2) + "; X: " + String(xPos, 2) + "; Y: " + String(yPos, 2);
+
+    // Send combined string via BLE
+    poseChar.writeValue(poseStr);
+
+    // Display current theta, x, y on Serial for debugging
+    Serial.print("Pose sent via BLE: "); Serial.println(poseStr);
+    Serial.print("Ticks: "); Serial.print(leftEnc.read()); Serial.print(" | "); Serial.println(rightEnc.read());
   }
 }
 
