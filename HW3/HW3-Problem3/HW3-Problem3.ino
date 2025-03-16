@@ -8,7 +8,7 @@ void setup() {
   UBRR0L = 103; // Set lower 8 bits of UBRR to 103 (9600 baud)
   UCSR0B |= (1 << TXEN0); // Enable transmitter
   UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data frame
-}
+} 
 
 void loop() {
   static unsigned long last = 0; // Store the last time we printed

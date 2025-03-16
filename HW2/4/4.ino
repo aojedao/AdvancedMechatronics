@@ -1,10 +1,11 @@
-const int signalPin = 9;
+const int signalPin = 7;
 
-
+volatile bool flag;
 int dist = 0;
 
 long readUltrasonicDistance(int signalPin)
 {
+ 
   pinMode(signalPin, OUTPUT);  // Clear the trigger
   digitalWrite(signalPin, LOW);
   delayMicroseconds(2);
@@ -19,24 +20,32 @@ long readUltrasonicDistance(int signalPin)
 
 void setup()
 {
+
+  pinMode(2,INPUT_PULLUP);
+  pinMode(7, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(2),isr,LOW);
   Serial.begin(9600);
-  DDRB |= (1<<PB2);
 }
 
-void loop()
+void loop(){
+  if(flag == 1 ){
+    UltraRead();
+    flag=0;
+    delay(1000);
+  }
+}
+void UltraRead()
 {
   // measure the ping time in cm
   dist = 0.01723 * readUltrasonicDistance(signalPin);
   Serial.print(dist);
   Serial.println(" cm");
-  delay(100); // Wait for 100 millisecond(s)
-  if(dist < 10) PORTB |= (1<<PB2); // if dist < 10 cm turn on
-  else if(dist >=10 && dist <= 50){
-    //if dist between 10 and 50 cm blink at 1Hz
-    PORTB |=(1<<PB2);
-    delay(500);
-    PORTB &= ~(1<<PB2);
-    delay(500);
-  }
-  else PORTB &= ~(1<<PB2);//if dist > 50cm turn off the light
+  delay(500); // Wait for 100 millisecond(s)
 }
+
+void isr(){
+  //UltraRead();
+  flag=1;
+  //Serial.print("test");
+}
+

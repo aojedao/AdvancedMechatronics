@@ -1,4 +1,4 @@
-
+  
 void setup() {
   // Configure buttons with pull-ups
   DDRD &= ~(1 << PD4); // P4 (input)
