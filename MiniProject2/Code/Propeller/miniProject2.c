@@ -132,7 +132,7 @@ int main() {
     // Initialize BLE
     ble = fdserial_open(10, 11, 0, 115200);
 
-    // Start cogs
+    // Start cogs for every task
     cog_run(&motor_control, 128);
     cog_run(&encoder_reading, 128);
     cog_run(&imu_processing, 128);
@@ -190,19 +190,34 @@ void sensor_fusion() {
     }
 }
 
-// BLE communication
+
+// BLE Communication
 void ble_communication() {
     char buf[32];
+
     while (1) {
-        if (fdserial_rxCount(ble) > 0) {
-            fdserial_rxFlush(ble);
-            fdserial_rx(ble);  
-            handle_command(buf);
+        if (fdserial_rxCheck(ble) != -1) {  
+            int n = 0;
+
+            // Read characters until newline or buffer is full
+            while (n < sizeof(buf) - 1) {
+                int c = fdserial_rxChar(ble);
+                if (c == '\n' || c == -1) break;
+                buf[n++] = c;
+            }
+            buf[n] = '\0';  // Null-terminate the string
+
+            // Handle BLE commands
+            if (strcmp(buf, "MOVE") == 0) {
+                move(60, 60);
+            } else if (strcmp(buf, "STOP") == 0) {
+                move(0, 0);
+            }
+            dprint(ble, "POS: X:%.2f Y:%.2f Th:%.2f\n", x_pos, y_pos, theta);
+            dprint(ble, "IMU: %.2f %.2f %.2f\n", imu_data[0], imu_data[1], imu_data[2]);
         }
 
-        dprint(ble, "POS: X:%.2f Y:%.2f Th:%.2f\n", x_pos, y_pos, theta);
-        dprint(ble, "IMU: %.2f %.2f %.2f\n", imu_data[0], imu_data[1], imu_data[2]);
-        pause(500);
+        pause(50);
     }
 }
 
