@@ -119,6 +119,8 @@ void mpu6050_read(imu_data_t *data) {
 
 // Calibrate gyroscope by averaging samples while stationary
 void calibrate_gyro(int samples, float *gyro_offsets, float *accel_offsets) {
+   print("Calibrating gyro... keep sensor still!\n");
+
     imu_data_t data;
     
     float gyro_sum[3] = {0};
@@ -147,7 +149,7 @@ void calibrate_gyro(int samples, float *gyro_offsets, float *accel_offsets) {
 int main() {
     // Initialize IMU
     mpu6050_init();
-    mstime_start();
+    
     float yaw = 0,pitch =0, roll = 0;
     float   gyroAngleX = 0, gyroAngleY = 0;
     // Calibrate gyroscope
@@ -159,15 +161,23 @@ int main() {
     int16_t current_time = 0;
     // Main loop
     print("finished calibration\n");
+    
+    mstime_start();
     while(1) {
         imu_data_t data;
-        mpu6050_read(&data);
-        
+        //mstime_reset();
+       // int16_t t1 = mstime_get();
         prev_time = current_time;
-        waitcnt(CNT += CLKFREQ/pow(10,3));
+        mpu6050_read(&data);
+        //int16_t t2 = mstime_get();
+        
+        waitcnt(CNT += CLKFREQ/1000);
         current_time = mstime_get();
-        elapsed_time = current_time - prev_time;
+        elapsed_time = (current_time - prev_time)/1000;
+        
+        
         // Apply gyro calibration
+        int16_t t3 = mstime_get();
         data.gyro[0] -= gyro_offsets[0];
         data.gyro[1] -= gyro_offsets[1];
         data.gyro[2] -= gyro_offsets[2];
@@ -196,16 +206,18 @@ int main() {
         
         // Temperature: (in °C)
         float temp = data.temp / 340.0 + 36.53;
-        
+        int16_t t4 = mstime_get();
         // Print results with fixed-width formatting
         print("%c", HOME);  // Clear terminal
         print("MPU-60X0 IMU Data\n");
         print("-----------------\n");
         print("Accel: X=%7.2fg  Y=%7.2fg  Z=%7.2fg\n", ax, ay, az);
-        print("elapsed_time = %d\n",elapsed_time);
+        print("Clockfreq = %d\t elapsed_time = %d\n",CLKFREQ,elapsed_time);
         print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", gx, gy, gz);
         print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);
         //print("Temp:  %7.1f°C\n", temp);
-        pause(500);
+        //while(1){pause(500);}
+        pause(1000);
+        print("%c",HOME);
     }      
 }
