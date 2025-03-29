@@ -1,6 +1,5 @@
 //The code is translated from arduino code available in the below link
 //https://howtomechatronics.com/tutorials/arduino/arduino-and-mpu6050-accelerometer-and-gyroscope-tutorial/.....
-...
 //imu settings
 //Accl range +-2g
 //Gyro range +-250deg/s
