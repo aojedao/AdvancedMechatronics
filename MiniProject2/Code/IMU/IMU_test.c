@@ -30,6 +30,13 @@ typedef struct {
     float temp;
 } imu_data_t;
 
+typedef struct{
+    int16_t accel[3];
+    int16_t gyro[3];
+    int16_t temp;
+  
+} received_data;
+
 // Initialize MPU-60X0
 void mpu6050_init() {
     // Initialize I2C
@@ -72,7 +79,7 @@ void mpu6050_init() {
 
 // Read all sensor data from MPU-60X0
 void mpu6050_read(imu_data_t *data) {
-    uint8_t buf[14];
+    int16_t buf[14];
     
     // Start reading from register 0x3B (ACCEL_XOUT_H)
     i2c_start(&imu);
@@ -93,23 +100,30 @@ void mpu6050_read(imu_data_t *data) {
     i2c_stop(&imu);
     
     // Format data (registers are big-endian)
-    data->accel[0] = ((buf[0] << 8) | buf[1]) / 16384.0 ;   // X
-    data->accel[1] = ((buf[2] << 8) | buf[3]) / 16384.0 ;   // Y
-    data->accel[2] = ((buf[4] << 8) | buf[5]) / 16384.0 ;   // Z
-    data->temp     = (buf[6] << 8) | buf[7];   // Temperature
-    data->gyro[0]  = ((buf[8] << 8) | buf[9]) / 131.0;   // X
-    data->gyro[1]  = ((buf[10] << 8) | buf[11])/ 131.0; // Y
-    data->gyro[2]  = ((buf[12] << 8) | buf[13])/ 131.0; // Z
+    received_data R_Data;
+    R_Data.accel[0] = ((buf[0] << 8) | buf[1]);
+    data->accel[0] = (float)(R_Data.accel[0]) / 16384.0 ;   // X
+    R_Data.accel[1] = ((buf[2] << 8) | buf[3]);
+    data->accel[1] = (float)(R_Data.accel[1]) / 16384.0 ;   // Y
+    R_Data.accel[2] = ((buf[4] << 8) | buf[5]);
+    data->accel[2] = (float)(R_Data.accel[2]) / 16384.0 ;   // Z
+    R_Data.temp = (buf[6] << 8) | buf[7];
+    data->temp     =  (float)(R_Data.temp);  // Temperature
+    R_Data.gyro[0]  = (buf[8] << 8) | buf[9];   // X
+    data->gyro[0] = (float)(R_Data.gyro[0])/131.0;
+    R_Data.gyro[1]  = (buf[10] << 8) | buf[11];   // X
+    data->gyro[1] = (float)(R_Data.gyro[1])/131.0;
+    R_Data.gyro[2]  = (buf[12] << 8) | buf[13];   // X
+    data->gyro[2] = (float)(R_Data.gyro[2])/131.0;
 }
 
 // Calibrate gyroscope by averaging samples while stationary
-void calibrate_gyro(int samples, int16_t *gyro_offsets, int16_t *accel_offsets) {
+void calibrate_gyro(int samples, float *gyro_offsets, float *accel_offsets) {
     imu_data_t data;
     
     float gyro_sum[3] = {0};
     float accel_sum[3] = {0};
     
-    print("Calibrating gyro... keep sensor still!\n");
     
     for(int i = 0; i < samples; i++) {
         mpu6050_read(&data);
@@ -127,9 +141,7 @@ void calibrate_gyro(int samples, int16_t *gyro_offsets, int16_t *accel_offsets) 
     gyro_offsets[2] = gyro_sum[2] / samples;
     accel_offsets[0] = accel_sum[0]/ samples;
     accel_offsets[1] = accel_sum[1]/ samples;
-    print("gx = %d gy = %d gz = %d \n\n ax = %d ay = %d\n",gyro_offsets[0],gyro_offsets[1],gyro_offsets[2],accel_offsets[0],accel_offsets[1]);
-    print("Offsets: X=%d, Y=%d, Z=%d\n", gyro_offsets[0], gyro_offsets[1], gyro_offsets[2],accel_offsets[0],accel_offsets[1]);
-    pause(5000);
+    pause(500);
 }
 
 int main() {
@@ -137,6 +149,7 @@ int main() {
     mpu6050_init();
     mstime_start();
     float yaw = 0,pitch =0, roll = 0;
+    float   gyroAngleX = 0, gyroAngleY = 0;
     // Calibrate gyroscope
     float gyro_offsets[3] = {0};
     float accel_offsets[3] = {0};
@@ -145,24 +158,27 @@ int main() {
     int16_t elapsed_time = 0; 
     int16_t current_time = 0;
     // Main loop
+    print("finished calibration\n");
     while(1) {
         imu_data_t data;
         mpu6050_read(&data);
+        
         prev_time = current_time;
-        waitcnt(CNT += CLKFREQ/1000);
+        waitcnt(CNT += CLKFREQ/pow(10,3));
         current_time = mstime_get();
-        elapsed_time = current_time-prev_time;
+        elapsed_time = current_time - prev_time;
         // Apply gyro calibration
         data.gyro[0] -= gyro_offsets[0];
         data.gyro[1] -= gyro_offsets[1];
         data.gyro[2] -= gyro_offsets[2];
         
+        
         // Convert raw data to human-readable values:
         // Accelerometer: ±2g range (16384 LSB/g)
         
-        float ax = data.accel[0];
-        float ay = data.accel[1]; 
-        float az = data.accel[2] ;
+        float ax = data.accel[0]*1;
+        float ay = data.accel[1]*1; 
+        float az = data.accel[2]*1 ;
         float ax_angle = (atan(data.accel[1] / sqrt(pow(data.accel[0], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
         float ay_angle =  (atan(-1 * data.accel[0] / sqrt(pow(data.accel[1], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
         // Gyroscope: ±250°/s range (131 LSB/°/s)
@@ -170,7 +186,8 @@ int main() {
         float gy = data.gyro[1] ;
         float gz = data.gyro[2] ;
         
-        
+        gyroAngleX = gyroAngleX + gx * elapsed_time;
+        gyroAngleY = gyroAngleY + gy * elapsed_time;
         yaw = yaw + gz*elapsed_time;
         roll = 0.96 * gx + 0.04*ax;
         pitch = 0.96*gy + 0.04*ay;
@@ -181,7 +198,7 @@ int main() {
         float temp = data.temp / 340.0 + 36.53;
         
         // Print results with fixed-width formatting
-        //print("%c", HOME);  // Clear terminal
+        print("%c", HOME);  // Clear terminal
         print("MPU-60X0 IMU Data\n");
         print("-----------------\n");
         print("Accel: X=%7.2fg  Y=%7.2fg  Z=%7.2fg\n", ax, ay, az);
@@ -189,6 +206,6 @@ int main() {
         print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", gx, gy, gz);
         print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);
         //print("Temp:  %7.1f°C\n", temp);
-        while(1){pause(200);}        
+        pause(500);
     }      
 }
