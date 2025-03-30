@@ -207,16 +207,16 @@ int main() {
         float temp = data.temp / 340.0 + 36.53;
         int16_t t4 = mstime_get();
         // Print results with fixed-width formatting
-        print("%c", HOME);  // Clear terminal
-        print("MPU-60X0 IMU Data\n");
-        print("-----------------\n");
+        //print("%c", HOME);  // Clear terminal
+        //print("MPU-60X0 IMU Data\n");
+        //print("-----------------\n");
         print("Accel: X=%7.2fg  Y=%7.2fg  Z=%7.2fg\n", ax, ay, az);
-        print("Clockfreq = %d\t elapsed_time = %d\n",CLKFREQ,elapsed_time);
+        //print("Clockfreq = %d\t elapsed_time = %d\n",CLKFREQ,elapsed_time);
         print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", gx, gy, gz);
         print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);
         //print("Temp:  %7.1f°C\n", temp);
         //while(1){pause(500);}
         pause(1000);
-        print("%c",HOME);
+        //print("%c",HOME);
     }      
 }
