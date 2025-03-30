@@ -188,8 +188,8 @@ int main() {
         float ax = data.accel[0]*1;
         float ay = data.accel[1]*1; 
         float az = data.accel[2]*1 ;
-        float ax_angle = (atan(data.accel[1] / sqrt(pow(data.accel[0], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
-        float ay_angle =  (atan(-1 * data.accel[0] / sqrt(pow(data.accel[1], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
+        float ax_angle = (atan2(data.accel[1] , sqrtf(pow(data.accel[0], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
+        float ay_angle =  (atan2(-1 * data.accel[0] , sqrtf(pow(data.accel[1], 2) + pow(data.accel[2], 2))) * 180 / PI) - accel_offsets[0];
         // Gyroscope: ±250°/s range (131 LSB/°/s)
         float gx = data.gyro[0] ;
         float gy = data.gyro[1] ;
