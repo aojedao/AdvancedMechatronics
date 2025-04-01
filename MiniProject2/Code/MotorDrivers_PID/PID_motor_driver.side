@@ -1,4 +1,5 @@
-DoubleMotors.c
+PID_motor_driver.c
+encoders.c
 >compiler=C
 >memtype=cmm main ram compact
 >optimize=-Os

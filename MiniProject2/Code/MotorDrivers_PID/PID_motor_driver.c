@@ -1,7 +1,20 @@
+/*
+ *0. int main() COG0
+ *1. Motor Setup
+ *2. Encoder Function COG1
+ *3. Currently implementing Prop.Gain for the motors -
+ *
+ *
+ *
+ *
+ *
+*/
+
 #include "simpletools.h"  // Core Propeller functions
 #include "servo.h"        // For PWM control via servo_speed
 #include "propeller.h"    // For direct hardware access (if needed beyond simpletools)
 #include <math.h>         // For abs()
+#include "mstimer.h"
 
 // --- Pin Definitions ---
 // Adjust these pins according to your actual hardware wiring
@@ -29,11 +42,41 @@
 #define RIGHT_MOTOR 1
 
 #define MAX_PWM_VAL 10000 // Define max value for our speed input (-100 to 100)
+#define MOTOR_STOP_TIME 50000
+#define KP 0.8f               // Proportional gain (adjust as needed)
+#define MAX_PWM_CHANGE 200 //MAX Change per cycle
+#define MOTOR_PWM 6000
+
 
 // --- Global Variables ---
 // Use 'volatile' if these will be updated by another Cog (e.g., encoder cog)
-volatile long encoder_left_count = 0;
-volatile long encoder_right_count = 0;
+static volatile int32_t rightWheelCount = 0;
+static volatile int32_t leftWheelCount = 0;
+static volatile int32_t prevLeftCount = 0;
+static volatile int32_t prevRightCount = 0;
+static int leftTargetPWM = 0;  // Store target PWM values
+static int rightTargetPWM = MOTOR_PWM;
+static unsigned int encoderStack[128*2]; 
+
+
+//-----Lookup table for Encoder-----
+static const int8_t decoderLookup[16] = {
+  
+    0,  +1, -1, +2, 
+  
+    -1, 0,  -2,+1, 
+    
+    +1, -2, 0,  -1, 
+    
+    +2, -1, +1, 0   
+};
+
+typedef enum{
+  LINEAR,
+  ROT
+}CONTROL_MODE;
+
+static CONTROL_MODE current_mode = LINEAR;  
 
 // --- Function Prototypes ---
 void initializeMotors();
@@ -44,54 +87,56 @@ void moveForward(int speed);
 void moveBackward(int speed);
 void turnLeft(int speed);  // Rotate in place left
 void turnRight(int speed); // Rotate in place right
+void encoderCog(void *par);
+void velocityControlLoop();
 
 // Placeholder for encoder reading function (likely run in separate cogs)
 // void encoder_reader_cog(void *par);
 
 // --- Main Program ---
 int main() {
+    clkset(_CLKMODE, _CLKFREQ);
     print("Initializing Robot...\n");
     initializeMotors();
     initializeEncoders(); // Initialize encoder pins (basic setup)
-
+    cogstart(&encoderCog, NULL, encoderStack, sizeof(encoderStack));
     print("Robot Ready. Starting command sequence...\n");
-
+    mstime_start();
+    while(1){
+      simpleterm_open();
     // Example Command Sequence:
     print("Moving Forward (Speed 50) for 2 seconds...\n");
-    moveForward(-9000);
-    pause(2000);
-
+    moveForward(MOTOR_PWM);
+    int16_t cur_time = mstime_get();
+    
+    while(mstime_get() - cur_time <= MOTOR_STOP_TIME){
+      
+      //print("Right: %6d  Left: %6d\n", rightWheelCount, leftWheelCount);
+      waitcnt(CNT+=CLKFREQ/1000);  
+      velocityControlLoop();
+        
+      
+      pause(100);
+    }       
+    /*
     print("Turning Left (Speed 40) for 1.5 seconds...\n");
-    turnLeft(400);
+    turnLeft(MOTOR_PWM);
     pause(1500);
 
     print("Moving Backward (Speed 50) for 2 seconds...\n");
-    moveBackward(500);
+    moveBackward(MOTOR_PWM);
     pause(2000);
 
     print("Turning Right (Speed 40) for 1.5 seconds...\n");
-    turnRight(400);
+    turnRight(MOTOR_PWM);
     pause(1500);
 
     print("Stopping Motors...\n");
     stopMotors();
 
     print("Command sequence complete.\n");
-
-    // --- Placeholder for where you'd integrate velocity commands ---
-    // Example: Read a command from serial or another input
-    // int desired_speed = 75;
-    // char command = 'F'; // Read from input
-    //
-    // switch(command) {
-    //    case 'F': moveForward(desired_speed); break;
-    //    case 'B': moveBackward(desired_speed); break;
-    //    case 'L': turnLeft(desired_speed); break;
-    //    case 'R': turnRight(desired_speed); break;
-    //    case 'S': stopMotors(); break;
-    // }
-    // pause(100); // Example delay or control loop timing
-    // --- End Placeholder ---
+    */
+  }    
 
 
     return 0; // Note: In embedded systems, main often loops forever.
@@ -223,6 +268,7 @@ void moveForward(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, speed);
     setMotorSpeed(RIGHT_MOTOR, speed);
+    current_mode = LINEAR;
 }
 
 /**
@@ -234,6 +280,7 @@ void moveBackward(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, -speed); // Negative for backward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Negative for backward
+    current_mode = LINEAR;
 }
 
 /**
@@ -245,6 +292,7 @@ void turnLeft(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, -speed); // Left motor backward
     setMotorSpeed(RIGHT_MOTOR, speed);  // Right motor forward
+    current_mode = ROT;
 }
 
 /**
@@ -256,64 +304,63 @@ void turnRight(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, speed);   // Left motor forward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Right motor backward
+    current_mode = ROT;
 }
 
-// --- Placeholder for Encoder Reading Cog ---
-/*
-void encoder_reader_cog(void *par) {
-  // --- Cog-Local Variables ---
-  int cog_id = cogid(); // Get the ID of this cog
-  unsigned int last_state_L = 0;
-  unsigned int last_state_R = 0;
-  int delta_L, delta_R;
 
-  print("Encoder Reader Cog %d Started.\n", cog_id);
 
-  // Configure Propeller Counters for Quadrature Input (Example - Details Matter!)
-  // This requires careful reading of the Propeller manual section on I/O Pins and Counters
-  // Example using INA/INB pins (adjust pins as needed!)
-  // FRQA = 1; // Set frequency A register (if needed)
-  // PHSA = 0; // Clear phase A register
-  // CTRA = (0b01010 << 26) | L_ENCA_PIN; // PHS A mode, Pin L_ENCA
-  //
-  // FRQB = 1;
-  // PHSB = 0;
-  // CTRB = (0b01010 << 26) | R_ENCA_PIN; // PHS A mode, Pin R_ENCA
-
-  while(1) {
-    // --- Method 1: Using Propeller Counters (Preferred) ---
-    // Assuming CTRA/CTRB are configured for quadrature counting on ENCA/ENCB pins
-    // delta_L = PHSA; // Read accumulated counts for Left
-    // PHSA = 0;       // Reset counter accumulator for next interval
-    // delta_R = PHSB; // Read accumulated counts for Right
-    // PHSB = 0;       // Reset counter accumulator
-
-    // --- Method 2: Basic Pin Monitoring (Less Accurate at High Speed) ---
-    // Read current state of Encoder A & B pins for both motors
-     unsigned int current_state_L = (input(L_ENCB_PIN) << 1) | input(L_ENCA_PIN);
-     unsigned int current_state_R = (input(R_ENCB_PIN) << 1) | input(R_ENCA_PIN);
-    // Decode state changes to increment/decrement count (complex logic needed)
-    // ... Lookup table or state machine logic here ...
-    // delta_L = calculate_delta(last_state_L, current_state_L);
-    // delta_R = calculate_delta(last_state_R, current_state_R);
-    // last_state_L = current_state_L;
-    // last_state_R = current_state_R;
-    // delta_L = 0; // Replace with actual calculation
-    // delta_R = 0; // Replace with actual calculation
-
-    // Update global counts (use lock if main cog also writes/reads complexly)
-    // Using __atomic builtins or disabling interrupts briefly might be needed
-    // for true atomicity if just incrementing/decrementing.
-    // For simple accumulation, direct access to volatile might be okay initially.
-    encoder_left_count += delta_L;
-    encoder_right_count += delta_R;
-
-    // Pause briefly to control update rate and yield CPU time
-    pause(10); // Adjust timing based on required resolution and speed
-  }
+void encoderCog(void *par) {
+    uint8_t lastRight = 0;
+    uint8_t lastLeft = 0;
+    
+    while(1) {
+      //getting the input values as xx
+        uint8_t currRight = (input(R_ENCB_PIN) << 1) | input(R_ENCA_PIN);
+        uint8_t currLeft = (input(L_ENCB_PIN) << 1) | input(L_ENCA_PIN);
+        
+      //left shifting them and adding the last input values
+        uint8_t rightIndex = (currRight << 2) | lastRight;
+        uint8_t leftIndex = (currLeft << 2) | lastLeft;
+        
+      //checking the lookup table
+        rightWheelCount += decoderLookup[rightIndex];
+        leftWheelCount += decoderLookup[leftIndex];
+       //saving only the first two bits of the current value 
+        lastRight = currRight & 0x03;  
+        lastLeft = currLeft & 0x03;
+        
+        waitcnt(CNT + CLKFREQ/10000);  // 100μs delay
+    }
 }
 
-// --- Required if using cogstart in main ---
-// unsigned int stack[40 + 25]; // Stack for the encoder cog (size depends on cog needs)
 
-*/
+void velocityControlLoop(){
+     // 1. Get current encoder counts (atomic read)
+    int32_t currLeft = leftWheelCount;
+    int32_t currRight = rightWheelCount;
+    
+    // 2. Calculate actual deltas since last loop
+    int32_t leftDelta = currLeft - prevLeftCount;
+    int32_t rightDelta = currRight - prevRightCount;
+    prevLeftCount = currLeft;
+    prevRightCount = currRight;
+
+    // 3. Calculate error (how much right needs to change to match left)
+    int error = leftDelta - rightDelta;
+   
+    rightTargetPWM += (int)(KP*error);
+    
+    // 5. Apply bounds and set motors
+    
+    if (rightTargetPWM > MAX_PWM_VAL) rightTargetPWM = MAX_PWM_VAL;
+    if (rightTargetPWM < -MAX_PWM_VAL) rightTargetPWM = -MAX_PWM_VAL;
+    print("leftDelta =%d rightDelta = %d error = %d rightTargetPWM = %d\n",leftDelta,rightDelta,error,rightTargetPWM);
+    servo_speed(RIGHT_MOTOR, 3000);   // Right follows left's actual movement
+    
+    
+}
+  
+
+  
+
+ 

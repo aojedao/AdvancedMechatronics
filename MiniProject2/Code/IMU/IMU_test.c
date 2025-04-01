@@ -206,6 +206,7 @@ int main() {
         // Temperature: (in °C)
         float temp = data.temp / 340.0 + 36.53;
         int16_t t4 = mstime_get();
+        print("%d\n",mstime_get());
         // Print results with fixed-width formatting
         //print("%c", HOME);  // Clear terminal
         //print("MPU-60X0 IMU Data\n");
