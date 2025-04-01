@@ -1,12 +1,12 @@
 #include "simpletools.h"  
 #include <math.h>          
-
+#include "servo.h"
 #include <propeller.h>
 
 // Define Propeller pins for motor control
-#define INA_PIN 14  // Adjust as needed
-#define INB_PIN 13  // Adjust as needed
-#define PWM_PIN 15  // Adjust as needed (PWM control not implemented in this basic test)
+#define INA_PIN 2  // Adjust as needed
+#define INB_PIN 1  // Adjust as needed
+#define PWM_PIN 0  // Adjust as needed (PWM control not implemented in this basic test)
 
 // Define constants for motor directions
 #define FORWARD 1
@@ -36,12 +36,16 @@ void moveMotor(int direction, int duration_ms) {
         OUTA |= (1 << INA_PIN); // Set INA high for forward
         OUTA &= ~(1 << INB_PIN); // Set INB low
         DIRA |= (1 << INA_PIN) | (1 << INB_PIN) | (1 << PWM_PIN); // Set as outputs
-        OUTA |= (1 << PWM_PIN); // Enable motor power (assuming PWM pin enables)
+        //OUTA |= (1 << PWM_PIN); // Enable motor power (assuming PWM pin enables)
+        servo_speed(PWM_PIN,100);
+        servo_speed(PWM_PIN,20000);
+        //servo_speed(14, 0);
     } else if (direction == BACKWARD) {
         OUTA &= ~(1 << INA_PIN); // Set INA low
         OUTA |= (1 << INB_PIN); // Set INB high
         DIRA |= (1 << INA_PIN) | (1 << INB_PIN) | (1 << PWM_PIN); // Set as outputs
         OUTA |= (1 << PWM_PIN); // Enable motor power
+        //servo_speed(PWM_PIN,1000);
     } else {
         print("Invalid direction specified.\n");
         return;
