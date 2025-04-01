@@ -165,7 +165,7 @@ void calibrate_imu(int samples, float *gyro_offsets, float *accel_offsets) {
     
     for(int i = 0; i < samples; i++) {
         mpu6050_read(&data);
-        print("i = %d\n",i);
+        //print("i = %d\n",i);
         gyro_sum[0] += data.gyro[0];
         gyro_sum[1] += data.gyro[1];
         gyro_sum[2] += data.gyro[2];
@@ -217,11 +217,11 @@ void update_odometry(odometry_t *odom, imu_data_t *imu_data, int32_t rightCount,
     odom->theta = theta;
     
     // Update velocities
-    print("%f\t %f\n",linear_dist,dt);
+    //print("%f\t %f\n",linear_dist,dt);
     odom->velocity = linear_dist / dt;
     
     odom->omega = imu_omega;
-    print("%f\n",odom->velocity);
+    //print("%f\n",odom->velocity);
 }
 
 int main() {
@@ -242,17 +242,20 @@ int main() {
     float gyro_offsets[3] = {0};
     float accel_offsets[3] = {0};
     
-    calibrate_imu(2, gyro_offsets, accel_offsets);
+    calibrate_imu(2000, gyro_offsets, accel_offsets);
     // Initialize odometry
     odometry_t odom = {0, 0, 0, 0, 0};
     imu_data_t imu_data;
+    mstime_start();
     int16_t prev_time = mstime_get();
     
     // Main loop
     while(1) {
         int16_t current_time = mstime_get();
+        waitcnt(CNT += CLKFREQ/1000);
         float dt = (current_time - prev_time) / 1000.0; // Convert to msseconds
         prev_time = current_time;
+        //print("%f\n",dt);
         
         // Read IMU
         mpu6050_read(&imu_data);
@@ -262,17 +265,18 @@ int main() {
         
         // Update odometry
         update_odometry(&odom, &imu_data, rightWheelCount, leftWheelCount, dt);
-        print("right wheel counts = %d\n", rightWheelCount);
-        /*
+        //print("right wheel counts = %d\n", rightWheelCount);
+        
         // Display results
         print("%c", HOME);  // Clear terminal
         print("Odometry Data\n");
         print("-------------\n");
+        print("Gyro[2] = %f\n",imu_data.gyro[2]);
         print("Position: X=%.2fm Y=%.2fm\n", odom.x, odom.y);
         print("Heading: %.1f°\n", odom.theta * 180.0 / PI);
         print("Velocity: %.2fm/s Omega=%.2frad/s\n", odom.velocity, odom.omega);
         print("Encoders: R=%d L=%d\n", rightWheelCount, leftWheelCount);
-        */
+        
         pause(100);
     }
 }
