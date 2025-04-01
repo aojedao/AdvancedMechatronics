@@ -20,14 +20,14 @@
 // Adjust these pins according to your actual hardware wiring
 
 // Motor Left
-#define L_INA_PIN   4  // Left Motor Direction Input A
-#define L_INB_PIN   3  // Left Motor Direction Input B
-#define L_PWM_PIN   5  // Left Motor PWM Speed Control
+#define L_INA_PIN    1// Left Motor Direction Input A
+#define L_INB_PIN    2// Left Motor Direction Input B
+#define L_PWM_PIN    0// Left Motor PWM Speed Control
 
 // Motor Right
-#define R_INA_PIN   2  // Right Motor Direction Input A
-#define R_INB_PIN   1  // Right Motor Direction Input B
-#define R_PWM_PIN   0  // Right Motor PWM Speed Control
+#define R_INA_PIN   4 // Right Motor Direction Input A
+#define R_INB_PIN   3 // Right Motor Direction Input B
+#define R_PWM_PIN   5 // Right Motor PWM Speed Control
 
 // Encoder Left (Example Pins - Adjust as needed)
 #define L_ENCA_PIN  9  // Left Encoder Phase A
@@ -46,6 +46,8 @@
 #define KP 0.8f               // Proportional gain (adjust as needed)
 #define MAX_PWM_CHANGE 200 //MAX Change per cycle
 #define MOTOR_PWM 6000
+#define LF 1
+#define RB -1
 
 
 // --- Global Variables ---
@@ -72,11 +74,13 @@ static const int8_t decoderLookup[16] = {
 };
 
 typedef enum{
-  LINEAR,
-  ROT
+  FRWD,
+  BKWD,
+  ROT_L,
+  ROT_R
 }CONTROL_MODE;
 
-static CONTROL_MODE current_mode = LINEAR;  
+static CONTROL_MODE current_mode = FRWD;  
 
 // --- Function Prototypes ---
 void initializeMotors();
@@ -106,14 +110,18 @@ int main() {
       simpleterm_open();
     // Example Command Sequence:
     print("Moving Forward (Speed 50) for 2 seconds...\n");
-    moveForward(MOTOR_PWM);
+    //turnRight(MOTOR_PWM); &tested and works&
+    //turnLeft(MOTOR_PWM); & tested and works&
+    //moveForward(MOTOR_PWM); &tested and works&
+    moveBackward(MOTOR_PWM);
     int16_t cur_time = mstime_get();
     
     while(mstime_get() - cur_time <= MOTOR_STOP_TIME){
       
       //print("Right: %6d  Left: %6d\n", rightWheelCount, leftWheelCount);
       waitcnt(CNT+=CLKFREQ/1000);  
-      velocityControlLoop();
+      //velocityLinearControlLoop();
+      velocityAngularControlLoop();
         
       
       pause(100);
@@ -268,7 +276,7 @@ void moveForward(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, speed);
     setMotorSpeed(RIGHT_MOTOR, speed);
-    current_mode = LINEAR;
+    current_mode = FRWD;
 }
 
 /**
@@ -280,7 +288,7 @@ void moveBackward(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, -speed); // Negative for backward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Negative for backward
-    current_mode = LINEAR;
+    current_mode = BKWD;
 }
 
 /**
@@ -292,7 +300,7 @@ void turnLeft(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, -speed); // Left motor backward
     setMotorSpeed(RIGHT_MOTOR, speed);  // Right motor forward
-    current_mode = ROT;
+    current_mode = ROT_L;
 }
 
 /**
@@ -304,7 +312,7 @@ void turnRight(int speed) {
     if (speed > MAX_PWM_VAL) speed = MAX_PWM_VAL;
     setMotorSpeed(LEFT_MOTOR, speed);   // Left motor forward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Right motor backward
-    current_mode = ROT;
+    current_mode = ROT_R;
 }
 
 
@@ -334,7 +342,7 @@ void encoderCog(void *par) {
 }
 
 
-void velocityControlLoop(){
+void velocityLinearControlLoop(){
      // 1. Get current encoder counts (atomic read)
     int32_t currLeft = leftWheelCount;
     int32_t currRight = rightWheelCount;
@@ -360,7 +368,45 @@ void velocityControlLoop(){
     
     
 }
-  
+ 
+void velocityAngularControlLoop(){
+     // 1. Get current encoder counts (atomic read)
+    int32_t currLeft = leftWheelCount;
+    int32_t currRight = rightWheelCount;
+    
+    // 2. Calculate actual deltas since last loop
+    int32_t leftDelta = currLeft - prevLeftCount;
+    int32_t rightDelta = currRight - prevRightCount;
+    prevLeftCount = currLeft;
+    prevRightCount = currRight;
+
+    // 3. Calculate error (how much right needs to change to match left)
+    int error = abs(leftDelta) - abs(rightDelta);
+    /*
+    if(current_mode != LINEAR){
+      if(current_mode == ROT_L) error = leftDelta - abs(rightDelta);
+      if(current_mode == ROT_R) error = leftDelta - rightDelta;
+    }else{    
+     error = leftDelta - abs(rightDelta);
+     
+    } 
+    */
+    rightTargetPWM += (int)(KP*error*50);   
+    
+    
+    // 5. Apply bounds and set motors
+    
+    if (rightTargetPWM > MAX_PWM_VAL) rightTargetPWM = MAX_PWM_VAL;
+    if (rightTargetPWM < -MAX_PWM_VAL) rightTargetPWM = -MAX_PWM_VAL;
+    print("leftDelta =%d rightDelta = %d\n",leftDelta,rightDelta);
+    if(current_mode == FRWD || current_mode == ROT_R)
+      setMotorSpeed(LEFT_MOTOR, rightTargetPWM);   // Right follows left's actual movement
+    else 
+      setMotorSpeed(LEFT_MOTOR, -1*rightTargetPWM);
+    pause(100);
+    
+    
+}
 
   
 
