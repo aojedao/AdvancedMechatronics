@@ -1,20 +1,3 @@
-/*
-  Blank Simple Project.c
-  http://learn.parallax.com/propeller-c-tutorials 
-*/
-#include "simpletools.h"                      // Include simple tools
-
-int main()                                    // Main function
-{
-  // Add startup code here.
-
- 
-  while(1)
-  {
-    // Add main loop code here.
-    
-  }  
-}
 #include "simpletools.h"  // Core Propeller functions
 #include "servo.h"        // For PWM control via servo_speed
 #include "propeller.h"    // For direct hardware access (if needed beyond simpletools)
@@ -29,17 +12,17 @@ int main()                                    // Main function
 #define L_PWM_PIN   5  // Left Motor PWM Speed Control
 
 // Motor Right
-#define R_INA_PIN   1  // Right Motor Direction Input A
-#define R_INB_PIN   2  // Right Motor Direction Input B
+#define R_INA_PIN   2  // Right Motor Direction Input A
+#define R_INB_PIN   1  // Right Motor Direction Input B
 #define R_PWM_PIN   0  // Right Motor PWM Speed Control
 
 // Encoder Left (Example Pins - Adjust as needed)
-#define L_ENCA_PIN  8  // Left Encoder Phase A
-#define L_ENCB_PIN  9  // Left Encoder Phase B
+#define L_ENCA_PIN  9  // Left Encoder Phase A
+#define L_ENCB_PIN  10  // Left Encoder Phase B
 
 // Encoder Right (Example Pins - Adjust as needed)
-#define R_ENCA_PIN  10 // Right Encoder Phase A
-#define R_ENCB_PIN  11 // Right Encoder Phase B
+#define R_ENCA_PIN  11 // Right Encoder Phase A
+#define R_ENCB_PIN  12 // Right Encoder Phase B
 
 // --- Constants ---
 #define LEFT_MOTOR  0
@@ -75,7 +58,7 @@ int main() {
 
     // Example Command Sequence:
     print("Moving Forward (Speed 50) for 2 seconds...\n");
-    moveForward(500);
+    moveForward(-9000);
     pause(2000);
 
     print("Turning Left (Speed 40) for 1.5 seconds...\n");
