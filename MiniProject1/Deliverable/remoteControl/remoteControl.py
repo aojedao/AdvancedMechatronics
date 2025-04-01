@@ -14,6 +14,8 @@ MOTORSPEED_UINT_UUID = "19B10006-E8F2-537E-4F6C-D104768A1214"  # Replace with ac
 client = None
 loop = asyncio.new_event_loop()  # Create a new event loop for asyncio
 
+print(tk.Tcl().eval('info patchlevel'))
+
 def update_pose_label(pose):
     """Update the pose label in the GUI."""
     pose_label.config(text=f"Current Pose: {pose}")
