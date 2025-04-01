@@ -38,8 +38,8 @@
 #define R_ENCB_PIN  12 // Right Encoder Phase B
 
 // --- Constants ---
-#define LEFT_MOTOR  0
-#define RIGHT_MOTOR 1
+#define LEFT_MOTOR  1
+#define RIGHT_MOTOR 0
 
 #define MAX_PWM_VAL 10000 // Define max value for our speed input (-100 to 100)
 #define MOTOR_STOP_TIME 50000
@@ -55,7 +55,7 @@ static volatile int32_t leftWheelCount = 0;
 static volatile int32_t prevLeftCount = 0;
 static volatile int32_t prevRightCount = 0;
 static int leftTargetPWM = 0;  // Store target PWM values
-static int rightTargetPWM = MOTOR_PWM;
+static int rightTargetPWM = 0;
 static unsigned int encoderStack[128*2]; 
 
 
@@ -348,14 +348,15 @@ void velocityControlLoop(){
     // 3. Calculate error (how much right needs to change to match left)
     int error = leftDelta - rightDelta;
    
-    rightTargetPWM += (int)(KP*error);
+    rightTargetPWM += (int)(KP*error*50);
     
     // 5. Apply bounds and set motors
     
     if (rightTargetPWM > MAX_PWM_VAL) rightTargetPWM = MAX_PWM_VAL;
     if (rightTargetPWM < -MAX_PWM_VAL) rightTargetPWM = -MAX_PWM_VAL;
-    print("leftDelta =%d rightDelta = %d error = %d rightTargetPWM = %d\n",leftDelta,rightDelta,error,rightTargetPWM);
-    servo_speed(RIGHT_MOTOR, 3000);   // Right follows left's actual movement
+    print("leftDelta =%d rightDelta = %d\n",leftDelta,rightDelta);
+    setMotorSpeed(LEFT_MOTOR, rightTargetPWM);   // Right follows left's actual movement
+    pause(100);
     
     
 }
