@@ -42,23 +42,46 @@ class MyServerCallbacks: public BLEServerCallbacks {
 // BLE Characteristic Callbacks to handle incoming data
 class MyCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
-    std::string rxValue = pCharacteristic->getValue();
-
-    if (rxValue.length() > 0) {
-      char command = rxValue[0]; // Assume single-character commands
-      Serial.print("Received via BLE: ");
-      Serial.println(command);
-
-      // Forward the command to the Propeller via UART
-      Propeller.println(command);
-
-      // Handle special case for 'Q' (reset pose)
-      if (command == 'Q') {
-        String resetPose = "Theta: 0.00; X: 0.00; Y: 0.00";
-        pCharacteristicPOSE->setValue(resetPose.c_str());
-        pCharacteristicPOSE->notify();
-        Serial.println("Pose reset and sent via BLE");
+    
+    if(pCharacteristic ==
+      pCharacteristicWASD) {
+      // Handle incoming WASD commands from BLE client
+      std::string rxValue = pCharacteristic->getValue();
+      if (rxValue.length() > 0) {
+        Serial.print("Received WASD Command: ");
+        Serial.println(rxValue.c_str());
+        // Forward the command to the Propeller via UART
+        Propeller.println(String(rxValue.c_str()));
       }
+    } else if(pCharacteristic == pCharacteristicLinTime ) {
+     // Handle incoming linear time from BLE client
+     std::string rxValue = pCharacteristic->toString();
+     if (rxValue.length() > 0) {
+       // Forward the linear time to the Propeller via UART
+       Serial.print("Received LinTime Command: ");
+       Serial.println(rxValue.c_str());
+       // Forward the command to the Propeller via UART
+       Propeller.print("LinTime:");
+       Propeller.println(String(pCharacteristicLinTime->getValue().c_str()));
+      }
+     }else  if (      pCharacteristic == pCharacteristicRotTime ){
+    std::string rxValue = pCharacteristic->getValue();
+    if (rxValue.length() > 0) {
+      // Forward the linear time to the Propeller via UART
+      Propeller.print("RotTime:");
+      Propeller.println(pCharacteristic->getValue().c_str());
+     }
+   }else if (pCharacteristic == pCharacteristicMotorSpeed  ){
+    std::string rxValue = pCharacteristic->getValue();
+    if (rxValue.length() > 0) {
+      // Forward the linear time to the Propeller via UART
+      Propeller.print("MotorSpeed:");
+      Propeller.println(pCharacteristicMotorSpeed->getValue().c_str());
+     }
+   }
+   else
+   {
+      Serial.println("Unknown characteristic write");
     }
   }
 };
@@ -67,8 +90,8 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Initializing...");
 
-  // Initialize UART1 (GPIO16 RX, GPIO17 TX)
-  Propeller.begin(115200, SERIAL_8N1, 16, 17);
+  // Initialize UART1 (GPIO14 RX, GPIO27 TX)
+  Propeller.begin(115200, SERIAL_8N1, 14, 27);
 
   // Initialize BLE
   BLEDevice::init(BLE_SERVER_NAME);
@@ -90,22 +113,30 @@ void setup() {
                         BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
                       );
 
+  pCharacteristicPOSE->setValue("Starting"); // Set initial value
+  
+
+  
   pCharacteristicLinTime = pService->createCharacteristic(
                         LIN_TIME_UINT_UUID,
                         BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_READ
                       );
-
+  pCharacteristicLinTime->setCallbacks(new MyCallbacks());
+    
   pCharacteristicRotTime = pService->createCharacteristic(
                         ROT_TIME_UINT_UUID,
                         BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_READ
                       );
+  pCharacteristicRotTime->setCallbacks(new MyCallbacks());
+
 
   pCharacteristicMotorSpeed = pService->createCharacteristic(
                         MOTORSPEED_UINT_UUID,
                         BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_READ
                       );
-
-
+  pCharacteristicMotorSpeed->setCallbacks(new MyCallbacks());
+  
+  // Start the service
   pService->start();
 
   // Start advertising
