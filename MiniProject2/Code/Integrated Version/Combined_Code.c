@@ -76,6 +76,8 @@
 #define SERIAL_BAUD_RATE 115200 // Communication speed (must match connected device)
 fdserial *usart;          // Full-duplex serial object
 
+#define REPORT_PERIOD_MS 10
+
 // --- Global Variables ---
 int speed = 6000;         // Default speed for movement
 int rot_time = 2000;      // Default duration for movement (in milliseconds)
@@ -136,6 +138,7 @@ i2c imu;  // I2C bus for MPU-60X0
 
 static CONTROL_MODE current_mode = IDLE;  
 static int32_t last_mode_change = 0;
+static int32_t last_report_timestamp = 0;
 
 // --- Function Prototypes ---
 // --- Initialization ---
@@ -167,6 +170,8 @@ void update_odometry(int16_t elapsed_time);
 // --- USART Communication ---
 void handleUSARTCommands();  // Function to handle USART commands
 void parseCommand(char *command);  // Function to parse `tag:value` commands
+
+void sendDataIfNeeded(); // This funciton is designed to be called from the main loop and will send data only if it needs to, based on time and data available.
 
 // Placeholder for encoder reading function (likely run in separate cogs)
 // void encoder_reader_cog(void *par);
@@ -213,15 +218,17 @@ int main() {
     while (1) {
       
       if (current_mode == IDLE){
-        handleUSARTCommands();  // Check for and handle USART commands          
+        handleUSARTCommands();  // Check for and handle USART commands        
+        sendDataIfNeeded();  
       }else{
       // We are moving! Controll the speed of both wheels and stop the motion.
         switch(current_mode){
             case FRWD:
             case BKWD:
-            
+       
             while((mstime_get() - last_mode_change)< lin_time){
               wheelVelocityControlLoop(); 
+              sendDataIfNeeded();
             }
             stopMotors();
             break;
@@ -230,6 +237,7 @@ int main() {
             case ROT_R:
             while((mstime_get() - last_mode_change)< rot_time){
               wheelVelocityControlLoop(); 
+              sendDataIfNeeded();
             }
             stopMotors();
             break;
@@ -818,3 +826,24 @@ void parseCommand(char *command) {
       print("Invalid command format: %s\n", command);
   }
 }
+
+
+void sendDataIfNeeded()
+{
+  if((mstime_get() - last_report_timestamp) > REPORT_PERIOD_MS)
+  {
+    // Create a JSON string with the encoder and IMU data
+    print(usart, "{");
+    dprint(usart, "\"leftWheelCount\": %d, ", leftWheelCount);
+    dprint(usart, "\"rightWheelCount\": %d, ", rightWheelCount);
+    dprint(usart, "\"ax\": %.2f, ", ax);
+    dprint(usart, "\"ay\": %.2f, ", ay);
+    dprint(usart, "\"az\": %.2f, ", az);
+    dprint(usart, "\"gx\": %.2f, ", gx);
+    dprint(usart, "\"gy\": %.2f, ", gy);
+    dprint(usart, "\"gz\": %.2f", gz);
+    dprint(usart, "}\n");
+    
+    last_report_timestamp = mstime_get();
+  }    
+}  
