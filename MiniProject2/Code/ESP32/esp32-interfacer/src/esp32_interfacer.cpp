@@ -51,6 +51,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         Serial.print("Received WASD Command: ");
         Serial.println(rxValue.c_str());
         // Forward the command to the Propeller via UART
+        Propeller.print("command:");
         Propeller.println(String(rxValue.c_str()));
       }
     } else if(pCharacteristic == pCharacteristicLinTime ) {

@@ -23,8 +23,8 @@
 #define L_PWM_PIN    0// Left Motor PWM Speed Control
 
 // Motor Right
-#define R_INA_PIN   4 // Right Motor Direction Input A
-#define R_INB_PIN   3 // Right Motor Direction Input B
+#define R_INA_PIN   3 // Right Motor Direction Input A
+#define R_INB_PIN   4 // Right Motor Direction Input B
 #define R_PWM_PIN   5 // Right Motor PWM Speed Control
 
 // Encoder Left (Example Pins - Adjust as needed)
@@ -38,6 +38,8 @@
 // --- Constants ---
 #define LEFT_MOTOR  1
 #define RIGHT_MOTOR 0
+
+#define IMU_CALIBRATION_SAMPLES 200 // WARNING only 200 to speed up startup process.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
 #define MAX_PWM_VAL 10000 // Define max value for our speed input (-100 to 100)
 #define MOTOR_STOP_TIME 50000
@@ -185,7 +187,7 @@ int main() {
     print("..........Initializing IMU..........\n");
     mpu6050_init();
     pause(200);
-    calibrate_gyro(2000, gyro_offsets,accel_offsets);
+    calibrate_gyro(IMU_CALIBRATION_SAMPLES, gyro_offsets,accel_offsets);
     print("..........Starting Cog1 for Encoder..........\n");
     cogstart(&encoderCog, NULL, encoderStack, sizeof(encoderStack));
     print("..........Starting Cog2 for IMU..........\n");
@@ -339,12 +341,12 @@ void setMotorSpeed(int motor_idx, int speed) {
 
     // Determine direction pin states and PWM value
     if (speed > 0) { // Forward
-        ina_val = 1;
-        inb_val = 0;
-        pwm_val = speed;
-    } else if (speed < 0) { // Backward
         ina_val = 0;
         inb_val = 1;
+        pwm_val = speed;
+    } else if (speed < 0) { // Backward
+        ina_val = 1;
+        inb_val = 0;
         pwm_val = abs(speed); // PWM value is always positive
     } else { // Stop (Coast)
         ina_val = 0; // Set both low for coasting (check your motor driver!)
