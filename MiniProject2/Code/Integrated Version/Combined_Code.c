@@ -11,7 +11,8 @@
 #include "propeller.h"    // For direct hardware access (if needed beyond simpletools)
 #include <math.h>         // For abs()
 #include "mstimer.h"
-#include "simplei2c.h" // for the I2C communication
+#include "simplei2c.h"    // for the I2C communication for IMU.
+#include "fdserial.h"
 
 // --- Pin Definitions ---
 // Adjust these pins according to your actual hardware wiring
@@ -54,7 +55,10 @@
 #define ACCEL_XOUT_H   0x3B
 #define TEMP_OUT_H     0x41
 #define GYRO_XOUT_H    0x43
+
+#ifndef PI
 #define PI 3.148
+#endif
 
 //WHEEL dimensions
 #define WHEEL_DIAMETER 0.065     // meters
@@ -63,6 +67,16 @@
 #define GEAR_RATIO 4.88          // Calculated from your data
 #define COUNTS_PER_WHEEL_REV (COUNTS_PER_REV * GEAR_RATIO)
 #define METERS_PER_COUNT (WHEEL_CIRCUMFERENCE / COUNTS_PER_WHEEL_REV)
+
+// --- USART Configuration ---
+#define RX_SERIAL_PIN 14 // Pin for receiving data (Connect to device's Tx)
+#define TX_SERIAL_PIN 15  // Pin for transmitting data (Connect to device's Rx)
+#define SERIAL_BAUD_RATE 115200 // Communication speed (must match connected device)
+fdserial *usart;          // Full-duplex serial object
+
+// --- Global Variables ---
+int speed = 6000;         // Default speed for movement
+int duration = 2000;      // Default duration for movement (in milliseconds)
 
 // --- Global Variables ---
 // Use 'volatile' if these will be updated by another Cog (e.g., encoder cog)
@@ -141,17 +155,21 @@ void velocityAngularControlLoop(); //function for Proportional gain
 
 // --- IMU Functions ---
 void mpu6050_read(void *par2) ;
+void mpu6050_read_cog(void *par2); // Function that runs read in while(1) to be used in a cog.
 void calc_imu(int16_t elapsed_time);
 void update_odometry(int16_t elapsed_time);
+
+// --- USART Communication ---
+void handleUSARTCommands();  // Function to handle USART commands
+void parseCommand(char *command);  // Function to parse `tag:value` commands
 
 // Placeholder for encoder reading function (likely run in separate cogs)
 // void encoder_reader_cog(void *par);
 
 // --- Main Program ---
 int main() {
-    mpu6050_init();
-
-    
+    // SETUP
+ 
     int16_t prev_time = 0;
     int16_t elapsed_time = 0; 
     int16_t current_time = 0;
@@ -164,40 +182,62 @@ int main() {
     print("..........Initializing Encoder..........\n");
     initializeEncoders(); // Initialize encoder pins (basic setup)
     pause(200);
-    print("..........Initializing Encoder..........\n");
+    print("..........Initializing IMU..........\n");
     mpu6050_init();
     pause(200);
     calibrate_gyro(2000, gyro_offsets,accel_offsets);
     print("..........Starting Cog1 for Encoder..........\n");
     cogstart(&encoderCog, NULL, encoderStack, sizeof(encoderStack));
-    print("..........Starting Cog2 for Encoder..........\n");
-    cogstart(&mpu6050_read, NULL, imuStack, sizeof(imuStack));
+    print("..........Starting Cog2 for IMU..........\n");
+    cogstart(&mpu6050_read_cog, NULL, imuStack, sizeof(imuStack));
     print("Robot Ready. Starting command sequence...\n");
     mstime_start();
+    
+    // --- Initialize the Serial Connection ---
+    usart = fdserial_open(RX_SERIAL_PIN, TX_SERIAL_PIN, 0, SERIAL_BAUD_RATE);
+    
+    // --- Check for Initialization Errors ---
+    if (usart == NULL) {
+        print("Error: Failed to open fdserial on P%d(Rx)/P%d(Tx).\n", RX_SERIAL_PIN, TX_SERIAL_PIN);
+        while (1) { // Halt with LED blink on error
+            high(26); pause(100); low(26); pause(100);
+        }
+    }
+    
+    // Main loop
+    while (1) {
+        handleUSARTCommands();  // Check for and handle USART commands
+        pause(100);             // Small delay to avoid overwhelming the CPU
+    }
+
+    
+    
+    /*
+    // INFINITE LOOP COG 0
     while(1){
       prev_time = current_time;
       waitcnt(CNT += CLKFREQ/1000);
       current_time = mstime_get();
       elapsed_time = (current_time - prev_time)/1000;
       calc_imu(elapsed_time);
-    print("Moving Forward (Speed 50) for 2 seconds...\n");
-    //turnRight(MOTOR_PWM); &tested and works&
-    //turnLeft(MOTOR_PWM); & tested and works&
-    //moveForward(MOTOR_PWM); &tested and works&
-    moveBackward(MOTOR_PWM);
-    int16_t cur_time = mstime_get();
-    
-    /*
-     *I have not figured out how to make the robot move and when to call the WASD commands and put a loop into them
-     *But below are all the values that We have computed.
-     *all this needs is a propper call function from the values we get from the esp32
-     *I also took the liberty to impliment a basic kalman filteration. I did the code without the help of AI so it might be wrong. Feel free to omit that part
-     *the function is update_odometry. Just to see if we are getting the values with testing.
-     *
-     *ENTER THE CODE FOR ESP32 serial communication
-     */
-    
-    while(mstime_get() - cur_time <= MOTOR_STOP_TIME){
+      print("Moving Forward (Speed 50) for 2 seconds...\n");
+      //turnRight(MOTOR_PWM); &tested and works&
+      //turnLeft(MOTOR_PWM); & tested and works&
+      //moveForward(MOTOR_PWM); &tested and works&
+      moveBackward(MOTOR_PWM);
+      int16_t cur_time = mstime_get();*/
+      
+      /*
+       *I have not figured out how to make the robot move and when to call the WASD commands and put a loop into them
+       *But below are all the values that We have computed.
+       *all this needs is a propper call function from the values we get from the esp32
+       *I also took the liberty to impliment a basic kalman filteration. I did the code without the help of AI so it might be wrong. Feel free to omit that part
+       *the function is update_odometry. Just to see if we are getting the values with testing.
+       *
+       *ENTER THE CODE FOR ESP32 serial communication
+       */
+       
+      /*while(mstime_get() - cur_time <= MOTOR_STOP_TIME){
       
       //print("Right: %6d  Left: %6d\n", rightWheelCount, leftWheelCount);
       prev_time = current_time;
@@ -222,17 +262,15 @@ int main() {
       print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", temp_gx, temp_gy, temp_gz);
       print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);
       
-      
-        
-      
       pause(100);
     }       
     
-  }    
+  }    */
 
 
     return 0; 
 }
+
 
 // --- Function Implementations ---
 
@@ -513,6 +551,45 @@ void mpu6050_init() {
 }
 
 void mpu6050_read(void *par2) {
+  int16_t buf[14];
+  
+  // Start reading from register 0x3B (ACCEL_XOUT_H)
+  i2c_start(&imu);
+  i2c_writeByte(&imu, MPU6050_ADDR << 1);
+  i2c_writeByte(&imu, ACCEL_XOUT_H);
+  
+  // Repeated start to begin reading
+  i2c_start(&imu);
+  i2c_writeByte(&imu, (MPU6050_ADDR << 1) | 1);
+  
+  // Read 14 bytes (accel, temp, gyro)
+  for(int i = 0; i < 13; i++) {
+     
+      buf[i] = i2c_readByte(&imu, 0);  // ACK all but last byte
+
+  }
+  buf[13] = i2c_readByte(&imu, 1);     // NAK last byte
+  i2c_stop(&imu);
+  
+  // Format data (registers are big-endian)
+  received_data R_Data;
+  int16_t temp_ax ,temp_ay,temp_az,temp_gx,temp_gy,temp_gz;
+  temp_ax = ((buf[0] << 8) | buf[1]);
+  ax = (float)(temp_ax ) / 16384.0 ;   // X
+  temp_ay = ((buf[2] << 8) | buf[3]);
+  ay = (float)(temp_ay) / 16384.0 ;   // Y
+  temp_az = ((buf[4] << 8) | buf[5]);
+  az = (float)(temp_az) / 16384.0 ;   // Z
+  temp_gx  = (buf[8] << 8) | buf[9];   // X
+  gx = (float)(temp_gx)/131.0;
+  temp_gy  = (buf[10] << 8) | buf[11];   // X
+  gy = (float)(temp_gy)/131.0;
+  temp_gz  = (buf[12] << 8) | buf[13];   // X
+  gz = (float)(temp_gz)/131.0;
+    
+}
+
+void mpu6050_read_cog(void *par2) {
   while(1){
     int16_t buf[14];
     
@@ -570,7 +647,7 @@ void mpu6050_read(void *par2) {
         gyro_sum[2] += data.gyro[2];
         accel_sum[0] = accel_sum[0] + ((atan((accel_sum[1]) / sqrt(pow((accel_sum[0]), 2) + pow((accel_sum[2]), 2))) * 180 / PI));
         accel_sum[1] = accel_sum[1] + ((atan(-1 * (accel_sum[0]) / sqrt(pow((accel_sum[1]), 2) + pow((accel_sum[2]), 2))) * 180 / PI));
-        
+        print(".");
         pause(10);
     }
     
@@ -632,3 +709,94 @@ void update_odometry(int16_t elapsed_time) {
     omega = imu_omega;
 }
 
+/**
+ * @brief Handles USART commands from the ESP32.
+ */
+void handleUSARTCommands() {
+  char buffer[64];  // Buffer to store incoming command
+  int index = 0;
+
+  // Check if data is available on the USART
+  while (fdserial_rxReady(usart)) {
+      char c = fdserial_rxChar(usart);  // Read a character
+
+      // Check for end of command (newline or carriage return)
+      if (c == '\n' || c == '\r') {
+          buffer[index] = '\0';  // Null-terminate the string
+          parseCommand(buffer);  // Parse the command
+          index = 0;             // Reset the buffer index
+      } else {
+          buffer[index++] = c;   // Add character to buffer
+          if (index >= sizeof(buffer) - 1) {
+              buffer[index] = '\0';  // Null-terminate to prevent overflow
+              parseCommand(buffer);  // Parse the command
+              index = 0;             // Reset the buffer index
+          }
+      }
+  }
+}
+
+/**
+* @brief Parses a `tag:value` command and applies the corresponding action.
+*
+* @param command The command string in the format `tag:value`.
+*/
+void parseCommand(char *command) {
+  char *tag = strtok(command, ":");  // Extract the tag
+  char *value = strtok(NULL, ":");  // Extract the value
+
+  if (tag && value) {
+      if (strcmp(tag, "speed") == 0) {
+          speed = atoi(value);  // Convert value to integer and set speed
+          print("Speed set to %d\n", speed);
+      } else if (strcmp(tag, "duration") == 0) {
+          duration = atoi(value);  // Convert value to integer and set duration
+          print("Duration set to %d ms\n", duration);
+      } else if (strcmp(tag, "command") == 0) {
+          // Handle motion commands (e.g., w, a, s, d)
+          char motion = value[0];  // Get the first character of the value
+          switch (motion) {
+              case 'W':  // Move forward
+                  print("Command: Move Forward\n");
+                  moveForward(speed);
+                  pause(duration);
+                  stopMotors();
+                  break;
+
+              case 'S':  // Move backward
+                  print("Command: Move Backward\n");
+                  moveBackward(speed);
+                  pause(duration);
+                  stopMotors();
+                  break;
+
+              case 'A':  // Turn left
+                  print("Command: Turn Left\n");
+                  turnLeft(speed);
+                  pause(duration);
+                  stopMotors();
+                  break;
+
+              case 'D':  // Turn right
+                  print("Command: Turn Right\n");
+                  turnRight(speed);
+                  pause(duration);
+                  stopMotors();
+                  break;
+
+              case 'X':  // Stop
+                  print("Command: Stop\n");
+                  stopMotors();
+                  break;
+
+              default:
+                  print("Unknown motion command: %c\n", motion);
+                  break;
+          }
+      } else {
+          print("Unknown tag: %s\n", tag);
+      }
+  } else {
+      print("Invalid command format: %s\n", command);
+  }
+}
