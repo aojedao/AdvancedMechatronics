@@ -131,9 +131,7 @@ async def set_characteristic(char_uuid, value):
     """Write a value to a specific BLE characteristic."""
     if client and client.is_connected:
         try:
-            int_value = int(value)
-            byte_data = int_value.to_bytes(2, byteorder="little")  # 2 bytes
-            await client.write_gatt_char(char_uuid, byte_data, response=True)
+            await client.write_gatt_char(char_uuid, value.encode('utf-8'), response=True)
             print(f"Set characteristic {char_uuid} to: {value}")
         except Exception as e:
             print(f"Error setting characteristic {char_uuid}: {e}")

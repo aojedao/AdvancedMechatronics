@@ -78,7 +78,8 @@ fdserial *usart;          // Full-duplex serial object
 
 // --- Global Variables ---
 int speed = 6000;         // Default speed for movement
-int duration = 2000;      // Default duration for movement (in milliseconds)
+int rot_time = 2000;      // Default duration for movement (in milliseconds)
+int lin_time = 2000;      // Default duration for movement (in milliseconds)
 
 // --- Global Variables ---
 // Use 'volatile' if these will be updated by another Cog (e.g., encoder cog)
@@ -723,7 +724,7 @@ void handleUSARTCommands() {
       char c = fdserial_rxChar(usart);  // Read a character
 
       // Check for end of command (newline or carriage return)
-      if (c == '\n' || c == '\r') {
+      if (c == '\n') {
           buffer[index] = '\0';  // Null-terminate the string
           parseCommand(buffer);  // Parse the command
           index = 0;             // Reset the buffer index
@@ -748,12 +749,15 @@ void parseCommand(char *command) {
   char *value = strtok(NULL, ":");  // Extract the value
 
   if (tag && value) {
-      if (strcmp(tag, "speed") == 0) {
+      if (strcmp(tag, "MotorSpeed") == 0) {
           speed = atoi(value);  // Convert value to integer and set speed
           print("Speed set to %d\n", speed);
-      } else if (strcmp(tag, "duration") == 0) {
-          duration = atoi(value);  // Convert value to integer and set duration
-          print("Duration set to %d ms\n", duration);
+      } else if (strcmp(tag, "RotTime") == 0) {
+          rot_time = atoi(value);  // Convert value to integer and set duration
+          print("Rotation duration set to %d ms\n", rot_time);
+      } else if (strcmp(tag, "LinTime") == 0) {
+          lin_time = atoi(value);  // Convert value to integer and set duration
+          print("Lienar duration set to %d ms\n", lin_time);
       } else if (strcmp(tag, "command") == 0) {
           // Handle motion commands (e.g., w, a, s, d)
           char motion = value[0];  // Get the first character of the value
@@ -761,28 +765,28 @@ void parseCommand(char *command) {
               case 'W':  // Move forward
                   print("Command: Move Forward\n");
                   moveForward(speed);
-                  pause(duration);
+                  pause(lin_time);
                   stopMotors();
                   break;
 
               case 'S':  // Move backward
                   print("Command: Move Backward\n");
                   moveBackward(speed);
-                  pause(duration);
+                  pause(lin_time);
                   stopMotors();
                   break;
 
               case 'A':  // Turn left
                   print("Command: Turn Left\n");
                   turnLeft(speed);
-                  pause(duration);
+                  pause(rot_time);
                   stopMotors();
                   break;
 
               case 'D':  // Turn right
                   print("Command: Turn Right\n");
                   turnRight(speed);
-                  pause(duration);
+                  pause(rot_time);
                   stopMotors();
                   break;
 
