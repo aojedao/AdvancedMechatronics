@@ -79,9 +79,9 @@ fdserial *usart;          // Full-duplex serial object
 #define REPORT_PERIOD_MS 10
 
 // --- Global Variables ---
-int speed = 6000;         // Default speed for movement
-int rot_time = 2000;      // Default duration for movement (in milliseconds)
-int lin_time = 2000;      // Default duration for movement (in milliseconds)
+int speed = 9000;         // Default speed for movement
+int rot_time = 10000;      // Default duration for movement (in milliseconds)
+int lin_time = 10000;      // Default duration for movement (in milliseconds)
 
 // --- Global Variables ---
 // Use 'volatile' if these will be updated by another Cog (e.g., encoder cog)
@@ -94,11 +94,11 @@ static int rightTargetPWM = 0;
 static unsigned int encoderStack[128*2]; 
 static unsigned int imuStack[128*2]; 
 static float ax = 0, ay = 0, az = 0, gx = 0, gy = 0,gz = 0;
-static float temp_gx = 0, temp_gy = 0, temp_gz = 0,ax_angle,ay_angle,yaw = 0,pitch =0, roll = 0,gyroAngleX = 0, gyroAngleY = 0;
+static float print_gx = 0, print_gy = 0, print_gz = 0,ax_angle,ay_angle,yaw = 0,pitch =0, roll = 0,gyroAngleX = 0, gyroAngleY = 0;
 static float gyro_offsets[3] = {0};
 static float accel_offsets[3] = {0};
 static float x_cord = 0,y_cord = 0,theta = 0,velocity = 0,omega = 0;
-
+static int imu_calibration_flag = 0;
 //-----Lookup table for Encoder-----
 static const int8_t decoderLookup[16] = {
   
@@ -145,7 +145,7 @@ static int32_t last_report_timestamp = 0;
 void initializeMotors(); //set pins for motors
 void initializeEncoders(); // Placeholder for encoder setup
 void mpu6050_init(); // initialize mpu6050
-void calibrate_gyro();
+void calibrate_gyro(int samples);
 
 // --- Motor Setup ---
 void setMotorSpeed(int motor_idx, int speed); //set motor speeds and also the direction
@@ -195,11 +195,11 @@ int main() {
     print("..........Initializing IMU..........\n");
     mpu6050_init();
     pause(200);
-    calibrate_gyro(IMU_CALIBRATION_SAMPLES, gyro_offsets,accel_offsets);
     print("..........Starting Cog1 for Encoder..........\n");
     cogstart(&encoderCog, NULL, encoderStack, sizeof(encoderStack));
     print("..........Starting Cog2 for IMU..........\n");
     cogstart(&mpu6050_read_cog, NULL, imuStack, sizeof(imuStack));
+    calibrate_gyro(IMU_CALIBRATION_SAMPLES);
     print("Robot Ready. Starting command sequence...\n");
     mstime_start();
     
@@ -224,6 +224,14 @@ int main() {
       // We are moving! Controll the speed of both wheels and stop the motion.
         switch(current_mode){
             case FRWD:
+       
+            while((mstime_get() - last_mode_change)< lin_time){
+              wheelVelocityControlLoop(); 
+              sendDataIfNeeded();
+            }
+            stopMotors();
+            break;
+            
             case BKWD:
        
             while((mstime_get() - last_mode_change)< lin_time){
@@ -234,6 +242,15 @@ int main() {
             break;
             
             case ROT_L:
+            
+       
+            while((mstime_get() - last_mode_change)< rot_time){
+              wheelVelocityControlLoop(); 
+              sendDataIfNeeded();
+            }
+            stopMotors();
+            break;
+            
             case ROT_R:
             while((mstime_get() - last_mode_change)< rot_time){
               wheelVelocityControlLoop(); 
@@ -246,8 +263,9 @@ int main() {
         }          
 
       }  
-      
-      print("%c", HOME);  // Clear terminal
+      /*
+      print("%c", CLS);  // Clear terminal
+      print("%c",HOME);
       print("Odometry Data\n");
       print("-------------\n");
       print("Position: X=%.2fm Y=%.2fm\n", x_cord, y_cord);
@@ -258,8 +276,11 @@ int main() {
       print("-----------------\n");
       print("Accel: X=%7.2fg  Y=%7.2fg  Z=%7.2fg\n", ax, ay, az);
       print("Clockfreq = %d\t elapsed_time = %d\n",CLKFREQ,elapsed_time);
-      print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", temp_gx, temp_gy, temp_gz);
-      print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);                
+      print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", print_gx, print_gy, print_gz);
+      print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);  
+      pause(500);
+        */   
+  
 
     }
 
@@ -657,28 +678,30 @@ void mpu6050_read_cog(void *par2) {
     gy = (float)(temp_gy)/131.0;
     temp_gz  = (buf[12] << 8) | buf[13];   // X
     gz = (float)(temp_gz)/131.0;
+    print_gx = gx-gyro_offsets[0];
+    print_gy = gy-gyro_offsets[1];
+    print_gz = gz-gyro_offsets[2];
+    
   }    
 }
 
 
 
- void calibrate_gyro(int samples, float *gyro_offsets, float *accel_offsets) {
+ void calibrate_gyro(int samples) {
    print("Calibrating gyro... keep sensor still!\n");
 
-    imu_data_t data;
+  
     
     float gyro_sum[3] = {0};
     float accel_sum[3] = {0};
     
     
     for(int i = 0; i < samples; i++) {
-        mpu6050_read(&data);
-        gyro_sum[0] += data.gyro[0];
-        gyro_sum[1] += data.gyro[1];
-        gyro_sum[2] += data.gyro[2];
-        accel_sum[0] = accel_sum[0] + ((atan((accel_sum[1]) / sqrt(pow((accel_sum[0]), 2) + pow((accel_sum[2]), 2))) * 180 / PI));
-        accel_sum[1] = accel_sum[1] + ((atan(-1 * (accel_sum[0]) / sqrt(pow((accel_sum[1]), 2) + pow((accel_sum[2]), 2))) * 180 / PI));
-        print(".");
+        gyro_sum[0] += gx;
+        gyro_sum[1] += gy;
+        gyro_sum[2] += gz;
+        ax_angle = ax_angle + ((atan((ay) / sqrt(pow((ax), 2) + pow((az), 2))) * 180 / PI));
+        ay_angle = ay_angle + ((atan(-1 * (ax) / sqrt(pow((ay), 2) + pow((az), 2))) * 180 / PI));
         pause(10);
     }
     
@@ -694,9 +717,9 @@ void mpu6050_read_cog(void *par2) {
 void calc_imu(int16_t elapsed_time){
   
   
-  temp_gx = gx -  gyro_offsets[0];
-  temp_gy = gy -  gyro_offsets[1];    
-  temp_gz = gz - gyro_offsets[2];
+  print_gx = gx -  gyro_offsets[0];
+  print_gy = gy -  gyro_offsets[1];    
+  print_gz = gz - gyro_offsets[2];
   ax_angle = (atan(ay / sqrt(pow(ax, 2) + pow(az, 2))) * 180 / PI) - accel_offsets[0];
   ay_angle =  (atan(-1 * ax / sqrt(pow(ay, 2) + pow(az, 2))) * 180 / PI) - accel_offsets[0];
   gyroAngleX = gyroAngleX + gx * elapsed_time;
@@ -833,15 +856,15 @@ void sendDataIfNeeded()
   if((mstime_get() - last_report_timestamp) > REPORT_PERIOD_MS)
   {
     // Create a JSON string with the encoder and IMU data
-    print(usart, "{");
+    dprint(usart, "{");
     dprint(usart, "\"leftWheelCount\": %d, ", leftWheelCount);
     dprint(usart, "\"rightWheelCount\": %d, ", rightWheelCount);
     dprint(usart, "\"ax\": %.2f, ", ax);
     dprint(usart, "\"ay\": %.2f, ", ay);
     dprint(usart, "\"az\": %.2f, ", az);
-    dprint(usart, "\"gx\": %.2f, ", gx);
-    dprint(usart, "\"gy\": %.2f, ", gy);
-    dprint(usart, "\"gz\": %.2f", gz);
+    dprint(usart, "\"gx\": %.2f, ", print_gx);
+    dprint(usart, "\"gy\": %.2f, ", print_gy);
+    dprint(usart, "\"gz\": %.2f", print_gz);
     dprint(usart, "}\n");
     
     last_report_timestamp = mstime_get();
