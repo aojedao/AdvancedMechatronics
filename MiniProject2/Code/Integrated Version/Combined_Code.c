@@ -113,7 +113,8 @@ typedef enum{
   FRWD,
   BKWD,
   ROT_L,
-  ROT_R
+  ROT_R,
+  IDLE
 }CONTROL_MODE;
 
 // IMU Sensor data structure
@@ -133,7 +134,8 @@ typedef struct{
 
 i2c imu;  // I2C bus for MPU-60X0
 
-static CONTROL_MODE current_mode = FRWD;  
+static CONTROL_MODE current_mode = IDLE;  
+static int32_t last_mode_change = 0;
 
 // --- Function Prototypes ---
 // --- Initialization ---
@@ -154,7 +156,7 @@ void turnRight(int speed); // Rotate in place right
 void encoderCog(void *par); //function for encoder values
 
 // --- Proportional gain for Wheels ---
-void velocityAngularControlLoop(); //function for Proportional gain 
+void wheelVelocityControlLoop(); //function for Proportional gain 
 
 // --- IMU Functions ---
 void mpu6050_read(void *par2) ;
@@ -209,8 +211,48 @@ int main() {
     
     // Main loop
     while (1) {
-        handleUSARTCommands();  // Check for and handle USART commands
-        pause(100);             // Small delay to avoid overwhelming the CPU
+      
+      if (current_mode == IDLE){
+        handleUSARTCommands();  // Check for and handle USART commands          
+      }else{
+      // We are moving! Controll the speed of both wheels and stop the motion.
+        switch(current_mode){
+            case FRWD:
+            case BKWD:
+            
+            while((mstime_get() - last_mode_change)< lin_time){
+              wheelVelocityControlLoop(); 
+            }
+            stopMotors();
+            break;
+            
+            case ROT_L:
+            case ROT_R:
+            while((mstime_get() - last_mode_change)< rot_time){
+              wheelVelocityControlLoop(); 
+            }
+            stopMotors();
+            break;
+          default:
+          break;
+        }          
+
+      }  
+      
+      print("%c", HOME);  // Clear terminal
+      print("Odometry Data\n");
+      print("-------------\n");
+      print("Position: X=%.2fm Y=%.2fm\n", x_cord, y_cord);
+      print("Heading: %.1f°\n", theta * 180.0 / PI);
+      print("Velocity: %.2fm/s Omega=%.2frad/s\n", velocity, omega);
+      print("Encoders: R=%d L=%d\n", rightWheelCount, leftWheelCount);
+      print("\nMPU-60X0 IMU Data\n");
+      print("-----------------\n");
+      print("Accel: X=%7.2fg  Y=%7.2fg  Z=%7.2fg\n", ax, ay, az);
+      print("Clockfreq = %d\t elapsed_time = %d\n",CLKFREQ,elapsed_time);
+      print("Gyro:  X=%7.2f°/s Y=%7.2f°/s Z=%7.2f°/s\n", temp_gx, temp_gy, temp_gz);
+      print("Roll =%7.2f°/s Pitch=%7.2f°/s Yaw=%7.2f°/s\n", roll, pitch, yaw);                
+
     }
 
     
@@ -368,6 +410,8 @@ void setMotorSpeed(int motor_idx, int speed) {
 void stopMotors() {
     setMotorSpeed(LEFT_MOTOR, 0);
     setMotorSpeed(RIGHT_MOTOR, 0);
+    current_mode = IDLE;
+    last_mode_change = mstime_get();
     // Optional: Add a small delay to ensure commands are processed
     pause(10);
 }
@@ -382,6 +426,7 @@ void moveForward(int speed) {
     setMotorSpeed(LEFT_MOTOR, speed);
     setMotorSpeed(RIGHT_MOTOR, speed);
     current_mode = FRWD;
+    last_mode_change = mstime_get();
 }
 
 /**
@@ -394,6 +439,7 @@ void moveBackward(int speed) {
     setMotorSpeed(LEFT_MOTOR, -speed); // Negative for backward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Negative for backward
     current_mode = BKWD;
+    last_mode_change = mstime_get();
 }
 
 /**
@@ -406,6 +452,7 @@ void turnLeft(int speed) {
     setMotorSpeed(LEFT_MOTOR, -speed); // Left motor backward
     setMotorSpeed(RIGHT_MOTOR, speed);  // Right motor forward
     current_mode = ROT_L;
+    last_mode_change = mstime_get();
 }
 
 /**
@@ -418,6 +465,7 @@ void turnRight(int speed) {
     setMotorSpeed(LEFT_MOTOR, speed);   // Left motor forward
     setMotorSpeed(RIGHT_MOTOR, -speed); // Right motor backward
     current_mode = ROT_R;
+    last_mode_change = mstime_get();
 }
 
 
@@ -445,36 +493,8 @@ void encoderCog(void *par) {
         waitcnt(CNT + CLKFREQ/10000);  // 100μs delay
     }
 }
-
-
-void velocityLinearControlLoop(){
-     // 1. Get current encoder counts (atomic read)
-    int32_t currLeft = leftWheelCount;
-    int32_t currRight = rightWheelCount;
-    
-    // 2. Calculate actual deltas since last loop
-    int32_t leftDelta = currLeft - prevLeftCount;
-    int32_t rightDelta = currRight - prevRightCount;
-    prevLeftCount = currLeft;
-    prevRightCount = currRight;
-
-    // 3. Calculate error (how much right needs to change to match left)
-    int error = leftDelta - rightDelta;
-   
-    rightTargetPWM += (int)(KP*error*50);
-    
-    // 5. Apply bounds and set motors
-    
-    if (rightTargetPWM > MAX_PWM_VAL) rightTargetPWM = MAX_PWM_VAL;
-    if (rightTargetPWM < -MAX_PWM_VAL) rightTargetPWM = -MAX_PWM_VAL;
-    print("leftDelta =%d rightDelta = %d\n",leftDelta,rightDelta);
-    setMotorSpeed(LEFT_MOTOR, rightTargetPWM);   // Right follows left's actual movement
-    pause(100);
-    
-    
-}
  
-void velocityAngularControlLoop(){
+void wheelVelocityControlLoop(){
      // 1. Get current encoder counts (atomic read)
     int32_t currLeft = leftWheelCount;
     int32_t currRight = rightWheelCount;
@@ -503,11 +523,11 @@ void velocityAngularControlLoop(){
     
     if (rightTargetPWM > MAX_PWM_VAL) rightTargetPWM = MAX_PWM_VAL;
     if (rightTargetPWM < -MAX_PWM_VAL) rightTargetPWM = -MAX_PWM_VAL;
-    print("leftDelta =%d rightDelta = %d\n",leftDelta,rightDelta);
-    if(current_mode == FRWD || current_mode == ROT_R)
-      setMotorSpeed(LEFT_MOTOR, rightTargetPWM);   // Right follows left's actual movement
+    //print("leftDelta =%d rightDelta = %d\n",leftDelta,rightDelta);
+    if(current_mode == FRWD || current_mode == ROT_L)
+      setMotorSpeed(RIGHT_MOTOR, rightTargetPWM);   // Right follows left's actual movement
     else 
-      setMotorSpeed(LEFT_MOTOR, -1*rightTargetPWM);
+      setMotorSpeed(RIGHT_MOTOR, -1*rightTargetPWM);
     pause(100);
     
     
@@ -765,29 +785,21 @@ void parseCommand(char *command) {
               case 'W':  // Move forward
                   print("Command: Move Forward\n");
                   moveForward(speed);
-                  pause(lin_time);
-                  stopMotors();
                   break;
 
               case 'S':  // Move backward
                   print("Command: Move Backward\n");
                   moveBackward(speed);
-                  pause(lin_time);
-                  stopMotors();
                   break;
 
               case 'A':  // Turn left
                   print("Command: Turn Left\n");
                   turnLeft(speed);
-                  pause(rot_time);
-                  stopMotors();
                   break;
 
               case 'D':  // Turn right
                   print("Command: Turn Right\n");
                   turnRight(speed);
-                  pause(rot_time);
-                  stopMotors();
                   break;
 
               case 'X':  // Stop
