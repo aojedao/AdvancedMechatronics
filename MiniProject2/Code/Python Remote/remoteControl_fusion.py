@@ -2,6 +2,79 @@ import asyncio
 import tkinter as tk
 from bleak import BleakClient, BleakScanner
 import threading
+import ast
+
+import numpy as np
+from filterpy.kalman import ExtendedKalmanFilter
+
+# Constants
+WHEEL_RADIUS = 0.0325  # meters
+WHEEL_DISTANCE = 0.145  # meters
+TICKS_PER_REVOLUTION = 937  # encoder ticks per wheel revolution
+ENCODER_RESOLUTION = 2 * np.pi / TICKS_PER_REVOLUTION  # radians per tick
+dt = 0.01  # time step in seconds (adjust based on your sensor update rate)
+
+# Initialize EKF
+ekf = ExtendedKalmanFilter(dim_x=5, dim_z=3)
+ekf.x = np.array([0, 0, 0, 0, 0])  # Initial state: [x, y, theta, v, w]
+ekf.P *= 10  # Covariance matrix
+ekf.Q = np.diag([0.01, 0.01, 0.001, 0.1, 0.01])  # Process noise
+ekf.R = np.diag([0.1, 0.1, 0.1])  # Measurement noise
+
+# State transition function
+def fx(x, dt):
+    theta = x[2]
+    v = x[3]
+    w = x[4]
+    if abs(w) < 1e-5:  # Straight motion
+        dx = v * np.cos(theta) * dt
+        dy = v * np.sin(theta) * dt
+        dtheta = w * dt
+    else:  # Rotational motion
+        dx = (v / w) * (np.sin(theta + w * dt) - np.sin(theta))
+        dy = (v / w) * (-np.cos(theta + w * dt) + np.cos(theta))
+        dtheta = w * dt
+    return x + np.array([dx, dy, dtheta, 0, 0])
+
+# Measurement function
+def hx(x):
+    return np.array([x[2], x[3], x[4]])  # theta, v, w
+
+last_encoder_value_r = 0
+last_encoder_value_l = 0
+
+
+# Function to process incoming sensor data
+def process_sensor_data(data):
+    """
+    Process a single set of sensor data and update the EKF.
+    :param data: Dictionary containing sensor data.
+    """
+    
+    global last_encoder_value_r, last_encoder_value_l  # Declare global variables
+    
+    # Extract data
+    ticks_r = data["rightWheelCount"]
+    ticks_l = data["leftWheelCount"]
+    imu_gyro_z = data["gz"]  # Angular velocity around z-axis
+
+    # Convert encoder ticks to linear and angular velocities
+    d_right = ((ticks_r-last_encoder_value_r) * WHEEL_RADIUS * 2* np.pi) / ENCODER_RESOLUTION 
+    d_left = ((ticks_l-last_encoder_value_l)* WHEEL_RADIUS* 2* np.pi) / ENCODER_RESOLUTION 
+    print(f"Ticks R: {d_right}, Ticks L: {d_left}, ")  # Debugging
+    v = (d_right + d_left) / 2.0 / dt
+    w = (d_right - d_left) / WHEEL_DISTANCE / dt
+    print(f"Velocity: {v}, Angular Velocity: {w}")  # Debugging
+
+    # Perform EKF predict and update steps
+    ekf.predict_update(np.array([imu_gyro_z, v, w]), HJacobian=lambda x: np.eye(3, 5), Hx=hx)
+
+    last_encoder_value_r = ticks_r
+    last_encoder_value_l = ticks_l
+
+    # Return the updated state
+    return ekf.x
+
 
 robot_name = "Robot-BLE-IMU"
 robot_name2 = "Team3SecondRobot"
@@ -30,10 +103,15 @@ def notification_handler(sender, data):
         pose = data.decode("utf-8")  # Decode the pose data
         print(f"Notification received from {sender}: {pose}")  # Debugging
         # TODO Insert string parsing and data fusion for pose calculation.
+        state = process_sensor_data(ast.literal_eval(pose))
+        print("Updated state:", state)
+        print(f"Read pose: {pose}")  # Debugging
+        print(f"Pose KMF: {state}")  # Debugging
+        
         
         # Update the GUI label with the new pose
         
-        update_pose_label(pose)  # Update the GUI label
+        update_pose_label(state)  # Update the GUI label
     except Exception as e:
         print(f"Error handling notification: {e}")
         
