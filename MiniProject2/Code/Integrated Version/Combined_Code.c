@@ -80,8 +80,8 @@ fdserial *usart;          // Full-duplex serial object
 
 // --- Global Variables ---
 int speed = 9000;         // Default speed for movement
-int rot_time = 10000;      // Default duration for movement (in milliseconds)
-int lin_time = 10000;      // Default duration for movement (in milliseconds)
+int rot_time = 3250;      // Default duration for movement (in milliseconds)
+int lin_time = 3250;      // Default duration for movement (in milliseconds)
 
 // --- Global Variables ---
 // Use 'volatile' if these will be updated by another Cog (e.g., encoder cog)
@@ -837,6 +837,13 @@ void parseCommand(char *command) {
                   print("Command: Stop\n");
                   stopMotors();
                   break;
+
+              case 'Q':  // Reset
+                  print("Command: Reset\n");
+                  rightWheelCount = 0;
+                  leftWheelCount = 0;
+                  break;
+
 
               default:
                   print("Unknown motion command: %c\n", motion);

@@ -83,7 +83,7 @@ def normalize_angle(angle):
 
 # Function to process incoming sensor data
 def process_sensor_data(data):
-    global last_encoder_r, last_encoder_l
+    global last_encoder_value_r, last_encoder_value_l
 
     ticks_r = data["rightWheelCount"]
     ticks_l = data["leftWheelCount"]
@@ -92,8 +92,8 @@ def process_sensor_data(data):
     # ✅ Convert gyro from deg/s → rad/s
     gz_rad = gz_dps * np.pi / 180.0
 
-    delta_ticks_r = ticks_r - last_encoder_r
-    delta_ticks_l = ticks_l - last_encoder_l
+    delta_ticks_r = ticks_r - last_encoder_value_r
+    delta_ticks_l = ticks_l - last_encoder_value_l
 
     d_right = (delta_ticks_r / TICKS_PER_REVOLUTION) * (2 * np.pi * WHEEL_RADIUS)
     d_left  = (delta_ticks_l  / TICKS_PER_REVOLUTION) * (2 * np.pi * WHEEL_RADIUS)
@@ -123,8 +123,8 @@ def process_sensor_data(data):
     ekf.x[2] = normalize_angle(ekf.x[2])  # normalize state θ
     ekf.P = (np.eye(3) - K @ ekf.H) @ ekf.P
 
-    last_encoder_r = ticks_r
-    last_encoder_l = ticks_l
+    last_encoder_value_r = ticks_r
+    last_encoder_value_l = ticks_l
 
     return ekf.x
 
@@ -246,6 +246,20 @@ def start_ble_connection():
     """Start the BLE connection process."""
     asyncio.run_coroutine_threadsafe(main(), loop)
     
+    
+def restart_location():
+    """Restart the robot's location."""
+    if client and client.is_connected:
+        #send_command('Q')
+        asyncio.run_coroutine_threadsafe(update_pose(), loop)
+        ekf.x = np.array([0., 0., 0.])  # Reset EKF state
+        print("EKF state reset.")
+        print("Restarting location...")
+        #wait 1 second
+        asyncio.run_coroutine_threadsafe(asyncio.sleep(1), loop)
+        print("Location restarted.")
+    else:
+        print("Client not connected.")
 
 async def disconnect_from_robot():
     """Disconnect from the BLE device."""
@@ -342,7 +356,7 @@ btn_connect = tk.Button(window, text="Connect", command=start_ble_connection, he
 btn_connect.pack(pady=10)
 
 # Connect Reset position button
-btn_right = tk.Button(window, text="Reset Location", command=lambda: send_command('Q'), height=2, width=10)
+btn_right = tk.Button(window, text="Reset Location", command=restart_location, height=2, width=10)
 btn_right.pack(pady=10)
 
 # Start the asyncio event loop in a separate thread
