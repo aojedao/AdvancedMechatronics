@@ -15,64 +15,117 @@ ENCODER_RESOLUTION = 2 * np.pi / TICKS_PER_REVOLUTION  # radians per tick
 dt = 0.01  # time step in seconds (adjust based on your sensor update rate)
 
 # Initialize EKF
-ekf = ExtendedKalmanFilter(dim_x=5, dim_z=3)
-ekf.x = np.array([0, 0, 0, 0, 0])  # Initial state: [x, y, theta, v, w]
-ekf.P *= 10  # Covariance matrix
-ekf.Q = np.diag([0.01, 0.01, 0.001, 0.1, 0.01])  # Process noise
-ekf.R = np.diag([0.1, 0.1, 0.1])  # Measurement noise
+#changing to only have [x,y,theta]
+ekf = ExtendedKalmanFilter(dim_x=3, dim_z=1)
+ekf.x = np.array([0., 0., 0.]) # Initial state: [x, y, theta, v, w]
+ekf.P *= 1.0  # Covariance matrix
+ekf.Q = np.diag([0.01, 0.01, 0.001])  # Process noise
+ekf.R = np.diag([0.1])  # Measurement noise
 
-# State transition function
-def fx(x, dt):
+def f(x, u):
+    """
+    Process model: predicts the new state given the current state and control input.
+    State: x = [x, y, theta]
+    Control input: u = [v, w] where
+       v: linear velocity (m/s)
+       w: angular velocity (rad/s)
+       
+    Equations:
+       x_new = x + v * cos(theta) * dt
+       y_new = y + v * sin(theta) * dt
+       theta_new = theta + w * dt
+    """
     theta = x[2]
-    v = x[3]
-    w = x[4]
-    if abs(w) < 1e-5:  # Straight motion
-        dx = v * np.cos(theta) * dt
-        dy = v * np.sin(theta) * dt
-        dtheta = w * dt
-    else:  # Rotational motion
-        dx = (v / w) * (np.sin(theta + w * dt) - np.sin(theta))
-        dy = (v / w) * (-np.cos(theta + w * dt) + np.cos(theta))
-        dtheta = w * dt
-    return x + np.array([dx, dy, dtheta, 0, 0])
+    v, w = u
+    x_new = x[0] + v * np.cos(theta) * dt
+    y_new = x[1] + v * np.sin(theta) * dt
+    theta_new = theta + w * dt
+    return np.array([x_new, y_new, theta_new])
 
-# Measurement function
-def hx(x):
-    return np.array([x[2], x[3], x[4]])  # theta, v, w
+
+def F_jacobian(x, u):
+    """
+    Jacobian of the process model f with respect to the state x.
+    Partial derivatives of f with respect to x:
+       ∂f/∂x = [[1, 0, -v*sin(theta)*dt],
+                 [0, 1,  v*cos(theta)*dt],
+                 [0, 0, 1]]
+    """
+    theta = x[2]
+    v, _ = u
+    return np.array([
+        [1, 0, -v * np.sin(theta) * dt],
+        [0, 1,  v * np.cos(theta) * dt],
+        [0, 0, 1]
+    ])
+
+def h(x):
+    """
+    Measurement model: we measure the robot's orientation.
+    Here, we assume the gyro provides an integrated heading measurement:
+       h(x) = theta.
+    """
+    return np.array([x[2]])
+
+def H_jacobian(x):
+    """
+    Jacobian of the measurement model h with respect to the state.
+    Since h(x) = theta, the derivative is [0, 0, 1].
+    """
+    return np.array([[0, 0, 1]])
 
 last_encoder_value_r = 0
 last_encoder_value_l = 0
 
+def normalize_angle(angle):
+    """Normalize angle to be within [-pi, pi]."""
+    return (angle + np.pi) % (2 * np.pi) - np.pi
 
 # Function to process incoming sensor data
 def process_sensor_data(data):
-    """
-    Process a single set of sensor data and update the EKF.
-    :param data: Dictionary containing sensor data.
-    """
-    
-    global last_encoder_value_r, last_encoder_value_l  # Declare global variables
-    
-    # Extract data
+    global last_encoder_value_r, last_encoder_value_l
+
     ticks_r = data["rightWheelCount"]
     ticks_l = data["leftWheelCount"]
-    imu_gyro_z = data["gz"]  # Angular velocity around z-axis
+    gz_dps = data["gz"]  # in degrees per second
 
-    # Convert encoder ticks to linear and angular velocities
-    d_right = ((ticks_r-last_encoder_value_r) * WHEEL_RADIUS * 2* np.pi) / ENCODER_RESOLUTION 
-    d_left = ((ticks_l-last_encoder_value_l)* WHEEL_RADIUS* 2* np.pi) / ENCODER_RESOLUTION 
-    print(f"Ticks R: {d_right}, Ticks L: {d_left}, ")  # Debugging
-    v = (d_right + d_left) / 2.0 / dt
-    w = (d_right - d_left) / WHEEL_DISTANCE / dt
-    print(f"Velocity: {v}, Angular Velocity: {w}")  # Debugging
+    # ✅ Convert gyro from deg/s → rad/s
+    gz_rad = gz_dps * np.pi / 180.0
 
-    # Perform EKF predict and update steps
-    ekf.predict_update(np.array([imu_gyro_z, v, w]), HJacobian=lambda x: np.eye(3, 5), Hx=hx)
+    delta_ticks_r = ticks_r - last_encoder_value_r
+    delta_ticks_l = ticks_l - last_encoder_value_l
+
+    d_right = (delta_ticks_r / TICKS_PER_REVOLUTION) * (2 * np.pi * WHEEL_RADIUS)
+    d_left  = (delta_ticks_l  / TICKS_PER_REVOLUTION) * (2 * np.pi * WHEEL_RADIUS)
+
+    v = (d_right + d_left) / (2 * dt)
+    w = (d_right - d_left) / (WHEEL_DISTANCE * dt)
+    u = np.array([v, w])
+
+    # Predict step
+    ekf.F = F_jacobian(ekf.x, u)
+    ekf.x = f(ekf.x, u)
+    ekf.P = ekf.F @ ekf.P @ ekf.F.T + ekf.Q
+
+    # Measurement: use integrated gyro to estimate theta
+    theta_meas = ekf.x[2] + gz_rad * dt
+    theta_meas = normalize_angle(theta_meas)  # keep θ bounded
+    z = np.array([theta_meas])
+
+    # Update step
+    ekf.H = H_jacobian(ekf.x)
+    y = z - h(ekf.x)
+    y[0] = normalize_angle(y[0])  # residual also normalized
+    S = ekf.H @ ekf.P @ ekf.H.T + ekf.R
+    K = ekf.P @ ekf.H.T @ np.linalg.inv(S)
+
+    ekf.x += K @ y
+    ekf.x[2] = normalize_angle(ekf.x[2])  # normalize state θ
+    ekf.P = (np.eye(3) - K @ ekf.H) @ ekf.P
 
     last_encoder_value_r = ticks_r
     last_encoder_value_l = ticks_l
 
-    # Return the updated state
     return ekf.x
 
 
@@ -94,8 +147,9 @@ loop = asyncio.new_event_loop()  # Create a new event loop for asyncio
 
 def update_pose_label(pose):
     """Update the pose label in the GUI."""
-    pose_label.config(text=f"Current Pose: {pose}")
-    print(f"Updated pose label: {pose}")  # Debugging
+    x, y, theta = pose
+    pose_label.config(text=f"Current Pose: x: {x:.3f}, y: {y:.3f}, θ: {theta:.3f}")
+    print(f"Updated pose label: x: {x:.3f}, y: {y:.3f}, θ: {theta:.3f}")  # Debugging
 
 def notification_handler(sender, data):
     """Handle notifications from the BLE device."""
@@ -193,6 +247,20 @@ def start_ble_connection():
     """Start the BLE connection process."""
     asyncio.run_coroutine_threadsafe(main(), loop)
     
+    
+def restart_location():
+    """Restart the robot's location."""
+    if client and client.is_connected:
+        #send_command('Q')
+        asyncio.run_coroutine_threadsafe(update_pose(), loop)
+        ekf.x = np.array([0., 0., 0.])  # Reset EKF state
+        print("EKF state reset.")
+        print("Restarting location...")
+        #wait 1 second
+        asyncio.run_coroutine_threadsafe(asyncio.sleep(1), loop)
+        print("Location restarted.")
+    else:
+        print("Client not connected.")
 
 async def disconnect_from_robot():
     """Disconnect from the BLE device."""
@@ -240,12 +308,12 @@ def run_asyncio_loop():
     asyncio.set_event_loop(loop)
     loop.run_forever()
 
-# GUI Setup
 window = tk.Tk()
+# GUI Setup
 window.title("BLE Robot Control")
 
 # Pose Label
-pose_label = tk.Label(window, text="Current Pose: N/A", font=("Arial", 14))
+pose_label = tk.Label(window, text="Current Pose: x: 0.00 y: 0.00 θ: 0.00", font=("Arial", 14))
 pose_label.pack(pady=10)
 
 # Movement Buttons
@@ -289,7 +357,7 @@ btn_connect = tk.Button(window, text="Connect", command=start_ble_connection, he
 btn_connect.pack(pady=10)
 
 # Connect Reset position button
-btn_right = tk.Button(window, text="Reset Location", command=lambda: send_command('Q'), height=2, width=10)
+btn_right = tk.Button(window, text="Reset Location", command=restart_location, height=2, width=10)
 btn_right.pack(pady=10)
 
 # Start the asyncio event loop in a separate thread
