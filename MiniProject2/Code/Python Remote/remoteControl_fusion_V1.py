@@ -147,8 +147,9 @@ loop = asyncio.new_event_loop()  # Create a new event loop for asyncio
 
 def update_pose_label(pose):
     """Update the pose label in the GUI."""
-    pose_label.config(text=f"Current Pose: {pose}")
-    print(f"Updated pose label: {pose}")  # Debugging
+    x, y, theta = pose
+    pose_label.config(text=f"Current Pose: x: {x:.3f}, y: {y:.3f}, θ: {theta:.3f}")
+    print(f"Updated pose label: x: {x:.3f}, y: {y:.3f}, θ: {theta:.3f}")  # Debugging
 
 def notification_handler(sender, data):
     """Handle notifications from the BLE device."""
