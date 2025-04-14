@@ -1,26 +1,34 @@
 #include "simpletools.h"
-#include "eeprom.h"
+
+#define BUZZER_PIN 8
+
+#define N_TONES 5
 
 int main() {
+  while(1)
+  {
     int freq, duration, addr = 0x8000;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < N_TONES; i++) {
         print("Enter frequency and duration for tone %d:\n", i + 1);
         scan("%d %d", &freq, &duration);
 
         ee_putInt(freq, addr);
-        addr += 2; // Increment address for next frequency.
+        addr += 4; // Increment address for next frequency.
         ee_putInt(duration, addr);
-        addr += 2; // Increment address for next duration.
+        addr += 4; // Increment address for next duration.
     }
 
     addr = 0x8000;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < N_TONES; i++) {
+        print("Getting values from EEPROM from %d\n", i);
         freq = ee_getInt(addr);
-        addr += 2;
+        addr += 4;
         duration = ee_getInt(addr);
-        addr += 2;
+        addr += 4;
+        print("Values loaded from EPROM freq: %d duration: %d:\n", freq, duration);
 
-        freqout(0, duration, freq);
+        freqout(BUZZER_PIN, duration, freq);
     }
-    return 0;
+    print("Finished\n");
+  }    
 }

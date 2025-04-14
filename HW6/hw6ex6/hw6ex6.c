@@ -1,5 +1,7 @@
 #include "simpletools.h"
 
+#define PING_PIN 8
+
 // Global variables
 volatile int distanceAvg = 0;
 volatile int flag = 0;
@@ -26,7 +28,7 @@ void measureDistance() {
     int sum = 0, count = 0;
 
     while (1) {
-        int distance = measurePingDistance(5); // Measure distance on pin P5
+        int distance = measurePingDistance(PING_PIN); // Measure distance on pin P5
         sum += distance;
         count++;
 
@@ -42,19 +44,27 @@ void measureDistance() {
 }
 
 // Cog function to print the updated average distance
-void printDistance() {
+void printDistance(void *par) {
+    
     while (1) {
         if (flag) { // Check if new data is available
+            simpleterm_open();
             print("Average Distance: %d cm\n", distanceAvg);
+            simpleterm_close();
             flag = 0; // Reset flag
         }
     }
 }
 
 int main() {
+    print("Starting");
+  
+    simpleterm_close();
     // Launch cogs for measuring and printing distance
     cog_run(measureDistance, 128);
     cog_run(printDistance, 128);
+    
+    
 
     while (1); // Keep the main program running
     return 0;
