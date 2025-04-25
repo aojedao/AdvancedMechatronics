@@ -7,6 +7,8 @@ def led_brightness_control():
     LED_PIN = 18
     BUTTON1_PIN = 17  # Increases brightness
     BUTTON2_PIN = 27  # Decreases brightness
+    
+    duty_cycle = 0  # Initial duty cycle
 
     GPIO.setup(LED_PIN, GPIO.OUT)
     GPIO.setup(BUTTON1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -18,14 +20,20 @@ def led_brightness_control():
     try:
         while True:
             if GPIO.input(BUTTON1_PIN) == GPIO.LOW:  # Button 1 pressed
-                for duty_cycle in range(0, 101, 5):  # Increase brightness
-                    pwm.ChangeDutyCycle(duty_cycle)
-                    time.sleep(0.1)
+                duty_cycle += 5  # Increase brightness
+                print("Increasing")
+                if duty_cycle > 100:
+                    duty_cycle = 100
+                pwm.ChangeDutyCycle(duty_cycle)
+                time.sleep(0.1)
 
             if GPIO.input(BUTTON2_PIN) == GPIO.LOW:  # Button 2 pressed
-                for duty_cycle in range(100, -1, -5):  # Decrease brightness
-                    pwm.ChangeDutyCycle(duty_cycle)
-                    time.sleep(0.1)
+                print("Decreasing")
+                duty_cycle -= 5
+                if duty_cycle < 0:
+                    duty_cycle = 0
+                pwm.ChangeDutyCycle(duty_cycle)
+                time.sleep(0.1)
 
     except KeyboardInterrupt:
         pwm.stop()  # Stop PWM on CTRL+C exit
