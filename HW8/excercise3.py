@@ -1,27 +1,55 @@
-from picamera import PiCamera
+from picamera2 import Picamera2, Preview
 import time
 
-camera = PiCamera()
+# Initialize the camera
+camera = Picamera2()
 
-camera.start_preview()
-time.sleep(2)
+# Step 1: Display the Preview
+def display_preview():
+    # Configure the camera for preview
+    preview_config = camera.create_preview_configuration()
+    camera.configure(preview_config)
 
-# store letters from A to J in the list
-letters = [chr(65 + i) for i in range(10)]  # ['A', 'B', ..., 'J']
+    # Start the preview
+    camera.start_preview(Preview.QTGL)  # Use QTGL for graphical environments
+    camera.start()
 
-# Capture images continuously
-for filename in camera.capture_continuous('image_{counter}.jpg'):
-    index = int(filename.split('_')[-1].split('.')[0])  # Get the current count from 'image_{counter}.jpg'. {counter} part is from 0 to n
-    if index < len(letters): #check if the values is less than 10
-        letter = letters[index]
-        camera.annotate_text = letter
-        new_filename = f'image_{letter}.jpg'
-        camera.capture(new_filename)
-        print(f"Captured {new_filename} with annotation '{letter}'")
+    # Wait for 2 seconds to allow the preview to initialize
+    print("Displaying preview for 2 seconds...")
+    time.sleep(2)
+
+    # Stop the preview
+    camera.stop_preview()
+    camera.stop()
+    print("Preview stopped.")
+
+# Step 2: Capture Images with Annotations
+def capture_images():
+    # Configure the camera for still image capture
+    still_config = camera.create_still_configuration()
+    camera.configure(still_config)
+
+    # Start the camera
+    camera.start()
+
+    # Store letters from A to J in a list
+    letters = [chr(65 + i) for i in range(10)]  # ['A', 'B', ..., 'J']
+
+    # Capture images with annotations
+    for index, letter in enumerate(letters):
+        # Capture the image
+        filename = f"image_{letter}.jpg"
+        camera.capture_file(filename)
+        print(f"Captured {filename} with annotation '{letter}'")
+
+        # Wait for 1 second before capturing the next image
         time.sleep(1)
-    else:
-        break
 
-camera.stop_preview()
-camera.close()
+    # Stop the camera
+    camera.stop()
+    print("Image capture completed.")
 
+# Main function to execute both steps
+if __name__ == "__main__":
+    display_preview()  # Step 1: Display the preview
+    capture_images()   # Step 2: Capture images
