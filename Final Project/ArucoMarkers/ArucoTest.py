@@ -74,7 +74,7 @@ def mark_ArUco(img, Detected_ArUco_markers, ArUco_marker_angles, ArUco_marker_po
         img = cv2.line(img, top, center, (255, 0, 0), 3)
         img = cv2.circle(img, center, 6, (0, 0, 255), -1)
         img = cv2.putText(img, f"ID:{key}", (center[0]+10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-        img = cv2.putText(img, f"θ:{ArUco_marker_angles[key]:.1f}", (center[0]+10, center[1]+20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
+        img = cv2.putText(img, f"theta:{ArUco_marker_angles[key]:.1f}", (center[0]+10, center[1]+20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
         
         x, y, theta = ArUco_marker_pose[key]
         img = cv2.putText(img, f"x:{x}px y:{y}px", (center[0]+10, center[1]+40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 100, 255), 2)
