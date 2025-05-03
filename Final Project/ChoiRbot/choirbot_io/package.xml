@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>choirbot_io</name>
+  <version>0.1.0</version>
+  <description>Nodes for ChoiRbot: ArUco marker detection, user goal GUI, and BLE bridge to hardware.</description>
+  <maintainer email="s.bernheim.basile@gmail.com">Santiago Bernheim</maintainer>
+  <license>MIT</license>
+
+  <!-- ROS 2 Python client library -->
+  <exec_depend>rclpy</exec_depend>
+  <!-- For image messages -->
+  <exec_depend>sensor_msgs</exec_depend>
+  <!-- For geometry messages (PoseStamped, Twist) -->
+  <exec_depend>geometry_msgs</exec_depend>
+  <!-- For converting ROS images to OpenCV -->
+  <exec_depend>cv_bridge</exec_depend>
+  <!-- For OpenCV-based ArUco detection -->
+  <exec_depend>opencv-python</exec_depend>
+  <!-- For PyQt5 GUI -->
+  <exec_depend>python3-pyqt5</exec_depend>
+  <!-- For BLE communication -->
+  <exec_depend>bleak</exec_depend>
+
+  <!-- Test dependencies (optional, keep as is or remove if not testing) -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
