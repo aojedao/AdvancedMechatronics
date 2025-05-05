@@ -61,11 +61,12 @@ class ArucoDetector(Node):
             self.get_logger().info("Video stream opened successfully")
             # Read the first frame to initialize the image callback
         success, img = self.cap.read()
-        Detected_ArUco_markers = self.image_callback(img)
+        self.image_callback(img)
 
     def image_callback(self, msg):
         # Convert ROS Image to OpenCV image
         #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        self.get_logger().info("Image callback triggered")
         frame=msg
         # Detect markers
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
