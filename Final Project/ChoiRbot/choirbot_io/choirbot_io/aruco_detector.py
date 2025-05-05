@@ -103,28 +103,32 @@ class ArucoDetector(Node):
 
         self.get_logger().info('ArucoDetector node started.')
         # Display live feed with pose estimation
-        while True:
-            ret, frame = self.cap.read()
-            if not ret:
-                self.get_logger().error("Failed to read frame from video stream")
-                break
+        
+        ret, frame = self.cap.read()
+        if not ret:
+            self.get_logger().error("Failed to read frame from video stream")
+        else:
+            self.get_logger().info("Frame read successfully")
 
-            # Detect markers
-            corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
-            if ids is not None:
-            # Estimate pose for each marker
-                rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
-                    corners, self.marker_length, self.camera_matrix, self.dist_coeffs)
-                for i, marker_id in enumerate(ids.flatten()):
-                    # Draw axis and marker ID on the frame
-                    cv2.aruco.drawAxis(frame, self.camera_matrix, self.dist_coeffs, rvecs[i], tvecs[i], self.marker_length)
-                    cv2.putText(frame, f"ID: {marker_id}", (int(corners[i][0][0][0]), int(corners[i][0][0][1] - 10)),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        # Detect markers
+        corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
+        if ids is not None:
+        # Estimate pose for each marker
+            rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
+                corners, self.marker_length, self.camera_matrix, self.dist_coeffs)
+            for i, marker_id in enumerate(ids.flatten()):
+                # Draw axis and marker ID on the frame
+                cv2.aruco.drawAxis(frame, self.camera_matrix, self.dist_coeffs, rvecs[i], tvecs[i], self.marker_length)
+                cv2.putText(frame, f"ID: {marker_id}", (int(corners[i][0][0][0]), int(corners[i][0][0][1] - 10)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-                # Display the frame
-                cv2.imshow("ArUco Pose Estimation", frame)
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
+        # Display the frame
+        cv2.imshow("ArUco Pose Estimation", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            self.get_logger().info("Exiting...")
+            self.cap.release()
+            cv2.destroyAllWindows()
+            return
 
         self.cap.release()
         cv2.destroyAllWindows()
