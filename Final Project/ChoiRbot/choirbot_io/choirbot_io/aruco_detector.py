@@ -17,7 +17,7 @@ import cv2
 import cv2.aruco as aruco
 import numpy as np
 
-url = "http://10.18.238.136:4747/video"
+url = "http://10.18.195.1:4747/video"
 
 class ArucoDetector(Node):
     def __init__(self):
