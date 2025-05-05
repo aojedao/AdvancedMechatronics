@@ -70,8 +70,9 @@ class ArucoDetector(Node):
         # Convert ROS Image to OpenCV image
         #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
-        cv2.imshow("Image", msg)
-        frame=msg
+        frame= cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
+        cv2.imshow("Image", frame)
+        
         # Detect markers
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
         if ids is not None:
