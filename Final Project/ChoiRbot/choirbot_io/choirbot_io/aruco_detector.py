@@ -45,7 +45,7 @@ class ArucoDetector(Node):
 
         # ROS <-> OpenCV bridge
         self.bridge = CvBridge()
-
+        self.get_logger().info("Aruco Detector Node initialized.")
         # Subscribe to camera images
         # Use OpenCV VideoCapture to get a live feed from the URL
         self.cap = cv2.VideoCapture(url)
@@ -57,6 +57,9 @@ class ArucoDetector(Node):
 
             # Timer to periodically read frames from the video feed
             self.timer = self.create_timer(0.1, self.timer_callback)
+        else:
+            self.get_logger().info("Video stream opened successfully")
+            # Read the first frame to initialize the image callback
         success, img = self.cap.read()
         Detected_ArUco_markers = self.image_callback(img)
 
