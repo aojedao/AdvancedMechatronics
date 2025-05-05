@@ -55,7 +55,39 @@ class ArucoDetector(Node):
 
             # Timer to periodically read frames from the video feed
             self.timer = self.create_timer(0.1, self.timer_callback)
-    
+
+    def image_callback(self, msg):
+        # Convert ROS Image to OpenCV image
+        frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+
+        # Detect markers
+        corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
+        if ids is not None:
+            # Estimate pose for each marker
+            rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
+                corners, self.marker_length, self.camera_matrix, self.dist_coeffs)
+            for i, marker_id in enumerate(ids.flatten()):
+                # Prepare PoseStamped message
+                pose_msg = PoseStamped()
+                pose_msg.header = msg.header
+                pose_msg.pose.position.x = float(tvecs[i][0][0])
+                pose_msg.pose.position.y = float(tvecs[i][0][1])
+                pose_msg.pose.position.z = float(tvecs[i][0][2])
+                # Convert rotation vector to quaternion
+                rot_matrix, _ = cv2.Rodrigues(rvecs[i][0])
+                quat = self.rotation_matrix_to_quaternion(rot_matrix)
+                pose_msg.pose.orientation.x = quat[0]
+                pose_msg.pose.orientation.y = quat[1]
+                pose_msg.pose.orientation.z = quat[2]
+                pose_msg.pose.orientation.w = quat[3]
+
+                # Publish on a topic for this marker
+                topic_name = f'/aruco/pose_{marker_id}'
+                if marker_id not in self.pose_publishers:
+                    self.pose_publishers[marker_id] = self.create_publisher(PoseStamped, topic_name, 10)
+                self.pose_publishers[marker_id].publish(pose_msg)
+                self.get_logger().debug(f'Published pose for marker {marker_id} on {topic_name}')
+
     def timer_callback(self):
         ret, frame = self.cap.read()
         if not ret:
@@ -70,9 +102,32 @@ class ArucoDetector(Node):
         self.pose_publishers = {}
 
         self.get_logger().info('ArucoDetector node started.')
+        # Display live feed with pose estimation
+        while True:
+            ret, frame = self.cap.read()
+            if not ret:
+                self.get_logger().error("Failed to read frame from video stream")
+                break
 
-    def image_callback(self, msg):
-        # Convert ROS Image to OpenCV image
+            # Detect markers
+            corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
+            if ids is not None:
+            # Estimate pose for each marker
+                rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
+                    corners, self.marker_length, self.camera_matrix, self.dist_coeffs)
+                for i, marker_id in enumerate(ids.flatten()):
+                    # Draw axis and marker ID on the frame
+                    cv2.aruco.drawAxis(frame, self.camera_matrix, self.dist_coeffs, rvecs[i], tvecs[i], self.marker_length)
+                    cv2.putText(frame, f"ID: {marker_id}", (int(corners[i][0][0][0]), int(corners[i][0][0][1] - 10)),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+                # Display the frame
+                cv2.imshow("ArUco Pose Estimation", frame)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+
+        self.cap.release()
+        cv2.destroyAllWindows()
         frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
 
         # Detect markers
