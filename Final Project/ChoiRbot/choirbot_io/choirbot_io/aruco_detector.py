@@ -49,17 +49,21 @@ class ArucoDetector(Node):
         # Subscribe to camera images
         # Use OpenCV VideoCapture to get a live feed from the URL
         self.cap = cv2.VideoCapture(url)
+        
+
         if not self.cap.isOpened():
             self.get_logger().error(f"Failed to open video stream from {url}")
             return
 
             # Timer to periodically read frames from the video feed
             self.timer = self.create_timer(0.1, self.timer_callback)
+        success, img = self.cap.read()
+        Detected_ArUco_markers = self.image_callback(img)
 
     def image_callback(self, msg):
         # Convert ROS Image to OpenCV image
-        frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-
+        #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        frame=msg
         # Detect markers
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
         if ids is not None:
