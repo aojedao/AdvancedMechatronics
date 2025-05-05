@@ -60,8 +60,8 @@ class ArucoDetector(Node):
         else:
             self.get_logger().info("Video stream opened successfully")
             # Read the first frame to initialize the image callback
-        success, img = self.cap.read()
         while True:
+            success, img = self.cap.read()
             self.image_callback(img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -71,7 +71,7 @@ class ArucoDetector(Node):
         #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
         frame= cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
-        #cv2.imshow("Image", frame)
+        cv2.imshow("Image", frame)
         
         # Detect markers
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
