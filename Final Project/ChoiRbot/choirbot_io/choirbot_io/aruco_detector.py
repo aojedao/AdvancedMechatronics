@@ -40,8 +40,8 @@ class ArucoDetector(Node):
         self.dist_coeffs = np.zeros((5, 1))  # Assume no distortion for demo
 
         # Set up ArUco dictionary
-        self.aruco_dict = aruco.Dictionary_get(getattr(aruco, self.aruco_dict_name))
-        self.aruco_params = aruco.DetectorParameters_create()
+        self.aruco_dict = aruco.getPredefinedDictionary(getattr(aruco, self.aruco_dict_name))
+        self.aruco_params = aruco.DetectorParameters()
 
         # ROS <-> OpenCV bridge
         self.bridge = CvBridge()
