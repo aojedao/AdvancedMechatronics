@@ -71,12 +71,13 @@ class ArucoDetector(Node):
         #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
         frame= cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
-        cv2.imshow("Image", frame)
+        #cv2.imshow("Image", frame)
         
         # Detect markers
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
         if ids is not None:
             # Estimate pose for each marker
+            self.get_logger().info("Markers detected")
             rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
                 corners, self.marker_length, self.camera_matrix, self.dist_coeffs)
             for i, marker_id in enumerate(ids.flatten()):
@@ -86,6 +87,7 @@ class ArucoDetector(Node):
                 pose_msg.pose.position.x = float(tvecs[i][0][0])
                 pose_msg.pose.position.y = float(tvecs[i][0][1])
                 pose_msg.pose.position.z = float(tvecs[i][0][2])
+                self.get_logger().info(f"Marker ID: {marker_id}, Position: {pose_msg.pose.position}")
                 # Convert rotation vector to quaternion
                 rot_matrix, _ = cv2.Rodrigues(rvecs[i][0])
                 quat = self.rotation_matrix_to_quaternion(rot_matrix)
