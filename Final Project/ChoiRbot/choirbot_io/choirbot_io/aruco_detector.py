@@ -11,7 +11,7 @@ Aruco Detector Node for ChoiRbot
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import PoseStamped
+from nav_msgs.msg import Odometry
 from cv_bridge import CvBridge
 import cv2
 import cv2.aruco as aruco
@@ -21,6 +21,11 @@ import os
 class ArucoDetector(Node):
     def __init__(self):
         super().__init__('aruco_detector')
+        
+        # Publisher for odometry data
+        self.agent_0_odom_publisher = self.create_publisher(Odometry, '/agent_0/odom', 10)
+        self.agent_1_odom_publisher = self.create_publisher(Odometry, '/agent_1/odom', 10)
+        
         self.get_logger().info(' cv2 version: ' + cv2.__version__)
 
         # Parameters (customize as needed)
@@ -102,58 +107,61 @@ class ArucoDetector(Node):
         self.detect_and_publish_markers(frame, msg.header)
 
     def detect_and_publish_markers(self, frame, header=None):
-        """Detect ArUco markers and publish their poses."""
-        # Detect markers
+        """Detect ArUco markers and publish their poses as odometry."""
         corners, ids, rejected = self.detector.detectMarkers(frame)
         if ids is not None:
             for i, marker_id in enumerate(ids.flatten()):
-                # Get the corner points for the marker
-                marker_corners = corners[i].reshape((4, 2))
+                if marker_id in [5, 6]:  # Only process markers with IDs 5 and 6
+                    # Get the corner points for the marker
+                    marker_corners = corners[i].reshape((4, 2))
 
-                # Define the 3D points of the marker corners in the marker's coordinate system
-                marker_size = self.marker_length
-                object_points = np.array([
-                    [-marker_size / 2, -marker_size / 2, 0],
-                    [ marker_size / 2, -marker_size / 2, 0],
-                    [ marker_size / 2,  marker_size / 2, 0],
-                    [-marker_size / 2,  marker_size / 2, 0]
-                ], dtype=np.float32)
+                    # Define the 3D points of the marker corners in the marker's coordinate system
+                    marker_size = self.marker_length
+                    object_points = np.array([
+                        [-marker_size / 2, -marker_size / 2, 0],
+                        [ marker_size / 2, -marker_size / 2, 0],
+                        [ marker_size / 2,  marker_size / 2, 0],
+                        [-marker_size / 2,  marker_size / 2, 0]
+                    ], dtype=np.float32)
 
-                # Estimate pose using solvePnP
-                success, rvec, tvec = cv2.solvePnP(
-                    object_points, marker_corners, self.camera_matrix, self.dist_coeffs
-                )
-                if success:
-                    # Prepare PoseStamped message
-                    pose_msg = PoseStamped()
-                    pose_msg.header.stamp = header.stamp if header else self.get_clock().now().to_msg()
-                    pose_msg.header.frame_id = header.frame_id if header else "camera_frame"  # Replace "camera_frame" with your frame ID
-                    pose_msg.pose.position.x = float(tvec[0])
-                    pose_msg.pose.position.y = float(tvec[1])
-                    pose_msg.pose.position.z = float(tvec[2])
-                    # Convert rotation vector to quaternion
-                    rot_matrix, _ = cv2.Rodrigues(rvec)
-                    quat = self.rotation_matrix_to_quaternion(rot_matrix)
-                    pose_msg.pose.orientation.x = quat[0]
-                    pose_msg.pose.orientation.y = quat[1]
-                    pose_msg.pose.orientation.z = quat[2]
-                    pose_msg.pose.orientation.w = quat[3]
+                    # Estimate pose using solvePnP
+                    success, rvec, tvec = cv2.solvePnP(
+                        object_points, marker_corners, self.camera_matrix, self.dist_coeffs
+                    )
+                    if success:
+                        # Create an Odometry message
+                        odom_msg = Odometry()
+                        odom_msg.header.stamp = header.stamp if header else self.get_clock().now().to_msg()
+                        odom_msg.header.frame_id = header.frame_id if header else "camera_frame"
+                        odom_msg.child_frame_id = "base_link"  # Replace with your robot's frame ID
 
-                   # Optionally, draw the detected markers on the image
+                        # Set the pose
+                        odom_msg.pose.pose.position.x = float(tvec[0])
+                        odom_msg.pose.pose.position.y = float(tvec[1])
+                        odom_msg.pose.pose.position.z = float(tvec[2])
+                        # Convert rotation vector to quaternion
+                        rot_matrix, _ = cv2.Rodrigues(rvec)
+                        quat = self.rotation_matrix_to_quaternion(rot_matrix)
+                        odom_msg.pose.pose.orientation.x = quat[0]
+                        odom_msg.pose.pose.orientation.y = quat[1]
+                        odom_msg.pose.pose.orientation.z = quat[2]
+                        odom_msg.pose.pose.orientation.w = quat[3]
 
-                    # Publish on a topic for this marker
-                    topic_name = f'/aruco/pose_{marker_id}'
-                    if marker_id not in self.pose_publishers:
-                       self.pose_publishers[marker_id] = self.create_publisher(PoseStamped, topic_name, 10)
-                    self.pose_publishers[marker_id].publish(pose_msg)
-                    self.get_logger().info(f'Published pose for marker {marker_id} on {topic_name}')
-                    
-                    aruco.drawDetectedMarkers(frame, corners, ids)
-                    # Display the image with detected markers
-                    cv2.imshow('Aruco Markers', frame)
-                    cv2.waitKey(1)
-        else:
-            self.get_logger().warn("No markers detected.")
+                        # Set the twist (optional, can be left as zero)
+                        odom_msg.twist.twist.linear.x = 0.0
+                        odom_msg.twist.twist.linear.y = 0.0
+                        odom_msg.twist.twist.linear.z = 0.0
+                        odom_msg.twist.twist.angular.x = 0.0
+                        odom_msg.twist.twist.angular.y = 0.0
+                        odom_msg.twist.twist.angular.z = 0.0
+
+                        # Publish to the appropriate topic
+                        if marker_id == 4:
+                            self.agent_0_odom_publisher.publish(odom_msg)
+                            self.get_logger().info(f'Published odometry for marker {marker_id} to /agent_0/odom')
+                        elif marker_id == 5:
+                            self.agent_1_odom_publisher.publish(odom_msg)
+                            self.get_logger().info(f'Published odometry for marker {marker_id} to /agent_1/odom')
 
     @staticmethod
     def rotation_matrix_to_quaternion(R):
