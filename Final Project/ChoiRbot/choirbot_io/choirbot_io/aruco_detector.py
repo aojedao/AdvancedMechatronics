@@ -22,26 +22,20 @@ class ArucoDetector(Node):
     def __init__(self):
         super().__init__('aruco_detector')
         
-        # Publisher for odometry data
+        # Publishers for odometry data
         self.agent_0_odom_publisher = self.create_publisher(Odometry, '/agent_0/odom', 10)
         self.agent_1_odom_publisher = self.create_publisher(Odometry, '/agent_1/odom', 10)
         
-        self.get_logger().info(' cv2 version: ' + cv2.__version__)
+        self.get_logger().info('cv2 version: ' + cv2.__version__)
 
-        # Parameters (customize as needed)
-        self.declare_parameter('use_image', True)  # Use static image or camera feed
+        # Parameters
         self.declare_parameter('image_path', '~/Desktop/aruco_test/image1.jpeg')  # Path to test image
-        self.declare_parameter('camera_topic', '/camera/image_raw')  # Camera feed topic
-        self.declare_parameter('aruco_dict', 'DICT_7X7_250')
         self.declare_parameter('marker_length', 0.07)  # meters
 
         # Load parameters
-        self.use_image = self.get_parameter('use_image').get_parameter_value().bool_value
         self.image_path = os.path.expanduser(self.get_parameter('image_path').get_parameter_value().string_value)
-        self.camera_topic = self.get_parameter('camera_topic').get_parameter_value().string_value
-        self.aruco_dict_name = self.get_parameter('aruco_dict').get_parameter_value().string_value
         self.marker_length = self.get_parameter('marker_length').get_parameter_value().double_value
-        
+
         # Log the expanded image path for debugging
         self.get_logger().info(f"Expanded image path: {self.image_path}")
 
@@ -53,65 +47,36 @@ class ArucoDetector(Node):
 
         # Set up ArUco dictionary
         try:
-            dictionary = aruco.getPredefinedDictionary(getattr(aruco, self.aruco_dict_name))
+            dictionary = aruco.getPredefinedDictionary(aruco.DICT_7X7_250)
             parameters = aruco.DetectorParameters()
             self.detector = aruco.ArucoDetector(dictionary, parameters)
-            self.get_logger().info(f"Using ArUco dictionary: {self.aruco_dict_name}")
+            self.get_logger().info("Using ArUco dictionary: DICT_7X7_250")
         except AttributeError as e:
-            self.get_logger().error(f"Invalid ArUco dictionary name: {self.aruco_dict_name}. Error: {e}")
+            self.get_logger().error(f"Error setting up ArUco detector: {e}")
             raise
 
         # ROS <-> OpenCV bridge
         self.bridge = CvBridge()
 
-        # Publishers for marker poses (created dynamically)
-        self.pose_publishers = {}
+        # Load the static image
+        self.frame = cv2.imread(self.image_path)
+        if self.frame is None:
+            self.get_logger().error(f"Failed to load image from {self.image_path}")
+            raise FileNotFoundError(f"Image not found at {self.image_path}")
 
-        # Start based on mode
-        if self.use_image:
-            self.get_logger().info('Using static image for testing.')
-            self.process_image()
-        else:
-            self.get_logger().info('Using Raspberry Pi camera feed.')
-            self.subscription = self.create_subscription(
-                Image, self.camera_topic, self.image_callback, 10)
+        # Timer to simulate camera feed at 25 Hz
+        self.timer = self.create_timer(1, self.process_image)
 
     def process_image(self):
-        """Process a static image for testing."""
-        
-        # Log the directory contents for debugging
-        directory = os.path.dirname(self.image_path)
-        self.get_logger().info(f"Listing files in directory: {directory}")
-        try:
-            files = os.listdir(directory)
-            self.get_logger().info(f"Files in directory: {files}")
-        except FileNotFoundError:
-            self.get_logger().error(f"Directory not found: {directory}")
-            return
-        
-        # Load the image
-        frame = cv2.imread(self.image_path)
-        if frame is None:
-            self.get_logger().error(f"Failed to load image from {self.image_path}")
-            return
+        """Process the static image and publish odometry data."""
+        self.detect_and_publish_markers(self.frame)
 
-        # Detect and process markers
-        self.detect_and_publish_markers(frame)
-
-    def image_callback(self, msg):
-        """Callback for processing camera feed."""
-        # Convert ROS Image to OpenCV image
-        frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-
-        # Detect and process markers
-        self.detect_and_publish_markers(frame, msg.header)
-
-    def detect_and_publish_markers(self, frame, header=None):
+    def detect_and_publish_markers(self, frame):
         """Detect ArUco markers and publish their poses as odometry."""
         corners, ids, rejected = self.detector.detectMarkers(frame)
         if ids is not None:
             for i, marker_id in enumerate(ids.flatten()):
-                if marker_id in [5, 6]:  # Only process markers with IDs 5 and 6
+                if marker_id in [4, 5]:  # Process markers with IDs 4 and 5
                     # Get the corner points for the marker
                     marker_corners = corners[i].reshape((4, 2))
 
@@ -131,9 +96,9 @@ class ArucoDetector(Node):
                     if success:
                         # Create an Odometry message
                         odom_msg = Odometry()
-                        odom_msg.header.stamp = header.stamp if header else self.get_clock().now().to_msg()
-                        odom_msg.header.frame_id = header.frame_id if header else "camera_frame"
-                        odom_msg.child_frame_id = "base_link"  # Replace with your robot's frame ID
+                        odom_msg.header.stamp = self.get_clock().now().to_msg()
+                        odom_msg.header.frame_id = "camera_frame"
+                        odom_msg.child_frame_id = "base_link"
 
                         # Set the pose
                         odom_msg.pose.pose.position.x = float(tvec[0])
@@ -146,14 +111,6 @@ class ArucoDetector(Node):
                         odom_msg.pose.pose.orientation.y = quat[1]
                         odom_msg.pose.pose.orientation.z = quat[2]
                         odom_msg.pose.pose.orientation.w = quat[3]
-
-                        # Set the twist (optional, can be left as zero)
-                        odom_msg.twist.twist.linear.x = 0.0
-                        odom_msg.twist.twist.linear.y = 0.0
-                        odom_msg.twist.twist.linear.z = 0.0
-                        odom_msg.twist.twist.angular.x = 0.0
-                        odom_msg.twist.twist.angular.y = 0.0
-                        odom_msg.twist.twist.angular.z = 0.0
 
                         # Publish to the appropriate topic
                         if marker_id == 4:
