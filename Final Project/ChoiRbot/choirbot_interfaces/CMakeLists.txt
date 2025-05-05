@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(choirbot_interfaces)
 
-# load requires packages
-find_package(ament_cmake_python REQUIRED)
+find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
-# generate C++ and Python classes
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/PositionAction.action"
   "msg/PositionTask.msg"
@@ -14,9 +12,5 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/TaskCompletionService.srv"
 )
 
-# Install the python module for this package
-ament_python_install_package(${PROJECT_NAME})
-
-ament_export_dependencies(ament_cmake_python)
-
+ament_export_dependencies(rosidl_default_runtime)
 ament_package()
