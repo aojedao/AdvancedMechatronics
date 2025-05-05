@@ -53,18 +53,18 @@ class ArucoDetector(Node):
             self.get_logger().error(f"Failed to open video stream from {url}")
             return
 
-        # Timer to periodically read frames from the video feed
-        self.timer = self.create_timer(0.1, self.timer_callback)
-
-        def timer_callback(self):
-            ret, frame = self.cap.read()
-            if not ret:
-                self.get_logger().error("Failed to read frame from video stream")
-                return
+            # Timer to periodically read frames from the video feed
+            self.timer = self.create_timer(0.1, self.timer_callback)
     
-            # Convert OpenCV image to ROS Image and process it
-            msg = self.bridge.cv2_to_imgmsg(frame, encoding='bgr8')
-            self.image_callback(msg)
+    def timer_callback(self):
+        ret, frame = self.cap.read()
+        if not ret:
+            self.get_logger().error("Failed to read frame from video stream")
+            return
+
+        # Convert OpenCV image to ROS Image and process it
+        msg = self.bridge.cv2_to_imgmsg(frame, encoding='bgr8')
+        self.image_callback(msg)
 
         # Publishers for marker poses (created dynamically)
         self.pose_publishers = {}
