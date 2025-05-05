@@ -70,7 +70,8 @@ class ArucoDetector(Node):
         # Convert ROS Image to OpenCV image
         #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
-        frame= cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
+        preframe= self.bridge.cv2_to_imgmsg(msg, encoding="passthrough")
+        frame=self.bridge.imgmsg_to_cv2(preframe, desired_encoding='bgr8')
         cv2.imshow("Image", frame)
         
         # Detect markers
