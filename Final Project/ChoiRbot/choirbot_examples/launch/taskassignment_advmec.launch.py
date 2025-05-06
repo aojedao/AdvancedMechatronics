@@ -21,7 +21,7 @@ def generate_launch_description():
         {"name": "BLE_Device_4", "address": "AA:BB:CC:DD:EE:04", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 4 agents
         {"name": "BLE_Device_5", "address": "AA:BB:CC:DD:EE:05", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 5 agents
     ]
-    
+    '''
     for arg in sys.argv:
         if arg.startswith("N:="):
             N = int(arg.split(":=")[1])
