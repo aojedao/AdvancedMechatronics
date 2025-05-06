@@ -12,7 +12,7 @@ import numpy as np
 import os
 
 file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'calibration_data.npz')
-data = np.load(file_path)
+
 
 # DroidCam video stream URL
 url = "http://10.18.238.136:4747/video"  # Nishant's DroidCam URL
@@ -30,7 +30,7 @@ class ArucoDetector(Node):
 
         # Load camera calibration from .npz file
         try:
-            data = np.load('calibration_data.npz')
+            data = np.load(file_path)
             self.camera_matrix = data['camera_matrix']
             self.dist_coeffs = data['dist_coeffs']
             self.get_logger().info("Loaded camera calibration data.")
