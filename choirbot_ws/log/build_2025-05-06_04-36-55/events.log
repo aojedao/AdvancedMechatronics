@@ -1,0 +1,1091 @@
+[0.000000] (-) TimerEvent: {}
+[0.001215] (choirbot_interfaces) JobQueued: {'identifier': 'choirbot_interfaces', 'dependencies': OrderedDict()}
+[0.001562] (choirbot_io) JobQueued: {'identifier': 'choirbot_io', 'dependencies': OrderedDict()}
+[0.002463] (choirbot) JobQueued: {'identifier': 'choirbot', 'dependencies': OrderedDict([('choirbot_interfaces', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces')])}
+[0.003079] (choirbot_examples) JobQueued: {'identifier': 'choirbot_examples', 'dependencies': OrderedDict([('choirbot_interfaces', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces'), ('choirbot', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot')])}
+[0.003641] (choirbot_interfaces) JobStarted: {'identifier': 'choirbot_interfaces'}
+[0.053963] (choirbot_io) JobStarted: {'identifier': 'choirbot_io'}
+[0.099173] (-) TimerEvent: {}
+[0.110032] (choirbot_interfaces) JobProgress: {'identifier': 'choirbot_interfaces', 'progress': 'cmake'}
+[0.111227] (choirbot_interfaces) Command: {'cmd': ['/usr/bin/cmake', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces', 'env': OrderedDict([('MAIL', '/var/mail/robot4'), ('USER', 'robot4'), ('SSH_AGENT_PID', '1291'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/robot4'), ('OLDPWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics'), ('ROS_PYTHON_VERSION', '3'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1221'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'robot4'), ('JOURNAL_STREAM', '9:31721'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin'), ('SESSION_MANAGER', 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339'), ('INVOCATION_ID', '4c14e32938774145a9c17a0dc50a8b06'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'GNOME'), ('XMODIFIERS', '@im=ibus'), ('XAUTHORITY', '/home/robot4/.Xauthority'), ('GNOME_TERMINAL_SERVICE', ':1.82'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.199959] (-) TimerEvent: {}
+[0.304644] (-) TimerEvent: {}
+[0.405805] (-) TimerEvent: {}
+[0.436642] (choirbot_interfaces) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.4.0\n'}
+[0.505787] (-) TimerEvent: {}
+[0.606644] (-) TimerEvent: {}
+[0.700637] (choirbot_interfaces) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.4.0\n'}
+[0.706837] (-) TimerEvent: {}
+[0.721184] (choirbot_interfaces) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[0.807029] (-) TimerEvent: {}
+[0.908279] (-) TimerEvent: {}
+[1.010239] (-) TimerEvent: {}
+[1.078288] (choirbot_interfaces) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[1.082245] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.110606] (-) TimerEvent: {}
+[1.212204] (-) TimerEvent: {}
+[1.313900] (-) TimerEvent: {}
+[1.416150] (-) TimerEvent: {}
+[1.455312] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.515151] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.516153] (-) TimerEvent: {}
+[1.521024] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.531000] (choirbot_interfaces) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[1.617077] (-) TimerEvent: {}
+[1.721485] (-) TimerEvent: {}
+[1.823590] (-) TimerEvent: {}
+[1.920962] (choirbot_interfaces) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[1.923743] (-) TimerEvent: {}
+[1.926504] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[2.024019] (-) TimerEvent: {}
+[2.125532] (-) TimerEvent: {}
+[2.226952] (-) TimerEvent: {}
+[2.319071] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[2.327059] (-) TimerEvent: {}
+[2.365159] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[2.371631] (choirbot_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[2.399068] (choirbot_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.12 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[2.427370] (-) TimerEvent: {}
+[2.528652] (-) TimerEvent: {}
+[2.562895] (choirbot_interfaces) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[2.565624] (choirbot_interfaces) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[2.628887] (-) TimerEvent: {}
+[2.730901] (-) TimerEvent: {}
+[2.832640] (-) TimerEvent: {}
+[2.934032] (-) TimerEvent: {}
+[3.035266] (-) TimerEvent: {}
+[3.136034] (-) TimerEvent: {}
+[3.236894] (-) TimerEvent: {}
+[3.338101] (-) TimerEvent: {}
+[3.439455] (-) TimerEvent: {}
+[3.540969] (-) TimerEvent: {}
+[3.642393] (-) TimerEvent: {}
+[3.696142] (choirbot_interfaces) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[3.742540] (-) TimerEvent: {}
+[3.843238] (-) TimerEvent: {}
+[3.943953] (-) TimerEvent: {}
+[4.028347] (choirbot_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)\n'}
+[4.044069] (-) TimerEvent: {}
+[4.059155] (choirbot_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[4.140615] (choirbot_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[4.157926] (-) TimerEvent: {}
+[4.258543] (-) TimerEvent: {}
+[4.359221] (-) TimerEvent: {}
+[4.460188] (-) TimerEvent: {}
+[4.564391] (-) TimerEvent: {}
+[4.666070] (-) TimerEvent: {}
+[4.770300] (-) TimerEvent: {}
+[4.871534] (-) TimerEvent: {}
+[4.975393] (-) TimerEvent: {}
+[5.033112] (choirbot_interfaces) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[5.075630] (-) TimerEvent: {}
+[5.112747] (choirbot_io) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/build', '--no-deps', 'symlink_data'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io', 'env': {'MAIL': '/var/mail/robot4', 'USER': 'robot4', 'SSH_AGENT_PID': '1291', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib', 'HOME': '/home/robot4', 'OLDPWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics', 'ROS_PYTHON_VERSION': '3', 'GTK_MODULES': 'gail:atk-bridge', 'MANAGERPID': '1221', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'robot4', 'JOURNAL_STREAM': '9:31721', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin', 'SESSION_MANAGER': 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339', 'INVOCATION_ID': '4c14e32938774145a9c17a0dc50a8b06', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0.0', 'LANG': 'C.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XMODIFIERS': '@im=ibus', 'XAUTHORITY': '/home/robot4/.Xauthority', 'GNOME_TERMINAL_SERVICE': ':1.82', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/foxy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'VTE_VERSION': '6003'}, 'shell': False}
+[5.175856] (-) TimerEvent: {}
+[5.276753] (-) TimerEvent: {}
+[5.325202] (choirbot_interfaces) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/include  \n'}
+[5.376919] (-) TimerEvent: {}
+[5.477858] (-) TimerEvent: {}
+[5.579034] (-) TimerEvent: {}
+[5.680234] (-) TimerEvent: {}
+[5.781743] (-) TimerEvent: {}
+[5.883002] (-) TimerEvent: {}
+[5.984376] (-) TimerEvent: {}
+[6.085623] (-) TimerEvent: {}
+[6.186413] (-) TimerEvent: {}
+[6.287139] (-) TimerEvent: {}
+[6.323287] (choirbot_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[6.387303] (-) TimerEvent: {}
+[6.488508] (-) TimerEvent: {}
+[6.590098] (-) TimerEvent: {}
+[6.624940] (choirbot_interfaces) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[6.690275] (-) TimerEvent: {}
+[6.791006] (-) TimerEvent: {}
+[6.891830] (-) TimerEvent: {}
+[6.992539] (-) TimerEvent: {}
+[7.093453] (-) TimerEvent: {}
+[7.194245] (-) TimerEvent: {}
+[7.284893] (choirbot_io) StdoutLine: {'line': b'running develop\n'}
+[7.294393] (-) TimerEvent: {}
+[7.395175] (-) TimerEvent: {}
+[7.496085] (-) TimerEvent: {}
+[7.598070] (-) TimerEvent: {}
+[7.699781] (-) TimerEvent: {}
+[7.800270] (choirbot_interfaces) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.9.2 (/opt/ros/foxy/share/ament_cmake_ros/cmake)\n'}
+[7.801804] (-) TimerEvent: {}
+[7.903035] (-) TimerEvent: {}
+[8.003838] (-) TimerEvent: {}
+[8.104599] (-) TimerEvent: {}
+[8.205356] (-) TimerEvent: {}
+[8.306173] (-) TimerEvent: {}
+[8.407055] (-) TimerEvent: {}
+[8.507913] (-) TimerEvent: {}
+[8.539779] (choirbot_io) StdoutLine: {'line': b'running egg_info\n'}
+[8.540779] (choirbot_io) StdoutLine: {'line': b'creating choirbot_io.egg-info\n'}
+[8.608064] (-) TimerEvent: {}
+[8.624207] (choirbot_io) StdoutLine: {'line': b'writing choirbot_io.egg-info/PKG-INFO\n'}
+[8.626468] (choirbot_io) StdoutLine: {'line': b'writing dependency_links to choirbot_io.egg-info/dependency_links.txt\n'}
+[8.627866] (choirbot_io) StdoutLine: {'line': b'writing entry points to choirbot_io.egg-info/entry_points.txt\n'}
+[8.628877] (choirbot_io) StdoutLine: {'line': b'writing requirements to choirbot_io.egg-info/requires.txt\n'}
+[8.629725] (choirbot_io) StdoutLine: {'line': b'writing top-level names to choirbot_io.egg-info/top_level.txt\n'}
+[8.634808] (choirbot_io) StdoutLine: {'line': b"writing manifest file 'choirbot_io.egg-info/SOURCES.txt'\n"}
+[8.708229] (-) TimerEvent: {}
+[8.806438] (choirbot_io) StdoutLine: {'line': b"reading manifest file 'choirbot_io.egg-info/SOURCES.txt'\n"}
+[8.808391] (-) TimerEvent: {}
+[8.810612] (choirbot_io) StdoutLine: {'line': b"writing manifest file 'choirbot_io.egg-info/SOURCES.txt'\n"}
+[8.908576] (-) TimerEvent: {}
+[8.946963] (choirbot_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[9.008967] (-) TimerEvent: {}
+[9.080621] (choirbot_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[9.109468] (-) TimerEvent: {}
+[9.164144] (choirbot_io) StdoutLine: {'line': b'running build_ext\n'}
+[9.221125] (-) TimerEvent: {}
+[9.222854] (choirbot_io) StdoutLine: {'line': b'Creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/python3.8/site-packages/choirbot-io.egg-link (link to .)\n'}
+[9.224651] (choirbot_interfaces) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[9.225887] (choirbot_io) StdoutLine: {'line': b'Installing aruco_detector script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/choirbot_io\n'}
+[9.227405] (choirbot_io) StdoutLine: {'line': b'Installing ble_bridge script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/choirbot_io\n'}
+[9.229468] (choirbot_io) StdoutLine: {'line': b'Installing goal_gui script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/choirbot_io\n'}
+[9.231660] (choirbot_io) StdoutLine: {'line': b'\n'}
+[9.236841] (choirbot_io) StdoutLine: {'line': b'Installed /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io\n'}
+[9.241022] (choirbot_io) StdoutLine: {'line': b'running symlink_data\n'}
+[9.255151] (choirbot_io) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/ament_index\n'}
+[9.260297] (choirbot_io) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/ament_index/resource_index\n'}
+[9.264628] (choirbot_io) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/ament_index/resource_index/packages\n'}
+[9.270191] (choirbot_io) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/resource/choirbot_io -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/ament_index/resource_index/packages\n'}
+[9.275079] (choirbot_io) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/package.xml -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io\n'}
+[9.280110] (choirbot_interfaces) StdoutLine: {'line': b'-- Found python_cmake_module: 0.8.1 (/opt/ros/foxy/share/python_cmake_module/cmake)\n'}
+[9.321424] (-) TimerEvent: {}
+[9.424028] (-) TimerEvent: {}
+[9.446177] (choirbot_interfaces) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/aarch64-linux-gnu/libpython3.8.so (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[9.448875] (choirbot_interfaces) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[9.462367] (choirbot_interfaces) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8\n'}
+[9.471360] (choirbot_interfaces) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.8.so\n'}
+[9.479078] (choirbot_io) CommandEnded: {'returncode': 0}
+[9.524061] (-) TimerEvent: {}
+[9.572595] (choirbot_io) JobEnded: {'identifier': 'choirbot_io', 'rc': 0}
+[9.576067] (choirbot_interfaces) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[9.624304] (-) TimerEvent: {}
+[9.725168] (-) TimerEvent: {}
+[9.826097] (-) TimerEvent: {}
+[9.926823] (-) TimerEvent: {}
+[10.027649] (-) TimerEvent: {}
+[10.128800] (-) TimerEvent: {}
+[10.229936] (-) TimerEvent: {}
+[10.331078] (-) TimerEvent: {}
+[10.431826] (-) TimerEvent: {}
+[10.440611] (choirbot_interfaces) StdoutLine: {'line': b'-- Configuring done\n'}
+[10.532001] (-) TimerEvent: {}
+[10.632701] (-) TimerEvent: {}
+[10.733708] (-) TimerEvent: {}
+[10.746049] (choirbot_interfaces) StdoutLine: {'line': b'-- Generating done\n'}
+[10.834091] (-) TimerEvent: {}
+[10.838298] (choirbot_interfaces) StdoutLine: {'line': b'-- Build files have been written to: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces\n'}
+[10.887342] (choirbot_interfaces) CommandEnded: {'returncode': 0}
+[10.889587] (choirbot_interfaces) JobProgress: {'identifier': 'choirbot_interfaces', 'progress': 'build'}
+[10.892238] (choirbot_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces', '--', '-j4', '-l4'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces', 'env': OrderedDict([('MAIL', '/var/mail/robot4'), ('USER', 'robot4'), ('SSH_AGENT_PID', '1291'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/robot4'), ('OLDPWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics'), ('ROS_PYTHON_VERSION', '3'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1221'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'robot4'), ('JOURNAL_STREAM', '9:31721'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin'), ('SESSION_MANAGER', 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339'), ('INVOCATION_ID', '4c14e32938774145a9c17a0dc50a8b06'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'GNOME'), ('XMODIFIERS', '@im=ibus'), ('XAUTHORITY', '/home/robot4/.Xauthority'), ('GNOME_TERMINAL_SERVICE', ':1.82'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[10.934345] (-) TimerEvent: {}
+[11.035240] (-) TimerEvent: {}
+[11.091941] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__cpp\x1b[0m\n'}
+[11.093434] (choirbot_interfaces) StdoutLine: {'line': b'[  1%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[11.135593] (-) TimerEvent: {}
+[11.146433] (choirbot_interfaces) StdoutLine: {'line': b'[  3%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[11.235788] (-) TimerEvent: {}
+[11.337491] (-) TimerEvent: {}
+[11.439480] (-) TimerEvent: {}
+[11.541187] (-) TimerEvent: {}
+[11.642967] (-) TimerEvent: {}
+[11.744276] (-) TimerEvent: {}
+[11.845454] (-) TimerEvent: {}
+[11.946644] (-) TimerEvent: {}
+[12.047716] (-) TimerEvent: {}
+[12.148437] (-) TimerEvent: {}
+[12.249208] (-) TimerEvent: {}
+[12.350345] (-) TimerEvent: {}
+[12.451223] (-) TimerEvent: {}
+[12.551996] (-) TimerEvent: {}
+[12.652810] (-) TimerEvent: {}
+[12.754115] (-) TimerEvent: {}
+[12.855204] (-) TimerEvent: {}
+[12.956382] (-) TimerEvent: {}
+[13.057585] (-) TimerEvent: {}
+[13.158858] (-) TimerEvent: {}
+[13.259969] (-) TimerEvent: {}
+[13.361441] (-) TimerEvent: {}
+[13.462226] (-) TimerEvent: {}
+[13.563423] (-) TimerEvent: {}
+[13.664886] (-) TimerEvent: {}
+[13.766130] (-) TimerEvent: {}
+[13.867941] (-) TimerEvent: {}
+[13.969007] (-) TimerEvent: {}
+[14.070475] (-) TimerEvent: {}
+[14.171873] (-) TimerEvent: {}
+[14.266412] (choirbot_interfaces) StdoutLine: {'line': b'[  3%] Built target choirbot_interfaces__cpp\n'}
+[14.272252] (-) TimerEvent: {}
+[14.342927] (choirbot_interfaces) StdoutLine: {'line': b'[  4%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[14.372854] (-) TimerEvent: {}
+[14.407634] (choirbot_interfaces) StdoutLine: {'line': b'[  6%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[14.473755] (-) TimerEvent: {}
+[14.576692] (-) TimerEvent: {}
+[14.627558] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_generator_c\x1b[0m\n'}
+[14.665227] (choirbot_interfaces) StdoutLine: {'line': b'[  7%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[14.676883] (-) TimerEvent: {}
+[14.778280] (-) TimerEvent: {}
+[14.809844] (choirbot_interfaces) StdoutLine: {'line': b'[  9%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/choirbot_interfaces/action/detail/position_action__functions.c.o\x1b[0m\n'}
+[14.878586] (-) TimerEvent: {}
+[14.981074] (-) TimerEvent: {}
+[15.083977] (-) TimerEvent: {}
+[15.188726] (-) TimerEvent: {}
+[15.293146] (-) TimerEvent: {}
+[15.396691] (-) TimerEvent: {}
+[15.500395] (-) TimerEvent: {}
+[15.603945] (-) TimerEvent: {}
+[15.708230] (-) TimerEvent: {}
+[15.799991] (choirbot_interfaces) StdoutLine: {'line': b'[ 11%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/choirbot_interfaces/msg/detail/position_task__functions.c.o\x1b[0m\n'}
+[15.808307] (-) TimerEvent: {}
+[15.909080] (-) TimerEvent: {}
+[16.009865] (-) TimerEvent: {}
+[16.110643] (-) TimerEvent: {}
+[16.211706] (-) TimerEvent: {}
+[16.312641] (-) TimerEvent: {}
+[16.403957] (choirbot_interfaces) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/choirbot_interfaces/msg/detail/position_task_array__functions.c.o\x1b[0m\n'}
+[16.412844] (-) TimerEvent: {}
+[16.516067] (-) TimerEvent: {}
+[16.619946] (-) TimerEvent: {}
+[16.727495] (-) TimerEvent: {}
+[16.836027] (-) TimerEvent: {}
+[16.940885] (-) TimerEvent: {}
+[17.013292] (choirbot_interfaces) StdoutLine: {'line': b'[ 14%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/choirbot_interfaces/srv/detail/position_task_service__functions.c.o\x1b[0m\n'}
+[17.040773] (-) TimerEvent: {}
+[17.096770] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_cpp\x1b[0m\n'}
+[17.140982] (-) TimerEvent: {}
+[17.242159] (-) TimerEvent: {}
+[17.260187] (choirbot_interfaces) StdoutLine: {'line': b'[ 15%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/choirbot_interfaces/action/position_action__type_support.cpp.o\x1b[0m\n'}
+[17.342374] (-) TimerEvent: {}
+[17.397844] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[17.442557] (-) TimerEvent: {}
+[17.473370] (choirbot_interfaces) StdoutLine: {'line': b'[ 17%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/choirbot_interfaces/srv/detail/task_completion_service__functions.c.o\x1b[0m\n'}
+[17.542896] (-) TimerEvent: {}
+[17.643810] (-) TimerEvent: {}
+[17.697211] (choirbot_interfaces) StdoutLine: {'line': b'[ 19%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/choirbot_interfaces/action/detail/position_action__type_support.cpp.o\x1b[0m\n'}
+[17.744026] (-) TimerEvent: {}
+[17.844839] (-) TimerEvent: {}
+[17.945921] (-) TimerEvent: {}
+[18.032554] (choirbot_interfaces) StdoutLine: {'line': b'[ 20%] \x1b[32m\x1b[1mLinking C shared library libchoirbot_interfaces__rosidl_generator_c.so\x1b[0m\n'}
+[18.046140] (-) TimerEvent: {}
+[18.147286] (-) TimerEvent: {}
+[18.248718] (-) TimerEvent: {}
+[18.349882] (-) TimerEvent: {}
+[18.453056] (-) TimerEvent: {}
+[18.554744] (-) TimerEvent: {}
+[18.614682] (choirbot_interfaces) StdoutLine: {'line': b'[ 20%] Built target choirbot_interfaces__rosidl_generator_c\n'}
+[18.655078] (-) TimerEvent: {}
+[18.672134] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[18.755261] (-) TimerEvent: {}
+[18.770493] (choirbot_interfaces) StdoutLine: {'line': b'[ 22%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/choirbot_interfaces/msg/detail/position_task__type_support.cpp.o\x1b[0m\n'}
+[18.855483] (-) TimerEvent: {}
+[18.956471] (-) TimerEvent: {}
+[19.023996] (choirbot_interfaces) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/choirbot_interfaces/action/detail/dds_fastrtps/position_action__type_support.cpp.o\x1b[0m\n'}
+[19.056658] (-) TimerEvent: {}
+[19.158464] (-) TimerEvent: {}
+[19.260499] (-) TimerEvent: {}
+[19.362587] (-) TimerEvent: {}
+[19.464770] (-) TimerEvent: {}
+[19.567085] (-) TimerEvent: {}
+[19.669455] (-) TimerEvent: {}
+[19.770946] (-) TimerEvent: {}
+[19.872398] (-) TimerEvent: {}
+[19.973825] (-) TimerEvent: {}
+[20.075462] (-) TimerEvent: {}
+[20.176935] (-) TimerEvent: {}
+[20.278426] (-) TimerEvent: {}
+[20.379971] (-) TimerEvent: {}
+[20.481154] (-) TimerEvent: {}
+[20.582279] (-) TimerEvent: {}
+[20.684482] (-) TimerEvent: {}
+[20.786264] (-) TimerEvent: {}
+[20.888485] (-) TimerEvent: {}
+[20.993816] (-) TimerEvent: {}
+[21.095529] (-) TimerEvent: {}
+[21.196954] (-) TimerEvent: {}
+[21.298437] (-) TimerEvent: {}
+[21.387353] (choirbot_interfaces) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/choirbot_interfaces/msg/position_task__type_support.cpp.o\x1b[0m\n'}
+[21.396233] (choirbot_interfaces) StdoutLine: {'line': b'[ 26%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/choirbot_interfaces/msg/detail/dds_fastrtps/position_task__type_support.cpp.o\x1b[0m\n'}
+[21.404285] (-) TimerEvent: {}
+[21.415401] (choirbot_interfaces) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/choirbot_interfaces/msg/detail/position_task_array__type_support.cpp.o\x1b[0m\n'}
+[21.504916] (-) TimerEvent: {}
+[21.607804] (-) TimerEvent: {}
+[21.711235] (-) TimerEvent: {}
+[21.815547] (-) TimerEvent: {}
+[21.921578] (-) TimerEvent: {}
+[22.025758] (-) TimerEvent: {}
+[22.131429] (-) TimerEvent: {}
+[22.233467] (-) TimerEvent: {}
+[22.335698] (-) TimerEvent: {}
+[22.437647] (-) TimerEvent: {}
+[22.539777] (-) TimerEvent: {}
+[22.641745] (-) TimerEvent: {}
+[22.743849] (-) TimerEvent: {}
+[22.845121] (-) TimerEvent: {}
+[22.946116] (-) TimerEvent: {}
+[23.047207] (-) TimerEvent: {}
+[23.150966] (-) TimerEvent: {}
+[23.189116] (choirbot_interfaces) StdoutLine: {'line': b'[ 30%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/choirbot_interfaces/srv/detail/position_task_service__type_support.cpp.o\x1b[0m\n'}
+[23.251180] (-) TimerEvent: {}
+[23.352801] (-) TimerEvent: {}
+[23.454406] (-) TimerEvent: {}
+[23.556195] (-) TimerEvent: {}
+[23.658110] (-) TimerEvent: {}
+[23.762862] (-) TimerEvent: {}
+[23.870308] (-) TimerEvent: {}
+[23.940270] (choirbot_interfaces) StdoutLine: {'line': b'[ 31%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/choirbot_interfaces/srv/detail/task_completion_service__type_support.cpp.o\x1b[0m\n'}
+[23.970957] (-) TimerEvent: {}
+[24.039392] (choirbot_interfaces) StdoutLine: {'line': b'[ 33%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/choirbot_interfaces/msg/position_task_array__type_support.cpp.o\x1b[0m\n'}
+[24.071324] (-) TimerEvent: {}
+[24.174120] (-) TimerEvent: {}
+[24.276244] (-) TimerEvent: {}
+[24.379426] (-) TimerEvent: {}
+[24.492398] (-) TimerEvent: {}
+[24.596020] (-) TimerEvent: {}
+[24.700774] (-) TimerEvent: {}
+[24.754569] (choirbot_interfaces) StdoutLine: {'line': b'[ 34%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/choirbot_interfaces/msg/detail/dds_fastrtps/position_task_array__type_support.cpp.o\x1b[0m\n'}
+[24.800877] (-) TimerEvent: {}
+[24.902416] (-) TimerEvent: {}
+[25.004153] (-) TimerEvent: {}
+[25.106241] (-) TimerEvent: {}
+[25.208371] (-) TimerEvent: {}
+[25.310539] (-) TimerEvent: {}
+[25.412920] (-) TimerEvent: {}
+[25.515097] (-) TimerEvent: {}
+[25.616954] (-) TimerEvent: {}
+[25.718876] (-) TimerEvent: {}
+[25.821126] (-) TimerEvent: {}
+[25.922224] (-) TimerEvent: {}
+[26.023198] (-) TimerEvent: {}
+[26.124153] (-) TimerEvent: {}
+[26.225095] (-) TimerEvent: {}
+[26.326359] (-) TimerEvent: {}
+[26.428577] (-) TimerEvent: {}
+[26.447763] (choirbot_interfaces) StdoutLine: {'line': b'[ 36%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/choirbot_interfaces/srv/position_task_service__type_support.cpp.o\x1b[0m\n'}
+[26.528782] (-) TimerEvent: {}
+[26.627645] (choirbot_interfaces) StdoutLine: {'line': b'[ 38%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/choirbot_interfaces/srv/task_completion_service__type_support.cpp.o\x1b[0m\n'}
+[26.628954] (-) TimerEvent: {}
+[26.730090] (-) TimerEvent: {}
+[26.831563] (-) TimerEvent: {}
+[26.933133] (-) TimerEvent: {}
+[27.034531] (-) TimerEvent: {}
+[27.135509] (-) TimerEvent: {}
+[27.204915] (choirbot_interfaces) StdoutLine: {'line': b'[ 39%] \x1b[32m\x1b[1mLinking CXX shared library libchoirbot_interfaces__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[27.235751] (-) TimerEvent: {}
+[27.338107] (-) TimerEvent: {}
+[27.440433] (-) TimerEvent: {}
+[27.542755] (-) TimerEvent: {}
+[27.644903] (-) TimerEvent: {}
+[27.746880] (-) TimerEvent: {}
+[27.799935] (choirbot_interfaces) StdoutLine: {'line': b'[ 39%] Built target choirbot_interfaces__rosidl_typesupport_introspection_cpp\n'}
+[27.847222] (-) TimerEvent: {}
+[27.858592] (choirbot_interfaces) StdoutLine: {'line': b'[ 41%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/choirbot_interfaces/srv/detail/dds_fastrtps/position_task_service__type_support.cpp.o\x1b[0m\n'}
+[27.947404] (-) TimerEvent: {}
+[28.048723] (-) TimerEvent: {}
+[28.151845] (-) TimerEvent: {}
+[28.254777] (-) TimerEvent: {}
+[28.295401] (choirbot_interfaces) StdoutLine: {'line': b'[ 42%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[28.355240] (-) TimerEvent: {}
+[28.458615] (-) TimerEvent: {}
+[28.562625] (-) TimerEvent: {}
+[28.666039] (-) TimerEvent: {}
+[28.769869] (-) TimerEvent: {}
+[28.825214] (choirbot_interfaces) StdoutLine: {'line': b'[ 44%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[28.870321] (-) TimerEvent: {}
+[28.972403] (-) TimerEvent: {}
+[29.074297] (-) TimerEvent: {}
+[29.176947] (-) TimerEvent: {}
+[29.279465] (-) TimerEvent: {}
+[29.381132] (-) TimerEvent: {}
+[29.483033] (-) TimerEvent: {}
+[29.585619] (-) TimerEvent: {}
+[29.687362] (-) TimerEvent: {}
+[29.790044] (-) TimerEvent: {}
+[29.891836] (-) TimerEvent: {}
+[29.993737] (-) TimerEvent: {}
+[30.023696] (choirbot_interfaces) StdoutLine: {'line': b'[ 46%] \x1b[32m\x1b[1mLinking CXX shared library libchoirbot_interfaces__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[30.094702] (-) TimerEvent: {}
+[30.199028] (-) TimerEvent: {}
+[30.302618] (-) TimerEvent: {}
+[30.321074] (choirbot_interfaces) StdoutLine: {'line': b'[ 46%] Built target choirbot_interfaces__rosidl_typesupport_cpp\n'}
+[30.402897] (-) TimerEvent: {}
+[30.427977] (choirbot_interfaces) StdoutLine: {'line': b'[ 47%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/choirbot_interfaces/srv/detail/dds_fastrtps/task_completion_service__type_support.cpp.o\x1b[0m\n'}
+[30.503186] (-) TimerEvent: {}
+[30.606587] (-) TimerEvent: {}
+[30.709986] (-) TimerEvent: {}
+[30.817093] (-) TimerEvent: {}
+[30.922388] (-) TimerEvent: {}
+[31.026874] (-) TimerEvent: {}
+[31.131965] (-) TimerEvent: {}
+[31.242197] (-) TimerEvent: {}
+[31.346943] (-) TimerEvent: {}
+[31.451452] (-) TimerEvent: {}
+[31.555881] (-) TimerEvent: {}
+[31.663775] (-) TimerEvent: {}
+[31.738553] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[31.764346] (-) TimerEvent: {}
+[31.866053] (-) TimerEvent: {}
+[31.874864] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_c\x1b[0m\n'}
+[31.898042] (choirbot_interfaces) StdoutLine: {'line': b'[ 49%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/choirbot_interfaces/action/detail/position_action__type_support.c.o\x1b[0m\n'}
+[31.940877] (choirbot_interfaces) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/choirbot_interfaces/msg/detail/position_task__type_support.c.o\x1b[0m\n'}
+[31.966242] (-) TimerEvent: {}
+[32.045529] (choirbot_interfaces) StdoutLine: {'line': b'[ 52%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/choirbot_interfaces/action/position_action__type_support.cpp.o\x1b[0m\n'}
+[32.066710] (-) TimerEvent: {}
+[32.168086] (-) TimerEvent: {}
+[32.214642] (choirbot_interfaces) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/choirbot_interfaces/msg/detail/position_task_array__type_support.c.o\x1b[0m\n'}
+[32.268331] (-) TimerEvent: {}
+[32.369878] (-) TimerEvent: {}
+[32.434874] (choirbot_interfaces) StdoutLine: {'line': b'[ 55%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/choirbot_interfaces/msg/position_task__type_support.cpp.o\x1b[0m\n'}
+[32.464486] (choirbot_interfaces) StdoutLine: {'line': b'[ 57%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/choirbot_interfaces/srv/detail/position_task_service__type_support.c.o\x1b[0m\n'}
+[32.470144] (-) TimerEvent: {}
+[32.536897] (choirbot_interfaces) StdoutLine: {'line': b'[ 58%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/choirbot_interfaces/msg/position_task_array__type_support.cpp.o\x1b[0m\n'}
+[32.570429] (-) TimerEvent: {}
+[32.659111] (choirbot_interfaces) StdoutLine: {'line': b'[ 60%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/choirbot_interfaces/srv/detail/task_completion_service__type_support.c.o\x1b[0m\n'}
+[32.670617] (-) TimerEvent: {}
+[32.773118] (-) TimerEvent: {}
+[32.830367] (choirbot_interfaces) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/choirbot_interfaces/srv/position_task_service__type_support.cpp.o\x1b[0m\n'}
+[32.848168] (choirbot_interfaces) StdoutLine: {'line': b'[ 63%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/choirbot_interfaces/srv/task_completion_service__type_support.cpp.o\x1b[0m\n'}
+[32.872393] (-) TimerEvent: {}
+[32.957153] (choirbot_interfaces) StdoutLine: {'line': b'[ 65%] \x1b[32m\x1b[1mLinking C shared library libchoirbot_interfaces__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[32.973467] (-) TimerEvent: {}
+[33.076792] (-) TimerEvent: {}
+[33.112750] (choirbot_interfaces) StdoutLine: {'line': b'[ 66%] \x1b[32m\x1b[1mLinking CXX shared library libchoirbot_interfaces__rosidl_typesupport_c.so\x1b[0m\n'}
+[33.176985] (-) TimerEvent: {}
+[33.182360] (choirbot_interfaces) StdoutLine: {'line': b'[ 66%] Built target choirbot_interfaces__rosidl_typesupport_introspection_c\n'}
+[33.277255] (-) TimerEvent: {}
+[33.331822] (choirbot_interfaces) StdoutLine: {'line': b'[ 66%] Built target choirbot_interfaces__rosidl_typesupport_c\n'}
+[33.377516] (-) TimerEvent: {}
+[33.478466] (-) TimerEvent: {}
+[33.579268] (-) TimerEvent: {}
+[33.680078] (-) TimerEvent: {}
+[33.781368] (-) TimerEvent: {}
+[33.832012] (choirbot_interfaces) StdoutLine: {'line': b'[ 68%] \x1b[32m\x1b[1mLinking CXX shared library libchoirbot_interfaces__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[33.881574] (-) TimerEvent: {}
+[33.982459] (-) TimerEvent: {}
+[34.083384] (-) TimerEvent: {}
+[34.184223] (-) TimerEvent: {}
+[34.224668] (choirbot_interfaces) StdoutLine: {'line': b'[ 68%] Built target choirbot_interfaces__rosidl_typesupport_fastrtps_cpp\n'}
+[34.271892] (choirbot_interfaces) StdoutLine: {'line': b'[ 69%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[34.284410] (-) TimerEvent: {}
+[34.385448] (-) TimerEvent: {}
+[34.486486] (-) TimerEvent: {}
+[34.587220] (-) TimerEvent: {}
+[34.687932] (-) TimerEvent: {}
+[34.788646] (-) TimerEvent: {}
+[34.889513] (-) TimerEvent: {}
+[34.990275] (-) TimerEvent: {}
+[35.091001] (-) TimerEvent: {}
+[35.191730] (-) TimerEvent: {}
+[35.292426] (-) TimerEvent: {}
+[35.393227] (-) TimerEvent: {}
+[35.494150] (-) TimerEvent: {}
+[35.594949] (-) TimerEvent: {}
+[35.696029] (-) TimerEvent: {}
+[35.796731] (-) TimerEvent: {}
+[35.897515] (-) TimerEvent: {}
+[35.998242] (-) TimerEvent: {}
+[36.098943] (-) TimerEvent: {}
+[36.199626] (-) TimerEvent: {}
+[36.300459] (-) TimerEvent: {}
+[36.401600] (-) TimerEvent: {}
+[36.494892] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[36.501795] (-) TimerEvent: {}
+[36.602515] (-) TimerEvent: {}
+[36.627514] (choirbot_interfaces) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/choirbot_interfaces/srv/detail/position_task_service__type_support_c.cpp.o\x1b[0m\n'}
+[36.669045] (choirbot_interfaces) StdoutLine: {'line': b'[ 73%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/choirbot_interfaces/msg/detail/position_task__type_support_c.cpp.o\x1b[0m\n'}
+[36.702743] (-) TimerEvent: {}
+[36.747341] (choirbot_interfaces) StdoutLine: {'line': b'[ 74%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/choirbot_interfaces/msg/detail/position_task_array__type_support_c.cpp.o\x1b[0m\n'}
+[36.750068] (choirbot_interfaces) StdoutLine: {'line': b'[ 76%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/choirbot_interfaces/action/detail/position_action__type_support_c.cpp.o\x1b[0m\n'}
+[36.803359] (-) TimerEvent: {}
+[36.904164] (-) TimerEvent: {}
+[37.005562] (-) TimerEvent: {}
+[37.107023] (-) TimerEvent: {}
+[37.208612] (-) TimerEvent: {}
+[37.310914] (-) TimerEvent: {}
+[37.412997] (-) TimerEvent: {}
+[37.515157] (-) TimerEvent: {}
+[37.617519] (-) TimerEvent: {}
+[37.719339] (-) TimerEvent: {}
+[37.821268] (-) TimerEvent: {}
+[37.923450] (-) TimerEvent: {}
+[38.025359] (-) TimerEvent: {}
+[38.127558] (-) TimerEvent: {}
+[38.229314] (-) TimerEvent: {}
+[38.330876] (-) TimerEvent: {}
+[38.432591] (-) TimerEvent: {}
+[38.534140] (-) TimerEvent: {}
+[38.635933] (-) TimerEvent: {}
+[38.737568] (-) TimerEvent: {}
+[38.839168] (-) TimerEvent: {}
+[38.940825] (-) TimerEvent: {}
+[39.042536] (-) TimerEvent: {}
+[39.144332] (-) TimerEvent: {}
+[39.245901] (-) TimerEvent: {}
+[39.312250] (choirbot_interfaces) StdoutLine: {'line': b'[ 77%] \x1b[32mBuilding CXX object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/choirbot_interfaces/srv/detail/task_completion_service__type_support_c.cpp.o\x1b[0m\n'}
+[39.346590] (-) TimerEvent: {}
+[39.451321] (-) TimerEvent: {}
+[39.553968] (-) TimerEvent: {}
+[39.657952] (-) TimerEvent: {}
+[39.765782] (-) TimerEvent: {}
+[39.867245] (-) TimerEvent: {}
+[39.968307] (-) TimerEvent: {}
+[40.070350] (-) TimerEvent: {}
+[40.172118] (-) TimerEvent: {}
+[40.272926] (-) TimerEvent: {}
+[40.373761] (-) TimerEvent: {}
+[40.474595] (-) TimerEvent: {}
+[40.575531] (-) TimerEvent: {}
+[40.676376] (-) TimerEvent: {}
+[40.777175] (-) TimerEvent: {}
+[40.878070] (-) TimerEvent: {}
+[40.979141] (-) TimerEvent: {}
+[41.079955] (-) TimerEvent: {}
+[41.118748] (choirbot_interfaces) StdoutLine: {'line': b'[ 79%] \x1b[32m\x1b[1mLinking CXX shared library libchoirbot_interfaces__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[41.180170] (-) TimerEvent: {}
+[41.281039] (-) TimerEvent: {}
+[41.382047] (-) TimerEvent: {}
+[41.483208] (-) TimerEvent: {}
+[41.538356] (choirbot_interfaces) StdoutLine: {'line': b'[ 79%] Built target choirbot_interfaces__rosidl_typesupport_fastrtps_c\n'}
+[41.581532] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces\x1b[0m\n'}
+[41.583555] (-) TimerEvent: {}
+[41.631346] (choirbot_interfaces) StdoutLine: {'line': b'[ 79%] Built target choirbot_interfaces\n'}
+[41.676583] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__py\x1b[0m\n'}
+[41.683731] (-) TimerEvent: {}
+[41.726631] (choirbot_interfaces) StdoutLine: {'line': b'[ 80%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[41.784072] (-) TimerEvent: {}
+[41.884909] (-) TimerEvent: {}
+[41.986031] (-) TimerEvent: {}
+[42.086803] (-) TimerEvent: {}
+[42.187790] (-) TimerEvent: {}
+[42.288597] (-) TimerEvent: {}
+[42.389456] (-) TimerEvent: {}
+[42.490692] (-) TimerEvent: {}
+[42.591552] (-) TimerEvent: {}
+[42.692310] (-) TimerEvent: {}
+[42.793251] (-) TimerEvent: {}
+[42.894346] (-) TimerEvent: {}
+[42.996135] (-) TimerEvent: {}
+[43.098295] (-) TimerEvent: {}
+[43.199741] (-) TimerEvent: {}
+[43.300455] (-) TimerEvent: {}
+[43.401330] (-) TimerEvent: {}
+[43.502061] (-) TimerEvent: {}
+[43.602756] (-) TimerEvent: {}
+[43.703440] (-) TimerEvent: {}
+[43.804129] (-) TimerEvent: {}
+[43.904837] (-) TimerEvent: {}
+[44.005697] (-) TimerEvent: {}
+[44.106377] (-) TimerEvent: {}
+[44.207128] (-) TimerEvent: {}
+[44.307856] (-) TimerEvent: {}
+[44.408558] (-) TimerEvent: {}
+[44.509225] (-) TimerEvent: {}
+[44.610169] (-) TimerEvent: {}
+[44.710876] (-) TimerEvent: {}
+[44.811634] (-) TimerEvent: {}
+[44.912332] (-) TimerEvent: {}
+[45.013042] (-) TimerEvent: {}
+[45.113931] (-) TimerEvent: {}
+[45.214652] (-) TimerEvent: {}
+[45.315373] (-) TimerEvent: {}
+[45.416320] (-) TimerEvent: {}
+[45.517006] (-) TimerEvent: {}
+[45.618069] (-) TimerEvent: {}
+[45.719262] (-) TimerEvent: {}
+[45.819982] (-) TimerEvent: {}
+[45.920703] (-) TimerEvent: {}
+[46.021428] (-) TimerEvent: {}
+[46.122413] (-) TimerEvent: {}
+[46.223119] (-) TimerEvent: {}
+[46.323806] (-) TimerEvent: {}
+[46.424512] (-) TimerEvent: {}
+[46.525377] (-) TimerEvent: {}
+[46.626791] (-) TimerEvent: {}
+[46.728158] (-) TimerEvent: {}
+[46.833366] (-) TimerEvent: {}
+[46.878883] (choirbot_interfaces) StdoutLine: {'line': b'[ 80%] Built target choirbot_interfaces__py\n'}
+[46.923404] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__python\x1b[0m\n'}
+[46.933520] (-) TimerEvent: {}
+[47.034836] (-) TimerEvent: {}
+[47.065817] (choirbot_interfaces) StdoutLine: {'line': b'[ 82%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__python.dir/rosidl_generator_py/choirbot_interfaces/msg/_position_task_array_s.c.o\x1b[0m\n'}
+[47.107660] (choirbot_interfaces) StdoutLine: {'line': b'[ 84%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__python.dir/rosidl_generator_py/choirbot_interfaces/action/_position_action_s.c.o\x1b[0m\n'}
+[47.124793] (choirbot_interfaces) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__python.dir/rosidl_generator_py/choirbot_interfaces/srv/_position_task_service_s.c.o\x1b[0m\n'}
+[47.132936] (choirbot_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__python.dir/rosidl_generator_py/choirbot_interfaces/msg/_position_task_s.c.o\x1b[0m\n'}
+[47.135231] (-) TimerEvent: {}
+[47.238519] (-) TimerEvent: {}
+[47.341384] (-) TimerEvent: {}
+[47.444662] (-) TimerEvent: {}
+[47.547179] (-) TimerEvent: {}
+[47.649419] (-) TimerEvent: {}
+[47.751303] (-) TimerEvent: {}
+[47.758450] (choirbot_interfaces) StdoutLine: {'line': b'[ 88%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__python.dir/rosidl_generator_py/choirbot_interfaces/srv/_task_completion_service_s.c.o\x1b[0m\n'}
+[47.851929] (-) TimerEvent: {}
+[47.954642] (-) TimerEvent: {}
+[48.056540] (-) TimerEvent: {}
+[48.158240] (-) TimerEvent: {}
+[48.247410] (choirbot_interfaces) StdoutLine: {'line': b'[ 90%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/choirbot_interfaces/libchoirbot_interfaces__python.so\x1b[0m\n'}
+[48.258417] (-) TimerEvent: {}
+[48.359319] (-) TimerEvent: {}
+[48.460296] (-) TimerEvent: {}
+[48.479885] (choirbot_interfaces) StdoutLine: {'line': b'[ 90%] Built target choirbot_interfaces__python\n'}
+[48.532656] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[48.535890] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[48.555627] (choirbot_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[48.560477] (-) TimerEvent: {}
+[48.661245] (-) TimerEvent: {}
+[48.668484] (choirbot_interfaces) StdoutLine: {'line': b'[ 92%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/choirbot_interfaces/_choirbot_interfaces_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[48.670368] (choirbot_interfaces) StdoutLine: {'line': b'[ 93%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/choirbot_interfaces/_choirbot_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[48.761461] (-) TimerEvent: {}
+[48.765637] (choirbot_interfaces) StdoutLine: {'line': b'[ 95%] \x1b[32mBuilding C object CMakeFiles/choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/choirbot_interfaces/_choirbot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[48.861707] (-) TimerEvent: {}
+[48.962706] (-) TimerEvent: {}
+[49.063661] (-) TimerEvent: {}
+[49.164589] (-) TimerEvent: {}
+[49.265540] (-) TimerEvent: {}
+[49.366709] (-) TimerEvent: {}
+[49.468148] (-) TimerEvent: {}
+[49.519520] (choirbot_interfaces) StdoutLine: {'line': b'[ 96%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_introspection_c.cpython-38-aarch64-linux-gnu.so\x1b[0m\n'}
+[49.568398] (-) TimerEvent: {}
+[49.639645] (choirbot_interfaces) StdoutLine: {'line': b'[ 98%] \x1b[32m\x1b[1mLinking CXX shared library rosidl_generator_py/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-38-aarch64-linux-gnu.so\x1b[0m\n'}
+[49.670329] (-) TimerEvent: {}
+[49.724135] (choirbot_interfaces) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_c.cpython-38-aarch64-linux-gnu.so\x1b[0m\n'}
+[49.771058] (-) TimerEvent: {}
+[49.870300] (choirbot_interfaces) StdoutLine: {'line': b'[100%] Built target choirbot_interfaces__rosidl_typesupport_introspection_c__pyext\n'}
+[49.880196] (-) TimerEvent: {}
+[49.983882] (-) TimerEvent: {}
+[50.049776] (choirbot_interfaces) StdoutLine: {'line': b'[100%] Built target choirbot_interfaces__rosidl_typesupport_c__pyext\n'}
+[50.084225] (-) TimerEvent: {}
+[50.112190] (choirbot_interfaces) StdoutLine: {'line': b'[100%] Built target choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext\n'}
+[50.169831] (choirbot_interfaces) CommandEnded: {'returncode': 0}
+[50.172644] (choirbot_interfaces) JobProgress: {'identifier': 'choirbot_interfaces', 'progress': 'install'}
+[50.184460] (-) TimerEvent: {}
+[50.214609] (choirbot_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces', 'env': OrderedDict([('MAIL', '/var/mail/robot4'), ('USER', 'robot4'), ('SSH_AGENT_PID', '1291'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/robot4'), ('OLDPWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics'), ('ROS_PYTHON_VERSION', '3'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1221'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'robot4'), ('JOURNAL_STREAM', '9:31721'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin'), ('SESSION_MANAGER', 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339'), ('INVOCATION_ID', '4c14e32938774145a9c17a0dc50a8b06'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'GNOME'), ('XMODIFIERS', '@im=ibus'), ('XAUTHORITY', '/home/robot4/.Xauthority'), ('GNOME_TERMINAL_SERVICE', ':1.82'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[50.262802] (choirbot_interfaces) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[50.265163] (choirbot_interfaces) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[50.267243] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/ament_index/resource_index/rosidl_interfaces/choirbot_interfaces\n'}
+[50.284583] (-) TimerEvent: {}
+[50.307430] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__functions.h\n'}
+[50.345503] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__struct.h\n'}
+[50.380520] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__type_support.h\n'}
+[50.384744] (-) TimerEvent: {}
+[50.421462] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/position_action.h\n'}
+[50.457944] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__functions.h\n'}
+[50.484913] (-) TimerEvent: {}
+[50.494080] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__struct.h\n'}
+[50.533657] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__type_support.h\n'}
+[50.568969] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__functions.h\n'}
+[50.585085] (-) TimerEvent: {}
+[50.604930] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__struct.h\n'}
+[50.646021] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__type_support.h\n'}
+[50.685257] (-) TimerEvent: {}
+[50.737647] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/position_task.h\n'}
+[50.780578] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/position_task_array.h\n'}
+[50.785497] (-) TimerEvent: {}
+[50.820324] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/rosidl_generator_c__visibility_control.h\n'}
+[50.855655] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__functions.h\n'}
+[50.885721] (-) TimerEvent: {}
+[50.892171] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__struct.h\n'}
+[50.931562] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__type_support.h\n'}
+[50.968166] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__functions.h\n'}
+[50.985876] (-) TimerEvent: {}
+[51.003831] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__struct.h\n'}
+[51.044352] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__type_support.h\n'}
+[51.079501] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/position_task_service.h\n'}
+[51.086234] (-) TimerEvent: {}
+[51.117198] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/task_completion_service.h\n'}
+[51.155260] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/library_path.sh\n'}
+[51.186407] (-) TimerEvent: {}
+[51.192156] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/library_path.dsv\n'}
+[51.236382] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__rosidl_typesupport_fastrtps_c.h\n'}
+[51.273928] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__rosidl_typesupport_fastrtps_c.h\n'}
+[51.286580] (-) TimerEvent: {}
+[51.309689] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__rosidl_typesupport_fastrtps_c.h\n'}
+[51.349876] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[51.385264] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__rosidl_typesupport_fastrtps_c.h\n'}
+[51.386691] (-) TimerEvent: {}
+[51.424156] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__rosidl_typesupport_fastrtps_c.h\n'}
+[51.460472] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[51.486883] (-) TimerEvent: {}
+[51.503896] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[51.544921] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[51.583170] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[51.587082] (-) TimerEvent: {}
+[51.621695] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[51.656586] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[51.687281] (-) TimerEvent: {}
+[51.691593] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[51.732714] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[51.771583] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__rosidl_typesupport_introspection_c.h\n'}
+[51.787467] (-) TimerEvent: {}
+[51.808324] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__rosidl_typesupport_introspection_c.h\n'}
+[51.848353] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__rosidl_typesupport_introspection_c.h\n'}
+[51.884137] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[51.887636] (-) TimerEvent: {}
+[51.925226] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__rosidl_typesupport_introspection_c.h\n'}
+[51.958456] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__rosidl_typesupport_introspection_c.h\n'}
+[51.988008] (-) TimerEvent: {}
+[51.999210] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__builder.hpp\n'}
+[52.040642] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__struct.hpp\n'}
+[52.076179] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__traits.hpp\n'}
+[52.088105] (-) TimerEvent: {}
+[52.111808] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__type_support.hpp\n'}
+[52.150742] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/position_action.hpp\n'}
+[52.186045] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__builder.hpp\n'}
+[52.188253] (-) TimerEvent: {}
+[52.225088] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__struct.hpp\n'}
+[52.260127] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__traits.hpp\n'}
+[52.288420] (-) TimerEvent: {}
+[52.295075] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__type_support.hpp\n'}
+[52.333961] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__builder.hpp\n'}
+[52.369694] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__struct.hpp\n'}
+[52.388620] (-) TimerEvent: {}
+[52.404742] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__traits.hpp\n'}
+[52.443829] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__type_support.hpp\n'}
+[52.480319] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/position_task.hpp\n'}
+[52.489179] (-) TimerEvent: {}
+[52.515552] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/position_task_array.hpp\n'}
+[52.553664] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[52.589383] (-) TimerEvent: {}
+[52.590140] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__builder.hpp\n'}
+[52.625168] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__struct.hpp\n'}
+[52.663123] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__traits.hpp\n'}
+[52.689576] (-) TimerEvent: {}
+[52.699083] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__type_support.hpp\n'}
+[52.738051] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__builder.hpp\n'}
+[52.773567] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__struct.hpp\n'}
+[52.789852] (-) TimerEvent: {}
+[52.808925] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__traits.hpp\n'}
+[52.847314] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__type_support.hpp\n'}
+[52.884187] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/position_task_service.hpp\n'}
+[52.890017] (-) TimerEvent: {}
+[52.919629] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/task_completion_service.hpp\n'}
+[52.960808] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/action/detail/position_action__rosidl_typesupport_introspection_cpp.hpp\n'}
+[52.990202] (-) TimerEvent: {}
+[52.997716] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task__rosidl_typesupport_introspection_cpp.hpp\n'}
+[53.037261] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/msg/detail/position_task_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[53.073658] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/position_task_service__rosidl_typesupport_introspection_cpp.hpp\n'}
+[53.090388] (-) TimerEvent: {}
+[53.109689] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/include/choirbot_interfaces/srv/detail/task_completion_service__rosidl_typesupport_introspection_cpp.hpp\n'}
+[53.149799] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/pythonpath.sh\n'}
+[53.185965] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/pythonpath.dsv\n'}
+[53.190542] (-) TimerEvent: {}
+[53.223740] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/__init__.py\n'}
+[53.264403] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/action/__init__.py\n'}
+[53.290746] (-) TimerEvent: {}
+[53.300746] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/action/_position_action.py\n'}
+[53.342213] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/msg/__init__.py\n'}
+[53.378831] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/msg/_position_task.py\n'}
+[53.391036] (-) TimerEvent: {}
+[53.414290] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/msg/_position_task_array.py\n'}
+[53.455684] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/srv/__init__.py\n'}
+[53.491491] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/srv/_position_task_service.py\n'}
+[53.492268] (-) TimerEvent: {}
+[53.527599] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/srv/_task_completion_service.py\n'}
+[53.567739] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-38-aarch64-linux-gnu.so\n'}
+[53.592710] (-) TimerEvent: {}
+[53.605084] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_introspection_c.cpython-38-aarch64-linux-gnu.so\n'}
+[53.646156] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/choirbot_interfaces_s__rosidl_typesupport_c.cpython-38-aarch64-linux-gnu.so\n'}
+[53.683176] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__python.so\n'}
+[53.692891] (-) TimerEvent: {}
+[53.722968] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/action/PositionAction.idl\n'}
+[53.763407] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/msg/PositionTask.idl\n'}
+[53.793079] (-) TimerEvent: {}
+[53.799900] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/msg/PositionTaskArray.idl\n'}
+[53.840022] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/PositionTaskService.idl\n'}
+[53.878326] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/TaskCompletionService.idl\n'}
+[53.893290] (-) TimerEvent: {}
+[53.914664] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/action/PositionAction.action\n'}
+[53.954356] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/msg/PositionTask.msg\n'}
+[53.990535] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/msg/PositionTaskArray.msg\n'}
+[53.993439] (-) TimerEvent: {}
+[54.027137] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/PositionTaskService.srv\n'}
+[54.065032] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/PositionTaskService_Request.msg\n'}
+[54.093678] (-) TimerEvent: {}
+[54.100809] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/PositionTaskService_Response.msg\n'}
+[54.141100] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/TaskCompletionService.srv\n'}
+[54.177091] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/TaskCompletionService_Request.msg\n'}
+[54.193866] (-) TimerEvent: {}
+[54.212699] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/srv/TaskCompletionService_Response.msg\n'}
+[54.253330] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/ament_index/resource_index/package_run_dependencies/choirbot_interfaces\n'}
+[54.290055] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/ament_index/resource_index/parent_prefix_path/choirbot_interfaces\n'}
+[54.294023] (-) TimerEvent: {}
+[54.326700] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/ament_prefix_path.sh\n'}
+[54.365336] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/ament_prefix_path.dsv\n'}
+[54.394226] (-) TimerEvent: {}
+[54.403012] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/path.sh\n'}
+[54.443078] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/environment/path.dsv\n'}
+[54.479400] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/local_setup.bash\n'}
+[54.494422] (-) TimerEvent: {}
+[54.515517] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/local_setup.sh\n'}
+[54.554691] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/local_setup.zsh\n'}
+[54.590525] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/local_setup.dsv\n'}
+[54.594757] (-) TimerEvent: {}
+[54.627397] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.dsv\n'}
+[54.666065] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/ament_index/resource_index/packages/choirbot_interfaces\n'}
+[54.695029] (-) TimerEvent: {}
+[54.701499] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/rosidl_cmake-extras.cmake\n'}
+[54.741121] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[54.777488] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[54.795396] (-) TimerEvent: {}
+[54.813909] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[54.854265] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[54.891175] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[54.895565] (-) TimerEvent: {}
+[54.927416] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[54.967023] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfacesConfig.cmake\n'}
+[54.995943] (-) TimerEvent: {}
+[55.003504] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfacesConfig-version.cmake\n'}
+[55.043143] (choirbot_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.xml\n'}
+[55.078128] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_generator_c.so\n'}
+[55.081467] (choirbot_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_generator_c.so" to ""\n'}
+[55.082322] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[55.085492] (choirbot_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_introspection_c.so" to ""\n'}
+[55.086375] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_c.so\n'}
+[55.089472] (choirbot_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_c.so" to ""\n'}
+[55.090342] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[55.094183] (choirbot_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[55.096123] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_cpp.so\n'}
+[55.096655] (-) TimerEvent: {}
+[55.097771] (choirbot_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/libchoirbot_interfaces__rosidl_typesupport_cpp.so" to ""\n'}
+[55.196912] (-) TimerEvent: {}
+[55.243207] (choirbot_interfaces) StdoutLine: {'line': b"Compiling '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages/choirbot_interfaces/__init__.py'...\n"}
+[55.267710] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_generator_cExport.cmake\n'}
+[55.269338] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_generator_cExport-noconfig.cmake\n'}
+[55.271330] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_introspection_cExport.cmake\n'}
+[55.273000] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[55.275143] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_cExport.cmake\n'}
+[55.276965] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[55.279016] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_generator_cppExport.cmake\n'}
+[55.281349] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[55.283369] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[55.285390] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_cppExport.cmake\n'}
+[55.287076] (choirbot_interfaces) StdoutLine: {'line': b'-- Installing: /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/cmake/choirbot_interfaces__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[55.294464] (choirbot_interfaces) CommandEnded: {'returncode': 0}
+[55.297763] (-) TimerEvent: {}
+[55.399158] (-) TimerEvent: {}
+[55.413866] (choirbot_interfaces) JobEnded: {'identifier': 'choirbot_interfaces', 'rc': 0}
+[55.419043] (choirbot) JobStarted: {'identifier': 'choirbot'}
+[55.499482] (-) TimerEvent: {}
+[55.600669] (-) TimerEvent: {}
+[55.701402] (-) TimerEvent: {}
+[55.802210] (-) TimerEvent: {}
+[55.902984] (-) TimerEvent: {}
+[56.003943] (-) TimerEvent: {}
+[56.104672] (-) TimerEvent: {}
+[56.205378] (-) TimerEvent: {}
+[56.306134] (-) TimerEvent: {}
+[56.406898] (-) TimerEvent: {}
+[56.509265] (-) TimerEvent: {}
+[56.611432] (-) TimerEvent: {}
+[56.712814] (-) TimerEvent: {}
+[56.813968] (-) TimerEvent: {}
+[56.916721] (-) TimerEvent: {}
+[57.018103] (-) TimerEvent: {}
+[57.119156] (-) TimerEvent: {}
+[57.220552] (-) TimerEvent: {}
+[57.321241] (-) TimerEvent: {}
+[57.421956] (-) TimerEvent: {}
+[57.522650] (-) TimerEvent: {}
+[57.623359] (-) TimerEvent: {}
+[57.724182] (-) TimerEvent: {}
+[57.824896] (-) TimerEvent: {}
+[57.925584] (-) TimerEvent: {}
+[58.026288] (-) TimerEvent: {}
+[58.126977] (-) TimerEvent: {}
+[58.227861] (-) TimerEvent: {}
+[58.328580] (-) TimerEvent: {}
+[58.429304] (-) TimerEvent: {}
+[58.530040] (-) TimerEvent: {}
+[58.630700] (-) TimerEvent: {}
+[58.731371] (-) TimerEvent: {}
+[58.832199] (-) TimerEvent: {}
+[58.933162] (-) TimerEvent: {}
+[59.033939] (-) TimerEvent: {}
+[59.134728] (-) TimerEvent: {}
+[59.235559] (-) TimerEvent: {}
+[59.336912] (-) TimerEvent: {}
+[59.377366] (choirbot) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/build', '--no-deps', 'symlink_data'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot', 'env': {'MAIL': '/var/mail/robot4', 'USER': 'robot4', 'SSH_AGENT_PID': '1291', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib', 'HOME': '/home/robot4', 'OLDPWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics', 'ROS_PYTHON_VERSION': '3', 'GTK_MODULES': 'gail:atk-bridge', 'MANAGERPID': '1221', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'robot4', 'JOURNAL_STREAM': '9:31721', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin', 'SESSION_MANAGER': 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339', 'INVOCATION_ID': '4c14e32938774145a9c17a0dc50a8b06', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0.0', 'LANG': 'C.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XMODIFIERS': '@im=ibus', 'XAUTHORITY': '/home/robot4/.Xauthority', 'GNOME_TERMINAL_SERVICE': ':1.82', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:/opt/ros/foxy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'VTE_VERSION': '6003', 'CMAKE_PREFIX_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces'}, 'shell': False}
+[59.437091] (-) TimerEvent: {}
+[59.537927] (-) TimerEvent: {}
+[59.638919] (-) TimerEvent: {}
+[59.739960] (-) TimerEvent: {}
+[59.840680] (-) TimerEvent: {}
+[59.941378] (-) TimerEvent: {}
+[60.042150] (-) TimerEvent: {}
+[60.142812] (-) TimerEvent: {}
+[60.243482] (-) TimerEvent: {}
+[60.344337] (-) TimerEvent: {}
+[60.445176] (-) TimerEvent: {}
+[60.545903] (-) TimerEvent: {}
+[60.646625] (-) TimerEvent: {}
+[60.747320] (-) TimerEvent: {}
+[60.848226] (-) TimerEvent: {}
+[60.949961] (-) TimerEvent: {}
+[60.954097] (choirbot) StdoutLine: {'line': b'running develop\n'}
+[61.050106] (-) TimerEvent: {}
+[61.151260] (-) TimerEvent: {}
+[61.252122] (-) TimerEvent: {}
+[61.352791] (-) TimerEvent: {}
+[61.453494] (-) TimerEvent: {}
+[61.554253] (-) TimerEvent: {}
+[61.655040] (-) TimerEvent: {}
+[61.756013] (-) TimerEvent: {}
+[61.856784] (-) TimerEvent: {}
+[61.957548] (-) TimerEvent: {}
+[61.966545] (choirbot) StdoutLine: {'line': b'running egg_info\n'}
+[61.967840] (choirbot) StdoutLine: {'line': b'creating choirbot.egg-info\n'}
+[62.039815] (choirbot) StdoutLine: {'line': b'writing choirbot.egg-info/PKG-INFO\n'}
+[62.042348] (choirbot) StdoutLine: {'line': b'writing dependency_links to choirbot.egg-info/dependency_links.txt\n'}
+[62.043668] (choirbot) StdoutLine: {'line': b'writing requirements to choirbot.egg-info/requires.txt\n'}
+[62.044432] (choirbot) StdoutLine: {'line': b'writing top-level names to choirbot.egg-info/top_level.txt\n'}
+[62.053672] (choirbot) StdoutLine: {'line': b"writing manifest file 'choirbot.egg-info/SOURCES.txt'\n"}
+[62.057718] (-) TimerEvent: {}
+[62.158733] (-) TimerEvent: {}
+[62.213206] (choirbot) StdoutLine: {'line': b"reading manifest file 'choirbot.egg-info/SOURCES.txt'\n"}
+[62.218641] (choirbot) StdoutLine: {'line': b"writing manifest file 'choirbot.egg-info/SOURCES.txt'\n"}
+[62.258849] (-) TimerEvent: {}
+[62.359552] (-) TimerEvent: {}
+[62.460413] (-) TimerEvent: {}
+[62.505912] (choirbot) StdoutLine: {'line': b'running build_ext\n'}
+[62.507353] (choirbot) StdoutLine: {'line': b'Creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages/choirbot.egg-link (link to .)\n'}
+[62.510319] (choirbot) StdoutLine: {'line': b'\n'}
+[62.511205] (choirbot) StdoutLine: {'line': b'Installed /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot\n'}
+[62.512307] (choirbot) StdoutLine: {'line': b'running symlink_data\n'}
+[62.513045] (choirbot) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/ament_index\n'}
+[62.513838] (choirbot) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/ament_index/resource_index\n'}
+[62.514851] (choirbot) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/ament_index/resource_index/packages\n'}
+[62.516037] (choirbot) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/resource/choirbot -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/ament_index/resource_index/packages\n'}
+[62.517447] (choirbot) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/package.xml -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot\n'}
+[62.560699] (-) TimerEvent: {}
+[62.662163] (-) TimerEvent: {}
+[62.708772] (choirbot) CommandEnded: {'returncode': 0}
+[62.750475] (choirbot) JobEnded: {'identifier': 'choirbot', 'rc': 0}
+[62.755548] (choirbot_examples) JobStarted: {'identifier': 'choirbot_examples'}
+[62.762334] (-) TimerEvent: {}
+[62.863664] (-) TimerEvent: {}
+[62.964965] (-) TimerEvent: {}
+[63.065855] (-) TimerEvent: {}
+[63.166569] (-) TimerEvent: {}
+[63.267315] (-) TimerEvent: {}
+[64.133588] (-) TimerEvent: {}
+[65.251239] (-) TimerEvent: {}
+[65.352159] (-) TimerEvent: {}
+[65.472773] (-) TimerEvent: {}
+[65.573476] (-) TimerEvent: {}
+[65.674225] (-) TimerEvent: {}
+[65.774971] (-) TimerEvent: {}
+[65.875693] (-) TimerEvent: {}
+[65.976551] (-) TimerEvent: {}
+[66.077409] (-) TimerEvent: {}
+[66.178132] (-) TimerEvent: {}
+[66.278881] (-) TimerEvent: {}
+[66.379610] (-) TimerEvent: {}
+[66.480612] (-) TimerEvent: {}
+[66.582063] (-) TimerEvent: {}
+[66.683524] (-) TimerEvent: {}
+[66.785336] (-) TimerEvent: {}
+[66.886897] (-) TimerEvent: {}
+[66.987597] (-) TimerEvent: {}
+[67.088273] (-) TimerEvent: {}
+[67.189019] (-) TimerEvent: {}
+[67.289774] (-) TimerEvent: {}
+[67.390672] (-) TimerEvent: {}
+[67.491374] (-) TimerEvent: {}
+[67.592050] (-) TimerEvent: {}
+[67.692758] (-) TimerEvent: {}
+[67.793445] (-) TimerEvent: {}
+[67.894186] (-) TimerEvent: {}
+[67.995196] (-) TimerEvent: {}
+[68.095994] (-) TimerEvent: {}
+[68.196925] (-) TimerEvent: {}
+[68.298382] (-) TimerEvent: {}
+[68.331915] (choirbot_examples) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/build', '--no-deps', 'symlink_data'], 'cwd': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples', 'env': {'MAIL': '/var/mail/robot4', 'USER': 'robot4', 'SSH_AGENT_PID': '1291', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib', 'HOME': '/home/robot4', 'OLDPWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics', 'ROS_PYTHON_VERSION': '3', 'GTK_MODULES': 'gail:atk-bridge', 'MANAGERPID': '1221', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'robot4', 'JOURNAL_STREAM': '9:31721', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin', 'SESSION_MANAGER': 'local/robot4:@/tmp/.ICE-unix/1339,unix/robot4:/tmp/.ICE-unix/1339', 'INVOCATION_ID': '4c14e32938774145a9c17a0dc50a8b06', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/2870417b_e038_461f_a77b_4273d2f67820', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0.0', 'LANG': 'C.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XMODIFIERS': '@im=ibus', 'XAUTHORITY': '/home/robot4/.Xauthority', 'GNOME_TERMINAL_SERVICE': ':1.82', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:/opt/ros/foxy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'VTE_VERSION': '6003', 'CMAKE_PREFIX_PATH': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces'}, 'shell': False}
+[68.398935] (-) TimerEvent: {}
+[68.500355] (-) TimerEvent: {}
+[68.601717] (-) TimerEvent: {}
+[68.702887] (-) TimerEvent: {}
+[68.804344] (-) TimerEvent: {}
+[68.905587] (-) TimerEvent: {}
+[69.006393] (-) TimerEvent: {}
+[69.107135] (-) TimerEvent: {}
+[69.207872] (-) TimerEvent: {}
+[69.308798] (-) TimerEvent: {}
+[69.409633] (-) TimerEvent: {}
+[69.510339] (-) TimerEvent: {}
+[69.611040] (-) TimerEvent: {}
+[69.711723] (-) TimerEvent: {}
+[69.812440] (-) TimerEvent: {}
+[69.913437] (-) TimerEvent: {}
+[69.928660] (choirbot_examples) StdoutLine: {'line': b'running develop\n'}
+[70.013763] (-) TimerEvent: {}
+[70.114888] (-) TimerEvent: {}
+[70.216655] (-) TimerEvent: {}
+[70.317339] (-) TimerEvent: {}
+[70.418015] (-) TimerEvent: {}
+[70.518717] (-) TimerEvent: {}
+[70.619428] (-) TimerEvent: {}
+[70.720369] (-) TimerEvent: {}
+[70.821062] (-) TimerEvent: {}
+[70.921748] (-) TimerEvent: {}
+[70.943594] (choirbot_examples) StdoutLine: {'line': b'running egg_info\n'}
+[70.944516] (choirbot_examples) StdoutLine: {'line': b'creating choirbot_examples.egg-info\n'}
+[71.014442] (choirbot_examples) StdoutLine: {'line': b'writing choirbot_examples.egg-info/PKG-INFO\n'}
+[71.016732] (choirbot_examples) StdoutLine: {'line': b'writing dependency_links to choirbot_examples.egg-info/dependency_links.txt\n'}
+[71.018822] (choirbot_examples) StdoutLine: {'line': b'writing entry points to choirbot_examples.egg-info/entry_points.txt\n'}
+[71.019642] (choirbot_examples) StdoutLine: {'line': b'writing requirements to choirbot_examples.egg-info/requires.txt\n'}
+[71.020381] (choirbot_examples) StdoutLine: {'line': b'writing top-level names to choirbot_examples.egg-info/top_level.txt\n'}
+[71.021874] (-) TimerEvent: {}
+[71.025700] (choirbot_examples) StdoutLine: {'line': b"writing manifest file 'choirbot_examples.egg-info/SOURCES.txt'\n"}
+[71.122099] (-) TimerEvent: {}
+[71.250537] (choirbot_examples) StdoutLine: {'line': b"reading manifest file 'choirbot_examples.egg-info/SOURCES.txt'\n"}
+[71.251157] (-) TimerEvent: {}
+[71.255077] (choirbot_examples) StdoutLine: {'line': b"writing manifest file 'choirbot_examples.egg-info/SOURCES.txt'\n"}
+[71.351321] (-) TimerEvent: {}
+[71.452123] (-) TimerEvent: {}
+[71.546654] (choirbot_examples) StdoutLine: {'line': b'running build_ext\n'}
+[71.547574] (choirbot_examples) StdoutLine: {'line': b'Creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/python3.8/site-packages/choirbot-examples.egg-link (link to .)\n'}
+[71.551520] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_bearingformationcontrol_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.552228] (-) TimerEvent: {}
+[71.553220] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_bearingformationcontrol_integrator script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.554073] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_containment_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.555027] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_containment_integrator script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.555847] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_containment_rviz script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.556831] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_formationcontrol_controller script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.557813] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_formationcontrol_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.558812] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_mpc_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.559940] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_mpc_integrator script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.560846] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_mpc_rviz script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.561845] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_quadrotorbearingformationcontrol_controller script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.562773] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_quadrotorbearingformationcontrol_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.563946] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_quadrotorbearingformationcontrol_integrator script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.565203] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_taskassignment_controller script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.566197] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_taskassignment_guidance script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.567143] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_taskassignment_planner script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.568067] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_taskassignment_table script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.569045] (choirbot_examples) StdoutLine: {'line': b'Installing choirbot_turtlebot_spawner script to /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/choirbot_examples\n'}
+[71.570760] (choirbot_examples) StdoutLine: {'line': b'\n'}
+[71.571579] (choirbot_examples) StdoutLine: {'line': b'Installed /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples\n'}
+[71.572342] (choirbot_examples) StdoutLine: {'line': b'running symlink_data\n'}
+[71.573180] (choirbot_examples) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/ament_index\n'}
+[71.573683] (choirbot_examples) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/ament_index/resource_index\n'}
+[71.574593] (choirbot_examples) StdoutLine: {'line': b'creating /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/ament_index/resource_index/packages\n'}
+[71.575331] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/resource/choirbot_examples -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/ament_index/resource_index/packages\n'}
+[71.576054] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/package.xml -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.576518] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/bearingformationcontrol.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.577164] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/mpc.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.577967] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/containment.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.585332] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/gazebo.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.591238] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/taskassignment_advmec.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.595920] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/quadrotorbearingformationcontrol.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.606033] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/taskassignment.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.611544] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/launch/formationcontrol.launch.py -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.615827] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/resource/rvizconf.rviz -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.620025] (choirbot_examples) StdoutLine: {'line': b'symbolically linking /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/resource/model_burger.sdf -> /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples\n'}
+[71.652971] (-) TimerEvent: {}
+[71.756033] (-) TimerEvent: {}
+[71.779966] (choirbot_examples) CommandEnded: {'returncode': 0}
+[71.827871] (choirbot_examples) JobEnded: {'identifier': 'choirbot_examples', 'rc': 0}
+[71.831953] (-) EventReactorShutdown: {}

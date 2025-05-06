@@ -1,0 +1,17 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from choirbot_interfaces/msg/PositionTaskArray.msg
+// generated code does not contain a copyright notice
+
+#include "choirbot_interfaces/msg/PositionTask.idl"
+
+module choirbot_interfaces {
+  module msg {
+    struct PositionTaskArray {
+      sequence<choirbot_interfaces::msg::PositionTask> tasks;
+
+      uint32 all_tasks_count;
+
+      uint32 label;
+    };
+  };
+};

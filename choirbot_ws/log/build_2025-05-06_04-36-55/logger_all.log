@@ -1,0 +1,469 @@
+[0.906s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.906s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff94bf1e50>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=4, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff94bf1e50>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff94a1e0d0>)
+[1.165s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.167s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws'
+[1.167s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.167s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.169s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.169s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.231s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.232s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.232s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.232s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.232s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.233s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.234s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.234s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.234s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.235s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.235s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.236s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.236s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.236s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.237s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.237s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.237s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.238s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.238s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.238s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.238s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.239s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.239s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.239s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.239s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.239s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.240s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.240s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.240s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['ignore', 'ignore_ament_install']
+[1.241s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'ignore'
+[1.241s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'ignore_ament_install'
+[1.241s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['colcon_pkg']
+[1.241s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'colcon_pkg'
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['colcon_meta']
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'colcon_meta'
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['ros']
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'ros'
+[1.243s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['cmake', 'python']
+[1.243s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'cmake'
+[1.243s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'python'
+[1.243s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extensions ['python_setup_py']
+[1.243s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot) by extension 'python_setup_py'
+[1.244s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/build) by extensions ['ignore', 'ignore_ament_install']
+[1.244s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/build) by extension 'ignore'
+[1.244s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/build) ignored
+[1.245s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extensions ['ignore', 'ignore_ament_install']
+[1.245s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extension 'ignore'
+[1.246s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extension 'ignore_ament_install'
+[1.246s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extensions ['colcon_pkg']
+[1.246s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extension 'colcon_pkg'
+[1.246s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extensions ['colcon_meta']
+[1.247s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extension 'colcon_meta'
+[1.247s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extensions ['ros']
+[1.247s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot) by extension 'ros'
+[1.257s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ChoiRbot/choirbot' with type 'ros.ament_python' and name 'choirbot'
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extensions ['ignore', 'ignore_ament_install']
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extension 'ignore'
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extension 'ignore_ament_install'
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extensions ['colcon_pkg']
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extension 'colcon_pkg'
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extensions ['colcon_meta']
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extension 'colcon_meta'
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extensions ['ros']
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_examples) by extension 'ros'
+[1.262s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ChoiRbot/choirbot_examples' with type 'ros.ament_python' and name 'choirbot_examples'
+[1.263s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[1.263s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extension 'ignore'
+[1.263s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extension 'ignore_ament_install'
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extensions ['colcon_pkg']
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extension 'colcon_pkg'
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extensions ['colcon_meta']
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extension 'colcon_meta'
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extensions ['ros']
+[1.264s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_interfaces) by extension 'ros'
+[1.267s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ChoiRbot/choirbot_interfaces' with type 'ros.ament_cmake' and name 'choirbot_interfaces'
+[1.267s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extensions ['ignore', 'ignore_ament_install']
+[1.268s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extension 'ignore'
+[1.268s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extension 'ignore_ament_install'
+[1.268s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extensions ['colcon_pkg']
+[1.269s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extension 'colcon_pkg'
+[1.269s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extensions ['colcon_meta']
+[1.269s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extension 'colcon_meta'
+[1.269s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extensions ['ros']
+[1.269s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/choirbot_io) by extension 'ros'
+[1.272s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ChoiRbot/choirbot_io' with type 'ros.ament_python' and name 'choirbot_io'
+[1.273s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['ignore', 'ignore_ament_install']
+[1.273s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'ignore'
+[1.274s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'ignore_ament_install'
+[1.274s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['colcon_pkg']
+[1.274s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'colcon_pkg'
+[1.274s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['colcon_meta']
+[1.275s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'colcon_meta'
+[1.275s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['ros']
+[1.275s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'ros'
+[1.275s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['cmake', 'python']
+[1.276s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'cmake'
+[1.276s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'python'
+[1.276s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extensions ['python_setup_py']
+[1.276s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs) by extension 'python_setup_py'
+[1.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['ignore', 'ignore_ament_install']
+[1.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'ignore'
+[1.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'ignore_ament_install'
+[1.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['colcon_pkg']
+[1.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'colcon_pkg'
+[1.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['colcon_meta']
+[1.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'colcon_meta'
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['ros']
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'ros'
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['cmake', 'python']
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'cmake'
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'python'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extensions ['python_setup_py']
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source) by extension 'python_setup_py'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['ignore', 'ignore_ament_install']
+[1.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'ignore'
+[1.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'ignore_ament_install'
+[1.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['colcon_pkg']
+[1.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'colcon_pkg'
+[1.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['colcon_meta']
+[1.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'colcon_meta'
+[1.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['ros']
+[1.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'ros'
+[1.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['cmake', 'python']
+[1.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'cmake'
+[1.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'python'
+[1.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extensions ['python_setup_py']
+[1.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/_static) by extension 'python_setup_py'
+[1.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['ignore', 'ignore_ament_install']
+[1.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'ignore'
+[1.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'ignore_ament_install'
+[1.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['colcon_pkg']
+[1.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'colcon_pkg'
+[1.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['colcon_meta']
+[1.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'colcon_meta'
+[1.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['ros']
+[1.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'ros'
+[1.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['cmake', 'python']
+[1.287s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'cmake'
+[1.287s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'python'
+[1.287s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extensions ['python_setup_py']
+[1.287s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/acknowledgements) by extension 'python_setup_py'
+[1.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['ignore', 'ignore_ament_install']
+[1.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'ignore'
+[1.289s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'ignore_ament_install'
+[1.289s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['colcon_pkg']
+[1.289s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'colcon_pkg'
+[1.289s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['colcon_meta']
+[1.289s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'colcon_meta'
+[1.290s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['ros']
+[1.290s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'ros'
+[1.290s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['cmake', 'python']
+[1.290s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'cmake'
+[1.291s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'python'
+[1.291s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extensions ['python_setup_py']
+[1.291s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/api_documentation) by extension 'python_setup_py'
+[1.291s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['ignore', 'ignore_ament_install']
+[1.292s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'ignore'
+[1.292s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'ignore_ament_install'
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['colcon_pkg']
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'colcon_pkg'
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['colcon_meta']
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'colcon_meta'
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['ros']
+[1.293s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'ros'
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['cmake', 'python']
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'cmake'
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'python'
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extensions ['python_setup_py']
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/citing) by extension 'python_setup_py'
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['ignore', 'ignore_ament_install']
+[1.296s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'ignore'
+[1.296s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'ignore_ament_install'
+[1.297s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['colcon_pkg']
+[1.297s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'colcon_pkg'
+[1.298s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['colcon_meta']
+[1.298s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'colcon_meta'
+[1.299s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['ros']
+[1.299s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'ros'
+[1.300s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['cmake', 'python']
+[1.300s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'cmake'
+[1.300s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'python'
+[1.301s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extensions ['python_setup_py']
+[1.301s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/examples) by extension 'python_setup_py'
+[1.302s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['ignore', 'ignore_ament_install']
+[1.302s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'ignore'
+[1.302s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'ignore_ament_install'
+[1.303s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['colcon_pkg']
+[1.303s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'colcon_pkg'
+[1.303s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['colcon_meta']
+[1.303s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'colcon_meta'
+[1.304s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['ros']
+[1.304s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'ros'
+[1.304s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['cmake', 'python']
+[1.304s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'cmake'
+[1.304s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'python'
+[1.305s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extensions ['python_setup_py']
+[1.305s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/installation) by extension 'python_setup_py'
+[1.305s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['ignore', 'ignore_ament_install']
+[1.306s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'ignore'
+[1.306s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'ignore_ament_install'
+[1.306s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['colcon_pkg']
+[1.307s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'colcon_pkg'
+[1.307s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['colcon_meta']
+[1.307s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'colcon_meta'
+[1.307s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['ros']
+[1.307s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'ros'
+[1.308s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['cmake', 'python']
+[1.308s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'cmake'
+[1.308s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'python'
+[1.308s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extensions ['python_setup_py']
+[1.308s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/docs/source/quick_start) by extension 'python_setup_py'
+[1.309s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/install) by extensions ['ignore', 'ignore_ament_install']
+[1.310s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/install) by extension 'ignore'
+[1.310s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/install) ignored
+[1.310s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/log) by extensions ['ignore', 'ignore_ament_install']
+[1.311s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/log) by extension 'ignore'
+[1.311s] Level 1:colcon.colcon_core.package_identification:_identify(src/ChoiRbot/log) ignored
+[1.311s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.312s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.312s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.312s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.312s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.390s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.391s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.406s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 373 installed packages in /opt/ros/foxy
+[1.420s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_args' from command line to 'None'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_target' from command line to 'None'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_clean_cache' from command line to 'False'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_clean_first' from command line to 'False'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'cmake_force_configure' from command line to 'False'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'ament_cmake_args' from command line to 'None'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'catkin_cmake_args' from command line to 'None'
+[1.764s] Level 5:colcon.colcon_core.verb:set package 'choirbot_interfaces' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.764s] DEBUG:colcon.colcon_core.verb:Building package 'choirbot_interfaces' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces', 'merge_install': False, 'path': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces', 'symlink_install': True, 'test_result_base': None}
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_args' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_target' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_clean_cache' from command line to 'False'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_clean_first' from command line to 'False'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'cmake_force_configure' from command line to 'False'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'ament_cmake_args' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'catkin_cmake_args' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'choirbot_io' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.767s] DEBUG:colcon.colcon_core.verb:Building package 'choirbot_io' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io', 'merge_install': False, 'path': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_io', 'symlink_install': True, 'test_result_base': None}
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_args' from command line to 'None'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_target' from command line to 'None'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_clean_cache' from command line to 'False'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_clean_first' from command line to 'False'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'cmake_force_configure' from command line to 'False'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'ament_cmake_args' from command line to 'None'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'catkin_cmake_args' from command line to 'None'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'choirbot' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.769s] DEBUG:colcon.colcon_core.verb:Building package 'choirbot' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot', 'merge_install': False, 'path': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot', 'symlink_install': True, 'test_result_base': None}
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_args' from command line to 'None'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_target' from command line to 'None'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_clean_cache' from command line to 'False'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_clean_first' from command line to 'False'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'cmake_force_configure' from command line to 'False'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'ament_cmake_args' from command line to 'None'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'catkin_cmake_args' from command line to 'None'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'choirbot_examples' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.772s] DEBUG:colcon.colcon_core.verb:Building package 'choirbot_examples' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples', 'merge_install': False, 'path': '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_examples', 'symlink_install': True, 'test_result_base': None}
+[1.773s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[1.777s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[1.778s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces' with build type 'ament_cmake'
+[1.779s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces'
+[1.789s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.790s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.791s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.829s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_io' with build type 'ament_python'
+[1.831s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_io', 'ament_prefix_path')
+[1.833s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/ament_prefix_path.ps1'
+[1.840s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/ament_prefix_path.dsv'
+[1.845s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/ament_prefix_path.sh'
+[1.850s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.851s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.894s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces
+[3.312s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_io'
+[3.315s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.316s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[6.901s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io': PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/build --no-deps symlink_data
+[11.251s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_io', 'pythonpath_develop')
+[11.254s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/share/choirbot_io/hook/pythonpath_develop.ps1'
+[11.256s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io' returned '0': PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/build --no-deps symlink_data
+[11.260s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/share/choirbot_io/hook/pythonpath_develop.dsv'
+[11.264s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_io/share/choirbot_io/hook/pythonpath_develop.sh'
+[11.290s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io' for CMake module files
+[11.295s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io' for CMake config files
+[11.301s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib'
+[11.303s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/bin'
+[11.304s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/pkgconfig/choirbot_io.pc'
+[11.306s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/lib/python3.8/site-packages'
+[11.307s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_io', 'pythonpath')
+[11.308s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/pythonpath.ps1'
+[11.311s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/pythonpath.dsv'
+[11.313s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/hook/pythonpath.sh'
+[11.315s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/bin'
+[11.316s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(choirbot_io)
+[11.318s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/package.ps1'
+[11.322s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/package.dsv'
+[11.325s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/package.sh'
+[11.331s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/package.bash'
+[11.337s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/choirbot_io/package.zsh'
+[11.346s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_io/share/colcon-core/packages/choirbot_io)
+[12.664s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces
+[12.677s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces -- -j4 -l4
+[51.947s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces -- -j4 -l4
+[52.004s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces
+[57.070s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(choirbot_interfaces)
+[57.071s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces' for CMake module files
+[57.073s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces
+[57.077s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces' for CMake config files
+[57.088s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'cmake_prefix_path')
+[57.089s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.ps1'
+[57.092s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.dsv'
+[57.093s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.sh'
+[57.096s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib'
+[57.097s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'ld_library_path_lib')
+[57.098s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.ps1'
+[57.100s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.dsv'
+[57.102s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.sh'
+[57.104s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/bin'
+[57.105s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/pkgconfig/choirbot_interfaces.pc'
+[57.106s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages'
+[57.106s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'pythonpath')
+[57.109s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.ps1'
+[57.113s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.dsv'
+[57.115s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.sh'
+[57.117s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/bin'
+[57.119s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.ps1'
+[57.122s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.dsv'
+[57.124s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.sh'
+[57.126s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.bash'
+[57.128s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.zsh'
+[57.130s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/colcon-core/packages/choirbot_interfaces)
+[57.133s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(choirbot_interfaces)
+[57.134s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces' for CMake module files
+[57.138s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces' for CMake config files
+[57.148s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'cmake_prefix_path')
+[57.149s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.ps1'
+[57.151s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.dsv'
+[57.153s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/cmake_prefix_path.sh'
+[57.156s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib'
+[57.157s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'ld_library_path_lib')
+[57.158s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.ps1'
+[57.160s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.dsv'
+[57.161s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/ld_library_path_lib.sh'
+[57.164s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/bin'
+[57.164s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/pkgconfig/choirbot_interfaces.pc'
+[57.165s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages'
+[57.165s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_interfaces', 'pythonpath')
+[57.166s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.ps1'
+[57.168s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.dsv'
+[57.171s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/hook/pythonpath.sh'
+[57.173s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/bin'
+[57.175s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.ps1'
+[57.178s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.dsv'
+[57.181s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.sh'
+[57.184s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.bash'
+[57.186s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/choirbot_interfaces/package.zsh'
+[57.189s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/share/colcon-core/packages/choirbot_interfaces)
+[57.190s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot' with build type 'ament_python'
+[57.191s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot', 'ament_prefix_path')
+[57.192s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/ament_prefix_path.ps1'
+[57.196s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/ament_prefix_path.dsv'
+[57.198s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/ament_prefix_path.sh'
+[57.200s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[57.201s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[58.283s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot'
+[58.285s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[58.285s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[61.169s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot': AMENT_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces LD_LIBRARY_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/build --no-deps symlink_data
+[64.484s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot', 'pythonpath_develop')
+[64.486s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/share/choirbot/hook/pythonpath_develop.ps1'
+[64.487s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot' returned '0': AMENT_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces LD_LIBRARY_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/build --no-deps symlink_data
+[64.491s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/share/choirbot/hook/pythonpath_develop.dsv'
+[64.492s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot/share/choirbot/hook/pythonpath_develop.sh'
+[64.496s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot' for CMake module files
+[64.499s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot' for CMake config files
+[64.502s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib'
+[64.503s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/bin'
+[64.504s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/pkgconfig/choirbot.pc'
+[64.505s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages'
+[64.505s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot', 'pythonpath')
+[64.506s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/pythonpath.ps1'
+[64.508s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/pythonpath.dsv'
+[64.510s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/hook/pythonpath.sh'
+[64.512s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/bin'
+[64.513s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(choirbot)
+[64.515s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/package.ps1'
+[64.517s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/package.dsv'
+[64.519s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/package.sh'
+[64.521s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/package.bash'
+[64.523s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/choirbot/package.zsh'
+[64.525s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/share/colcon-core/packages/choirbot)
+[64.527s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_examples' with build type 'ament_python'
+[64.528s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_examples', 'ament_prefix_path')
+[64.529s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/ament_prefix_path.ps1'
+[64.533s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/ament_prefix_path.dsv'
+[64.534s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/ament_prefix_path.sh'
+[64.537s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[64.538s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[65.615s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_examples'
+[65.811s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[65.812s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[70.121s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples': AMENT_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces LD_LIBRARY_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/build --no-deps symlink_data
+[73.555s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_examples', 'pythonpath_develop')
+[73.557s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/share/choirbot_examples/hook/pythonpath_develop.ps1'
+[73.559s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples' returned '0': AMENT_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces LD_LIBRARY_PATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/prefix_override:/home/robot4/.local/lib/python3.8/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot/lib/python3.8/site-packages:/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_interfaces/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/build --no-deps symlink_data
+[73.563s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/share/choirbot_examples/hook/pythonpath_develop.dsv'
+[73.566s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_examples/share/choirbot_examples/hook/pythonpath_develop.sh'
+[73.569s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples' for CMake module files
+[73.574s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples' for CMake config files
+[73.580s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib'
+[73.581s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/bin'
+[73.581s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/pkgconfig/choirbot_examples.pc'
+[73.582s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/lib/python3.8/site-packages'
+[73.583s] Level 1:colcon.colcon_core.shell:create_environment_hook('choirbot_examples', 'pythonpath')
+[73.584s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/pythonpath.ps1'
+[73.586s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/pythonpath.dsv'
+[73.587s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/hook/pythonpath.sh'
+[73.590s] Level 1:colcon.colcon_core.environment:checking '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/bin'
+[73.590s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(choirbot_examples)
+[73.592s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/package.ps1'
+[73.594s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/package.dsv'
+[73.597s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/package.sh'
+[73.599s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/package.bash'
+[73.601s] INFO:colcon.colcon_core.shell:Creating package script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/choirbot_examples/package.zsh'
+[73.602s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/choirbot_examples/share/colcon-core/packages/choirbot_examples)
+[73.604s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[73.605s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[73.606s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[73.607s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[73.631s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[73.631s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[73.632s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[73.706s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[73.708s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/local_setup.ps1'
+[73.713s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/_local_setup_util_ps1.py'
+[73.720s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/setup.ps1'
+[73.728s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/local_setup.sh'
+[73.732s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/_local_setup_util_sh.py'
+[73.735s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/setup.sh'
+[73.740s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/local_setup.bash'
+[73.743s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/setup.bash'
+[73.748s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/local_setup.zsh'
+[73.751s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/install/setup.zsh'

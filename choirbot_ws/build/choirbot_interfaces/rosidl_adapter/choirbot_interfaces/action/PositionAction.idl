@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from choirbot_interfaces/action/PositionAction.action
+// generated code does not contain a copyright notice
+
+
+module choirbot_interfaces {
+  module action {
+    struct PositionAction_Goal {
+      sequence<double> goal_position;
+    };
+    struct PositionAction_Result {
+      sequence<double> final_position;
+    };
+    struct PositionAction_Feedback {
+      sequence<double> current_position;
+
+      double distance;
+    };
+  };
+};

@@ -1,0 +1,213 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15
+					]
+				},
+				{
+					"build" : "choirbot_interfaces__py",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/choirbot_interfaces__py",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "choirbot_interfaces",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces-099591bb5767a55845d5.json",
+					"name" : "choirbot_interfaces",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__cpp-141710b867f95a5f5e89.json",
+					"name" : "choirbot_interfaces__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "choirbot_interfaces__py::@ab761a4d8aac54f51dbd",
+					"jsonFile" : "target-choirbot_interfaces__py-e7c965195ed5e98a6604.json",
+					"name" : "choirbot_interfaces__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__python::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__python-5eaaa5a398ce075f0903.json",
+					"name" : "choirbot_interfaces__python",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_generator_c-090bcf856de29dca8a8d.json",
+					"name" : "choirbot_interfaces__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_c-2605cc023d45283f9141.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_c__pyext-d6b8f20900fbb9a43cc4.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_cpp-58aa29c979b1b1e71a17.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_fastrtps_c-0c9cbbb1812e6d7c75c4.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext-cc7dc753036abc7294dd.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_fastrtps_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_fastrtps_cpp-83dd1dc4af22d307a20f.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_introspection_c-056eee660d365af09fe8.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_introspection_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_introspection_c__pyext-6d4d8a67dafe6a847647.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_introspection_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces__rosidl_typesupport_introspection_cpp-7aa90362545b87427dc3.json",
+					"name" : "choirbot_interfaces__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "choirbot_interfaces_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-choirbot_interfaces_uninstall-7a2b4222f2c7143ac518.json",
+					"name" : "choirbot_interfaces_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-9c228f18c2300020c2d5.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces",
+		"source" : "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/src/ChoiRbot/choirbot_interfaces"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

@@ -1,0 +1,15 @@
+package.xml
+setup.cfg
+setup.py
+choirbot_io/__init__.py
+choirbot_io/aruco_detector.py
+choirbot_io/ble_bridge.py
+choirbot_io/goal_gui.py
+choirbot_io.egg-info/PKG-INFO
+choirbot_io.egg-info/SOURCES.txt
+choirbot_io.egg-info/dependency_links.txt
+choirbot_io.egg-info/entry_points.txt
+choirbot_io.egg-info/requires.txt
+choirbot_io.egg-info/top_level.txt
+choirbot_io.egg-info/zip-safe
+resource/choirbot_io

@@ -1,0 +1,9 @@
+source;share/choirbot/hook/pythonpath.ps1
+source;share/choirbot/hook/pythonpath.dsv
+source;share/choirbot/hook/pythonpath.sh
+source;share/choirbot/hook/ament_prefix_path.ps1
+source;share/choirbot/hook/ament_prefix_path.dsv
+source;share/choirbot/hook/ament_prefix_path.sh
+source;../../build/choirbot/share/choirbot/hook/pythonpath_develop.ps1
+source;../../build/choirbot/share/choirbot/hook/pythonpath_develop.dsv
+source;../../build/choirbot/share/choirbot/hook/pythonpath_develop.sh

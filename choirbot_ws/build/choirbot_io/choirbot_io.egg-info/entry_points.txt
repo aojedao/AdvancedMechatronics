@@ -1,0 +1,4 @@
+[console_scripts]
+aruco_detector = choirbot_io.aruco_detector:main
+ble_bridge = choirbot_io.ble_bridge:main
+goal_gui = choirbot_io.goal_gui:main

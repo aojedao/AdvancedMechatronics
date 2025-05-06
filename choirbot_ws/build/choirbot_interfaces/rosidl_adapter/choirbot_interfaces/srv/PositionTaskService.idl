@@ -1,0 +1,16 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from choirbot_interfaces/srv/PositionTaskService.srv
+// generated code does not contain a copyright notice
+
+#include "choirbot_interfaces/msg/PositionTaskArray.idl"
+
+module choirbot_interfaces {
+  module srv {
+    struct PositionTaskService_Request {
+      uint32 agent_id;
+    };
+    struct PositionTaskService_Response {
+      choirbot_interfaces::msg::PositionTaskArray tasks;
+    };
+  };
+};

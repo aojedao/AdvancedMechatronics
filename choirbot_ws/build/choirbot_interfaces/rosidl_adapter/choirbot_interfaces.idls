@@ -1,0 +1,5 @@
+/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_adapter/choirbot_interfaces:action/PositionAction.idl
+/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_adapter/choirbot_interfaces:msg/PositionTask.idl
+/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_adapter/choirbot_interfaces:msg/PositionTaskArray.idl
+/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_adapter/choirbot_interfaces:srv/PositionTaskService.idl
+/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_adapter/choirbot_interfaces:srv/TaskCompletionService.idl
