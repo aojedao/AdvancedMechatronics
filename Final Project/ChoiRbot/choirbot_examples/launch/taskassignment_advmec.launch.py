@@ -15,7 +15,7 @@ def generate_launch_description():
     seed=3
     
     ble_devices = [
-        {"name": "BLE_Device_1", "address": "cd:ea:14:c3:cb:a5", "uuid": "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"},
+        {"name": "BLE_Device_1", "address": "cd:ea:14:c3:cb:a5", "uuid": "abcdefab-cdef-1234-5678-abcdef123456"},
         {"name": "BLE_Device_2", "address": "7c:9e:bd:f3:e9:c2", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}]
     '''
         {"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
@@ -78,11 +78,11 @@ def generate_launch_description():
             executable='ble_bridge',
             name=f'ble_bridge_agent_{i}',
             output='screen',
-            parameters=[{
-                'cmd_topic': f'/agent_{i}/cmd_vel',
-                'ble_address': ble_device["address"],
-                'ble_uuid': ble_device["uuid"]
-            }]
+            parameters=[
+                {'cmd_topic': f'/agent_{i}/cmd_vel'},
+                {'ble_address': ble_device["address"]},
+                {'ble_uuid': ble_device["uuid"]}
+            ]
         ))
         
         # turtlebot spawner
