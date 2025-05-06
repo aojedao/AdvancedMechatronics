@@ -78,11 +78,11 @@ def generate_launch_description():
             executable='ble_bridge',
             name=f'ble_bridge_agent_{i}',
             output='screen',
-            parameters=[
-                {'cmd_topic': f'/agent_{i}/cmd_vel'},
-                {'ble_address': ble_device["address"]},
-                {'ble_uuid': ble_device["uuid"]}
-            ]
+            parameters=[{
+                'cmd_topic': f'/agent_{i}/cmd_vel',
+                'ble_address': ble_device["address"],
+                'ble_uuid': ble_device["uuid"]
+            }]
         ))
         
         # turtlebot spawner
