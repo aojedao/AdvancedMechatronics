@@ -13,6 +13,15 @@ import os
 def generate_launch_description():
     N=2
     seed=3
+    
+    ble_devices = [
+        {"name": "BLE_Device_1", "address": "f4:65:0b:4a:6c:c6", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
+        {"name": "BLE_Device_2", "address": "AA:BB:CC:DD:EE:02", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
+        {"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
+        {"name": "BLE_Device_4", "address": "AA:BB:CC:DD:EE:04", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 4 agents
+        {"name": "BLE_Device_5", "address": "AA:BB:CC:DD:EE:05", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 5 agents
+    ]
+    
     for arg in sys.argv:
         if arg.startswith("N:="):
             N = int(arg.split(":=")[1])
@@ -62,14 +71,27 @@ def generate_launch_description():
             namespace='agent_{}'.format(i),
             parameters=[{'agent_id': i}]))
         
+        ble_device = ble_devices[i]
+        launch_description.append(Node(
+            package='choirbot_io',
+            executable='ble_bridge',
+            name=f'ble_bridge_agent_{i}',
+            output='screen',
+            parameters=[
+                {'cmd_topic': f'/agent_{i}/cmd_vel'},
+                {'ble_address': ble_device["address"]},
+                {'ble_uuid': ble_device["uuid"]}
+            ]
+        ))
+        
         # turtlebot spawner
         #launch_description.append(Node(
         #    package='choirbot_examples', executable='choirbot_turtlebot_spawner', output='screen',
         #    parameters=[{'namespace': 'agent_{}'.format(i), 'position': position}]))
     
     # include launcher for gazebo
-    gazebo_launcher = os.path.join(get_package_share_directory('choirbot_examples'), 'gazebo.launch.py')
-    launch_description.append(IncludeLaunchDescription(PythonLaunchDescriptionSource(gazebo_launcher)))
+    #gazebo_launcher = os.path.join(get_package_share_directory('choirbot_examples'), 'gazebo.launch.py')
+    #launch_description.append(IncludeLaunchDescription(PythonLaunchDescriptionSource(gazebo_launcher)))
     
     # Add ArUco detector node
     launch_description.append(Node(
@@ -87,16 +109,6 @@ def generate_launch_description():
         output='screen'
     ))
 
-    # Add BLE bridge node for each robot
-    for i in range(N):
-        launch_description.append(Node(
-            package='choirbot_io',
-            executable='ble_bridge',
-            name=f'ble_bridge_agent_{i}',
-            output='screen',
-            parameters=[{'cmd_topic': f'/agent_{i}/cmd_vel'}]
-            # Add BLE address/UUID as needed
-        ))
 
     # include delayed robot executables
     timer_action = TimerAction(period=10.0, actions=[LaunchDescription(robot_launch)])

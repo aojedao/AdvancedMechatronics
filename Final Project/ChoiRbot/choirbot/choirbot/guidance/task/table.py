@@ -98,10 +98,16 @@ class PositionTaskTable(TaskTable):
         return PositionTaskArray(tasks=task_list)
     
     def generate_tasks(self):
-        n_new_tasks = self.N - len(self.task_list) # in total we must always have N tasks
+        n_new_tasks = self.N - len(self.task_list)  # in total we must always have N tasks
+        print('Generating {} new tasks'.format(n_new_tasks))
+        print('Current task list:', [t.seq_num for t in self.task_list])
+        print('Current N:', self.N)
         prob = 0.5
 
-        for _ in range(n_new_tasks):
+        # Track which agents have been assigned to at least one task
+        agents_assigned = set()
+
+        for i in range(n_new_tasks):
             x_lim = y_lim = [-3, 3]
             position_x = np.random.uniform(x_lim[0], x_lim[1])
             position_y = np.random.uniform(y_lim[0], y_lim[1])
@@ -111,9 +117,28 @@ class PositionTaskTable(TaskTable):
             task = PositionTask(coordinates=position, id=task_id, seq_num=task_seq_num)
             self.task_list.append(task) # must do this before calling self.gen_task_id() again
 
-            # each agent can perform this task with a given probability
+            # Assign agents to this task with a given probability
             agents_can_perform = [i for i in range(self.N) if np.random.rand() < prob]
+            print('Agents that can perform task {}: {}'.format(task_seq_num, agents_can_perform))
             self.bipartite_graph[task_seq_num] = agents_can_perform
+
+            # Update the set of agents assigned to tasks
+            agents_assigned.update(agents_can_perform)
+
+        # Ensure all agents are assigned to at least one task
+        for agent in range(self.N):
+            if agent not in agents_assigned:
+                # Assign this agent to a random task
+                random_task_seq_num = np.random.choice(list(self.bipartite_graph.keys()))
+                self.bipartite_graph[random_task_seq_num].append(agent)
+                print(f'Agent {agent} added to task {random_task_seq_num}')
+
+        # Ensure no task has an empty list of agents
+        for task_seq_num, agents in self.bipartite_graph.items():
+            if not agents:  # If the list of agents is empty
+                random_agent = np.random.randint(0, self.N)
+                agents.append(random_agent)
+                print(f'Task {task_seq_num} had no agents. Assigned agent {random_agent}.')
 
         self.task_list_comm = self.task_list.copy()
         self.times_tasks_generated += 1
