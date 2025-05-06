@@ -15,7 +15,7 @@ def generate_launch_description():
     seed=3
     
     ble_devices = [
-        {"name": "BLE_Device_1", "address": "f4:65:0b:4a:6c:c6", "uuid": "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"},
+        {"name": "BLE_Device_1", "address": "cd:ea:14:c3:cb:a5", "uuid": "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"},
         {"name": "BLE_Device_2", "address": "7c:9e:bd:f3:e9:c2", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
         {"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
         {"name": "BLE_Device_4", "address": "AA:BB:CC:DD:EE:04", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 4 agents
