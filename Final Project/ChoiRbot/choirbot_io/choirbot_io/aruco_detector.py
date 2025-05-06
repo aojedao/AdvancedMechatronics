@@ -25,8 +25,8 @@ class ArucoDetector(Node):
         # Parameters (customize as needed)
         self.declare_parameter('camera_topic', '/camera/image_raw')
         self.declare_parameter('camera_info_topic', '/camera/camera_info')
-        self.declare_parameter('aruco_dict', 'DICT_4X4_50')
-        self.declare_parameter('marker_length', 0.05)  # meters
+        self.declare_parameter('aruco_dict', 'DICT_7X7_50')
+        self.declare_parameter('marker_length', 0.07)  # meters
 
         # Load parameters
         self.camera_topic = self.get_parameter('camera_topic').get_parameter_value().string_value
