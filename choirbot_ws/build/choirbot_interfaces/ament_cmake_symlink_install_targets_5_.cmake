@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_generator_py/choirbot_interfaces/libchoirbot_interfaces__python.so" "TARGETS" "choirbot_interfaces__python" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

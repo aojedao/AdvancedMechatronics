@@ -1,1 +1,0 @@
-/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_typesupport_introspection_c/choirbot_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h

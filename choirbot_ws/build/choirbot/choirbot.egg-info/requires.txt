@@ -1,3 +1,0 @@
-setuptools
-disropt>=0.1.7
-recordclass>=0.5

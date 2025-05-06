@@ -1,1 +1,0 @@
-/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/rosidl_generator_c/choirbot_interfaces/msg/rosidl_generator_c__visibility_control.h

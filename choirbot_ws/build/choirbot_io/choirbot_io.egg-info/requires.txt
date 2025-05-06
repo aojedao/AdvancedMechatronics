@@ -1,4 +1,0 @@
-setuptools
-opencv-python
-PyQt5
-bleak

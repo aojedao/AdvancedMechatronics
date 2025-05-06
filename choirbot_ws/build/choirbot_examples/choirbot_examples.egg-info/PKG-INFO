@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: choirbot_examples
-Version: 0.0.0
-Summary: Example files for ChoiRbot
-Maintainer: OPT4SMART
-Maintainer-email: info@opt4smart.eu
-License: GNU General Public License v3.0
-Requires-Dist: setuptools
-Requires-Dist: choirbot

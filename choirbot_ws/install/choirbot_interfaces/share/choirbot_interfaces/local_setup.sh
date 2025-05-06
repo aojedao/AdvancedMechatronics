@@ -1,1 +1,0 @@
-/home/robot4/Documents/Nishant_github_repo/AdvancedMechatronics/choirbot_ws/build/choirbot_interfaces/ament_cmake_environment_hooks/local_setup.sh
