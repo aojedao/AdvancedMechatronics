@@ -160,7 +160,7 @@ class ArucoDetector(Node):
             for i, marker_id in enumerate(ids.flatten()):
                 # Prepare PoseStamped message
                 pose_msg = PoseStamped()
-                pose_msg.header = msg.header
+                pose_msg.header = self.get_clock().now().to_msg()
                 pose_msg.pose.position.x = float(tvecs[i][0][0])
                 pose_msg.pose.position.y = float(tvecs[i][0][1])
                 pose_msg.pose.position.z = float(tvecs[i][0][2])
