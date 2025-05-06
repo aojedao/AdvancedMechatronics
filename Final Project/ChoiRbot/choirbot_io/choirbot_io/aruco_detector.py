@@ -68,7 +68,7 @@ class ArucoDetector(Node):
                 
     def image_callback(self, msg):
         # Convert ROS Image to OpenCV image
-        preframe= self.bridge.cv2_to_imgmsg(msg, encoding='bgr8')
+        preframe= self.bridge.cv2_to_imgmsg(msg, encoding="passthrough")
         frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
         #frame=msg
