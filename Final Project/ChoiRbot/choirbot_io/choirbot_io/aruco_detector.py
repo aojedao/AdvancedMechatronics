@@ -68,10 +68,10 @@ class ArucoDetector(Node):
                 
     def image_callback(self, msg):
         # Convert ROS Image to OpenCV image
-        #frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        preframe= self.bridge.cv2_to_imgmsg(msg, encoding='bgr8')
+        frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         self.get_logger().info("Image callback triggered")
-        preframe= self.bridge.cv2_to_imgmsg(msg, encoding="passthrough")
-        frame=self.bridge.imgmsg_to_cv2(preframe, desired_encoding='bgr8')
+        #frame=msg
         cv2.imshow("Image", frame)
         
         # Detect markers
@@ -84,7 +84,7 @@ class ArucoDetector(Node):
             for i, marker_id in enumerate(ids.flatten()):
                 # Prepare PoseStamped message
                 pose_msg = PoseStamped()
-                pose_msg.header = msg.header
+                pose_msg.header = preframe.header
                 pose_msg.pose.position.x = float(tvecs[i][0][0])
                 pose_msg.pose.position.y = float(tvecs[i][0][1])
                 pose_msg.pose.position.z = float(tvecs[i][0][2])
