@@ -65,7 +65,7 @@ class ArucoDetector(Node):
             return
 
         self.get_logger().info("Image callback triggered")
-        cv2.imshow("Image", frame)
+        #cv2.imshow("Image", frame)
 
         corners, ids, _ = aruco.detectMarkers(frame, self.aruco_dict, parameters=self.aruco_params)
 
@@ -102,7 +102,7 @@ class ArucoDetector(Node):
                 self.get_logger().debug(f'Published pose for marker {marker_id} on {topic_name}')
 
                 # Annotate image
-                cv2.aruco.drawAxis(frame, self.camera_matrix, self.dist_coeffs, rvecs[i], tvecs[i], self.marker_length)
+                cv2.drawFrameAxes(frame, self.camera_matrix, self.dist_coeffs, rvecs[i], tvecs[i], self.marker_length)
                 corner = corners[i][0][0]
                 cv2.putText(frame, f"ID: {marker_id}", (int(corner[0]), int(corner[1] - 10)),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
