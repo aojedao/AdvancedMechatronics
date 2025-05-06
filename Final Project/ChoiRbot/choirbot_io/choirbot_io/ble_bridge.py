@@ -13,7 +13,7 @@ class BLEBridge(Node):
         super().__init__('ble_bridge')
 
         # Declare and get parameters
-        self.declare_parameter('cmd_topic', '/agent_/\_/cmd_vel')
+        self.declare_parameter('cmd_topic', '/agent999/cmd_vel')
         self.declare_parameter('ble_address', 'AA:BB:CC:DD:EE:FF')
         self.declare_parameter('ble_uuid', '0000ffe1-0000-1000-8000-00805f9b34fb')
 
