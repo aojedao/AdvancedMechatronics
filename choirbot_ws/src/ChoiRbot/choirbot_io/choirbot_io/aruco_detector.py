@@ -11,6 +11,9 @@ import cv2.aruco as aruco
 import numpy as np
 import os
 
+file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'calibration_data.npz')
+data = np.load(file_path)
+
 # DroidCam video stream URL
 url = "http://10.18.238.136:4747/video"  # Nishant's DroidCam URL
 
