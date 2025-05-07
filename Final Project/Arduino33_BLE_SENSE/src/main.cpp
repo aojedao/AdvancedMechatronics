@@ -71,7 +71,6 @@ void printBleMacToSerial() {
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial);
 
   // Motor pins
   pinMode(enA, OUTPUT); pinMode(in1, OUTPUT); pinMode(in2, OUTPUT);
@@ -97,6 +96,9 @@ void setup() {
   Serial.println("Waiting for velocity commands (vx,vy,wz)...");
 }
 
+// Add at the top (global scope)
+unsigned long ignoreUntil = 0; // Time (millis) until which input is ignored
+
 void loop() {
   BLEDevice central = BLE.central();
 
@@ -107,6 +109,13 @@ void loop() {
     while (central.connected()) {
       // Check for new BLE command
       if (rxChar.written()) {
+        // Ignore input if within ignore period
+        if (millis() < ignoreUntil) {
+          // Optionally print debug info:
+          // Serial.println("Ignoring input due to cooldown.");
+          continue;
+        }
+
         int len = rxChar.valueLength();
         if (len > 0 && (size_t)len < sizeof(cmdBuffer)) {
           memcpy(cmdBuffer, rxChar.value(), len);
@@ -123,6 +132,12 @@ void loop() {
             Serial.print(", vy: "); Serial.print(vy, 2);
             Serial.print(", wz: "); Serial.println(wz, 2);
             Serial.print("PWM: L="); Serial.print(leftPWM); Serial.print(" R="); Serial.println(rightPWM);
+
+            // If command is exactly 0.0,0.0,0.0, start ignore period
+            if (vx == 0.0f && vy == 0.0f && wz == 0.0f) {
+              ignoreUntil = millis() + 1000; // Ignore for 1 second
+              Serial.println("Entering 1s ignore period.");
+            }
           } else {
             Serial.print("Invalid command: "); Serial.println(cmdBuffer);
             setMotorSpeeds(0, 0);
