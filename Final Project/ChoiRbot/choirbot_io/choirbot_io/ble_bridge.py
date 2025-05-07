@@ -4,6 +4,7 @@ from geometry_msgs.msg import Twist
 import asyncio
 import threading
 from bleak import BleakClient
+import time
 
 class BLEBridge(Node):
     """
@@ -88,23 +89,35 @@ class BLEBridge(Node):
                 await self.reconnect_ble()
             await asyncio.sleep(2)  # Check connection status every 2 seconds
 
+    # Add these global variables at the class level
+    MESSAGE_RATE_LIMIT = 1.0  # seconds between messages (adjust as needed)
+    last_sent_time = 0.0
+
     def cmd_callback(self, msg):
         """
         Callback for received Twist messages. Sends command over BLE.
         """
-        self.get_logger().info(
-            f"[{self.cmd_topic}] Received message: "
-            f"linear_x={msg.linear.x}, linear_y={msg.linear.y}, angular_z={msg.angular.z}"
-        )
-        if not self.connected:
-            self.get_logger().info(f"[{self.cmd_topic}] Not connected to BLE device. Command not sent.")
-            return
-
         command = f"{msg.linear.x:.2f},{msg.linear.y:.2f},{msg.angular.z:.2f}\n"
-        self.get_logger().info(f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}")
+        special_command = "0.00,0.00,0.00\n"
 
-        # Schedule BLE command to be sent in the asyncio event loop
-        asyncio.run_coroutine_threadsafe(self.send_ble_command(command), self.loop)
+        now = time.time()
+        should_send = False
+
+        if command == special_command:
+            should_send = True
+        elif now - BLEBridge.last_sent_time >= BLEBridge.MESSAGE_RATE_LIMIT:
+            should_send = True
+            BLEBridge.last_sent_time = now
+
+        if should_send:
+            self.get_logger().info(
+                f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
+            )
+            asyncio.run_coroutine_threadsafe(self.send_ble_command(command), self.loop)
+        else:
+            self.get_logger().info(
+                f"[{self.cmd_topic}] Rate limit: Command not sent: {command.strip()}"
+            )
 
     async def send_ble_command(self, command):
         """

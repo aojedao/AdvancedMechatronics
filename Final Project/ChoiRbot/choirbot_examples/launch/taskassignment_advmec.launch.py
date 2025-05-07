@@ -15,11 +15,9 @@ def generate_launch_description():
     seed=3
     
     ble_devices = [
-        {"name": "BLE_Arduino_Pandebono", "address": "f4:65:0b:4a:6c:c6", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
+        {"name": "BLE_Arduino_Pandebono", "address": "CD:EA:14:C3:CB:A5", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
         {"name": "BLE_Propeller_Mate"   , "address": "3C:71:BF:CF:14:1A", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
         {"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
-        {"name": "BLE_Device_4", "address": "AA:BB:CC:DD:EE:04", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 4 agents
-        {"name": "BLE_Device_5", "address": "AA:BB:CC:DD:EE:05", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 5 agents
     ]
     
     for arg in sys.argv:

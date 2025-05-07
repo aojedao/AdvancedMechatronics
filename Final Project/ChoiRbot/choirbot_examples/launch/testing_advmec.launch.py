@@ -15,9 +15,8 @@ def generate_launch_description():
     seed=3
     
     ble_devices = [
-        {"name": "BLE_Arduino_Pandebono", "address": "f4:65:0b:4a:6c:c6", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
+        {"name": "BLE_Arduino_Pandebono", "address": "CD:EA:14:C3:CB:A5", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
         {"name": "BLE_Propeller_Mate"   , "address": "3C:71:BF:CF:14:1A", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
-
     ]
     
     for arg in sys.argv:
