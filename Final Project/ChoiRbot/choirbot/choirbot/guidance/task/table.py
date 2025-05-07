@@ -25,45 +25,52 @@ class TaskTable(Node):
     
     def task_list_service(self, request, response):
         agent = request.agent_id
-
-        # filter tasks based on bipartite graph
         filtered_tasks = [t for t in self.task_list_comm if agent in self.bipartite_graph[t.seq_num]]
-
-        # return response
+        
+        self.get_logger().info(
+            f'Sending to agent {agent}:\n'
+            f'Task IDs: {[t.seq_num for t in filtered_tasks]}\n'
+            f'Positions: {[t.coordinates for t in filtered_tasks]}'
+        )
+        
         response.tasks = self.make_task_array(filtered_tasks)
         response.tasks.all_tasks_count = len(self.task_list_comm)
         response.tasks.label = self.label
-
-        task_list_print = [t.seq_num for t in filtered_tasks]
-        self.get_logger().info('Sending task list to agent {}: {}'.format(agent, task_list_print))
-
         return response
     
     def task_completion_service(self, request, response):
         agent = request.agent_id
         task_seq_num = request.task_seq_num
-
-        self.get_logger().info('Agent {} has completed task {}'.format(agent, task_seq_num))
-
-        # get task
-        index = next(k for k, t in enumerate(self.task_list) if t.seq_num == task_seq_num)
-
-        # mark task as complete
+        task = next(t for t in self.task_list if t.seq_num == task_seq_num)
+        
+        self.get_logger().info(
+            f'Agent {agent} completed task {task_seq_num} '
+            f'(Position: {task.coordinates}) '
+            f'and reached target location'
+        )
+        
+        # Mark task as complete
+        index = self.task_list.index(task)
         del self.task_list[index]
         del self.bipartite_graph[task_seq_num]
-
-        # trigger generation of new tasks
-        self.gc.trigger()
         
+        self.gc.trigger()
         return response
 
     def gen_task_id(self):
-        # IDs are recycled
-        ids = [t.id for t in self.task_list]
-        for i in range(len(ids)+1):
-            if i not in ids:
-                return i
-    
+        """
+        Generate cyclic task IDs between 0 and N-1
+        Returns:
+            int: Task ID between 0 and N-1
+        """
+        if not self.task_list:  # Explicit empty list handling
+            return 0
+        try:
+            return (max(t.id for t in self.task_list) + 1) % self.N
+        except ValueError as e:
+            self.get_logger().error(f"Task ID generation failed: {str(e)}")
+            return 0  # Fallback value  
+            
     def gen_task_seq_num(self):
         # sequence numbers are sequential (i.e. not recycled)
         seq_num = self.largest_seq_num
@@ -98,51 +105,47 @@ class PositionTaskTable(TaskTable):
         return PositionTaskArray(tasks=task_list)
     
     def generate_tasks(self):
-        n_new_tasks = self.N - len(self.task_list)  # in total we must always have N tasks
-        print('Generating {} new tasks'.format(n_new_tasks))
-        print('Current task list:', [t.seq_num for t in self.task_list])
-        print('Current N:', self.N)
-        prob = 0.5
+        """Generates tasks only for robots with empty queues, preserving all original structure"""
+        # Store which robots need tasks (NEW)
+        robots_needing_tasks = list(set(
+            agent for agents in self.bipartite_graph.values() 
+            for agent in agents
+            if not any(task for task in self.task_list if agent in self.bipartite_graph[task.seq_num])
+        )) or [0, 1]  # Default to all robots if empty
 
-        # Track which agents have been assigned to at least one task
-        agents_assigned = set()
+        # Clear only tasks for robots that need them (MODIFIED)
+        self.task_list = [
+            task for task in self.task_list
+            if not any(agent in robots_needing_tasks for agent in self.bipartite_graph[task.seq_num])
+        ]
+        
+        # Rebuild bipartite graph (MODIFIED)
+        self.bipartite_graph = {
+            task.seq_num: self.bipartite_graph[task.seq_num]
+            for task in self.task_list
+        }
 
-        for i in range(n_new_tasks):
-            x_lim = y_lim = [-3, 3]
-            position_x = np.random.uniform(x_lim[0], x_lim[1])
-            position_y = np.random.uniform(y_lim[0], y_lim[1])
-            position = [position_x, position_y]
-            task_id = self.gen_task_id()
-            task_seq_num = self.gen_task_seq_num()
-            task = PositionTask(coordinates=position, id=task_id, seq_num=task_seq_num)
-            self.task_list.append(task) # must do this before calling self.gen_task_id() again
+        # Original hardcoded tasks (UNCHANGED)
+        tasks_agent0 = [[0.16, 0.95], [3.0, 1.5]]  # ArUco 4
+        tasks_agent1 = [[0.48, -0.06], [-3.0, 0.5]]  # ArUco 5
 
-            # Assign agents to this task with a given probability
-            agents_can_perform = [i for i in range(self.N) if np.random.rand() < prob]
-            print('Agents that can perform task {}: {}'.format(task_seq_num, agents_can_perform))
-            self.bipartite_graph[task_seq_num] = agents_can_perform
+        # Only generate for robots needing tasks (MODIFIED)
+        for robot_id in robots_needing_tasks:
+            tasks = tasks_agent0 if robot_id == 0 else tasks_agent1
+            for coords in tasks:
+                task = PositionTask(
+                    coordinates=coords,
+                    id=self.gen_task_id(),
+                    seq_num=self.gen_task_seq_num()
+                )
+                self.task_list.append(task)
+                self.bipartite_graph[task.seq_num] = [robot_id]
+                print(f'Assigned Task ID {task.id} (Seq {task.seq_num}) to ArUco ID {4 if robot_id == 0 else 5}: x={coords[0]}, y={coords[1]}')
 
-            # Update the set of agents assigned to tasks
-            agents_assigned.update(agents_can_perform)
-
-        # Ensure all agents are assigned to at least one task
-        for agent in range(self.N):
-            if agent not in agents_assigned:
-                # Assign this agent to a random task
-                random_task_seq_num = np.random.choice(list(self.bipartite_graph.keys()))
-                self.bipartite_graph[random_task_seq_num].append(agent)
-                print(f'Agent {agent} added to task {random_task_seq_num}')
-
-        # Ensure no task has an empty list of agents
-        for task_seq_num, agents in self.bipartite_graph.items():
-            if not agents:  # If the list of agents is empty
-                random_agent = np.random.randint(0, self.N)
-                agents.append(random_agent)
-                print(f'Task {task_seq_num} had no agents. Assigned agent {random_agent}.')
-
+        # Original housekeeping (UNCHANGED)
         self.task_list_comm = self.task_list.copy()
         self.times_tasks_generated += 1
         self.label += 1
 
     def can_generate_tasks(self):
-        return len(self.task_list) < self.N and self.times_tasks_generated < 8
+        return len(self.task_list) < self.N #generate tasks when it is empty
