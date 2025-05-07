@@ -35,7 +35,7 @@ void velocityToPWM(float vx, float vy, float wz, int &leftPWM, int &rightPWM) {
 
   // Convert to PWM (simple proportional mapping)
   // Max robot speed (m/s) that maps to MAX_SPEED PWM
-  const float MAX_ROBOT_SPEED = 0.22; // e.g., TurtleBot3 max speed ////////////////////////CHECK THIS
+  const float MAX_ROBOT_SPEED = 0.6; // e.g., TurtleBot3 max speed ////////////////////////CHECK THIS
   leftPWM = clampPWM((int)(v_left / MAX_ROBOT_SPEED * MAX_SPEED), MAX_SPEED);
   rightPWM = clampPWM((int)(v_right / MAX_ROBOT_SPEED * MAX_SPEED), MAX_SPEED);
 }

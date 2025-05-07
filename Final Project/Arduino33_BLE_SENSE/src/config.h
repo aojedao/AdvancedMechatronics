@@ -7,7 +7,7 @@
 #define in3 4   // Right DIR 1
 #define in4 3   // Right DIR 2
 
-#define MAX_SPEED 100       // Adjusted PWM—try 255 if needed
+#define MAX_SPEED 255       // Adjusted PWM—try 255 if needed
 #define ROTATION_TIME 610  // ~1220 ms for ~1560 ticks (1 rev)
 #define LINEAR_TIME 1220  // ~1220 ms for ~1560 ticks (1 rev)
 
