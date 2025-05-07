@@ -43,6 +43,8 @@ class TaskOptimizer(Optimizer):
         # prepare problem data (TODO spostare calcolo di task_positions in classe funzione di costo)
         self.task_list = task_list
         self.n_tasks = self.guidance.n_agents
+        if any(t.id >= self.n_tasks for t in task_list.tasks):
+            raise ValueError(f"Task ID {t.id} exceeds max allowed ({self.n_tasks-1})")
         task_positions = np.array([np.array(t.coordinates) for t in task_list.tasks])
         task_indices = [t.id for t in task_list.tasks]
         starting_position = self.guidance.current_pose.position[:-1]
@@ -73,17 +75,26 @@ class TaskOptimizer(Optimizer):
         return cost_vector
 
     def _generate_constraints(self, task_indices):
-        # TODO compute A as [A_1; A_2], where A_1 has a row of ones and A_2 is the identity (check column order)
-        N = self.guidance.n_agents
-        A = np.zeros((2*N, len(self.task_list.tasks)))
+        N = self.guidance.n_agents  # Number of agents (robots)
+        M = len(self.task_list.tasks)  # Number of tasks
+        A = np.zeros((2*N, M))
         b = np.ones((2*N, 1))
 
-        for idx, t in enumerate(task_indices):
-            A[self.guidance.agent_id, idx] = 1
-            A[self.n_tasks + t, idx] = 1
+        # Agent constraints (A₁ block)
+        agent_row = self.guidance.agent_id
+        A[agent_row, :] = 1  # Set entire agent row to 1s
+
+        # Task constraints (A₂ block)
+        for idx, task_id in enumerate(task_indices):
+            # Verify task_id is within valid range
+            if task_id >= N:
+                raise ValueError(f"Task ID {task_id} exceeds maximum allowed value {N-1}")
+            
+            # Set corresponding position in task block
+            A[N + task_id, idx] = 1
 
         return A, b
-
+        
     def optimize(self):
         self.algorithm.run(self.max_iterations, event=self._halt_event)
 
