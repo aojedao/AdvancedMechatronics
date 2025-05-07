@@ -27,11 +27,11 @@ class ArucoDetector(Node):
         self.get_logger().info('cv2 version: ' + cv2.__version__)
 
         # Parameters
-        self.declare_parameter('droidcam_url', 'http://10.18.238.136:4747/video')
-        self.declare_parameter('marker_length', 0.07)
-        self.declare_parameter('show_gui', False)
+        self.declare_parameter('droidcam_url', 'http://10.18.238.136:8080/video')
+        self.declare_parameter('marker_length', 0.15)
+        self.declare_parameter('show_gui', True)
         self.declare_parameter('calibration_file', 
-            '/home/robot_2004/Documents/Projects/AdvMec2025/AdvancedMechatronics/Final Project/ChoiRbot/choirbot_io/choirbot_io/calibration_data.npz')
+            '/home/robot_2004/Documents/Projects/AdvMec2025/AdvancedMechatronics/Final Project/ChoiRbot/choirbot_io/choirbot_io/calibration_data_usb_cam.npz')
 
         # Load parameters
         self.droidcam_url = self.get_parameter('droidcam_url').get_parameter_value().string_value
@@ -63,7 +63,7 @@ class ArucoDetector(Node):
         self.bridge = CvBridge()
 
         # Video capture from DroidCam
-        self.cap = cv2.VideoCapture(self.droidcam_url)
+        self.cap = cv2.VideoCapture(0)
         if not self.cap.isOpened():
             self.get_logger().error(f"Failed to open video stream from {self.droidcam_url}")
             raise RuntimeError(f"Could not open video stream from {self.droidcam_url}")
@@ -219,9 +219,9 @@ class ArucoDetector(Node):
                     cv2.putText(frame, f"ID: {marker_id}", text_pos,
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                     cv2.putText(frame, f"X: {relative_pos[0][0]:.2f}", (text_pos[0], text_pos[1]+20),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                     cv2.putText(frame, f"Y: {relative_pos[1][0]:.2f}", (text_pos[0], text_pos[1]+40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         except Exception as e:
             self.get_logger().error(f"Error in process_agent_marker: {e}")
 
