@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 
 """
-Aruco Detector Node for ChoiRbot
-- Detects ArUco markers using OpenCV
-- Supports both static image testing and live Raspberry Pi camera feed
-- Estimates their 3D pose using camera calibration
-- Publishes each marker's pose as a PoseStamped message
+Aruco Detector Node for ChoiRbot - Fixed Version
 """
 
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image
 from nav_msgs.msg import Odometry
 from cv_bridge import CvBridge
 import cv2
 import cv2.aruco as aruco
 import numpy as np
 import os
+from geometry_msgs.msg import TransformStamped
+from tf2_ros import TransformBroadcaster
 
 class ArucoDetector(Node):
     def __init__(self):
@@ -25,25 +22,32 @@ class ArucoDetector(Node):
         # Publishers for odometry data
         self.agent_0_odom_publisher = self.create_publisher(Odometry, '/agent_0/odom', 10)
         self.agent_1_odom_publisher = self.create_publisher(Odometry, '/agent_1/odom', 10)
+        self.tf_broadcaster = TransformBroadcaster(self)
         
         self.get_logger().info('cv2 version: ' + cv2.__version__)
 
         # Parameters
-        self.declare_parameter('image_path', '/home/robot4/Downloads/image1.jpg')  # Path to test image
-        self.declare_parameter('marker_length', 0.07)  # meters
+        self.declare_parameter('droidcam_url', 'http://10.18.238.136:8080/video')
+        self.declare_parameter('marker_length', 0.15)
+        self.declare_parameter('show_gui', True)
+        self.declare_parameter('calibration_file', 
+            '/home/robot_2004/Documents/Projects/AdvMec2025/AdvancedMechatronics/Final Project/ChoiRbot/choirbot_io/choirbot_io/calibration_data_usb_cam.npz')
 
         # Load parameters
-        self.image_path = os.path.expanduser(self.get_parameter('image_path').get_parameter_value().string_value)
+        self.droidcam_url = self.get_parameter('droidcam_url').get_parameter_value().string_value
         self.marker_length = self.get_parameter('marker_length').get_parameter_value().double_value
+        self.show_gui = self.get_parameter('show_gui').get_parameter_value().bool_value
+        calibration_file = self.get_parameter('calibration_file').get_parameter_value().string_value
 
-        # Log the expanded image path for debugging
-        self.get_logger().info(f"Expanded image path: {self.image_path}")
-
-        # Camera calibration (replace with your actual calibration)
-        self.camera_matrix = np.array([[600, 0, 320],
-                                       [0, 600, 240],
-                                       [0, 0, 1]], dtype=np.float32)
-        self.dist_coeffs = np.zeros((5, 1))  # Assume no distortion for demo
+        # Load camera calibration
+        try:
+            data = np.load(calibration_file)
+            self.camera_matrix = data['camera_matrix']
+            self.dist_coeffs = data['dist_coeffs']
+            self.get_logger().info("Loaded camera calibration data.")
+        except Exception as e:
+            self.get_logger().error(f"Failed to load calibration file: {e}")
+            raise
 
         # Set up ArUco dictionary
         try:
@@ -58,67 +62,178 @@ class ArucoDetector(Node):
         # ROS <-> OpenCV bridge
         self.bridge = CvBridge()
 
-        # Load the static image
-        self.frame = cv2.imread(self.image_path)
-        if self.frame is None:
-            self.get_logger().error(f"Failed to load image from {self.image_path}")
-            raise FileNotFoundError(f"Image not found at {self.image_path}")
+        # Video capture from DroidCam
+        self.cap = cv2.VideoCapture(0)
+        if not self.cap.isOpened():
+            self.get_logger().error(f"Failed to open video stream from {self.droidcam_url}")
+            raise RuntimeError(f"Could not open video stream from {self.droidcam_url}")
 
-        # Timer to simulate camera feed at 25 Hz
-        self.timer = self.create_timer(1, self.process_image)
+        # Store reference frame (marker 0) transform
+        self.ref_transform = None
+        self.ref_rvec = None
+        self.ref_tvec = None
 
-    def process_image(self):
-        """Process the static image and publish odometry data."""
-        self.detect_and_publish_markers(self.frame)
+        # Timer to process frames
+        self.timer = self.create_timer(0.04, self.process_frame)
+
+    def process_frame(self):
+        """Capture and process frame from DroidCam."""
+        ret, frame = self.cap.read()
+        if not ret:
+            self.get_logger().error("Failed to read frame from video stream")
+            return
+
+        self.detect_and_publish_markers(frame)
+
+        if self.show_gui:
+            self.display_frame(frame)
+
+    def display_frame(self, frame):
+        """Display the processed frame with markers and info."""
+        try:
+            # Draw coordinate axes for marker 0 if found
+            if self.ref_rvec is not None and self.ref_tvec is not None:
+                cv2.drawFrameAxes(frame, self.camera_matrix, self.dist_coeffs, 
+                                 self.ref_rvec, self.ref_tvec, self.marker_length * 1.5)
+                
+                # Display reference marker info
+                cv2.putText(frame, "Reference Frame (Marker 0)", (10, 30),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
+
+            cv2.imshow("ArUco Marker Detection", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                self.get_logger().info("User requested shutdown")
+                self.destroy_node()
+        except Exception as e:
+            self.get_logger().error(f"Error in display_frame: {e}")
 
     def detect_and_publish_markers(self, frame):
         """Detect ArUco markers and publish their poses as odometry."""
-        corners, ids, rejected = self.detector.detectMarkers(frame)
-        if ids is not None:
-            for i, marker_id in enumerate(ids.flatten()):
-                if marker_id in [4, 5]:  # Process markers with IDs 4 and 5
-                    # Get the corner points for the marker
-                    marker_corners = corners[i].reshape((4, 2))
+        try:
+            corners, ids, rejected = self.detector.detectMarkers(frame)
+            
+            if ids is not None:
+                # Find marker 0 first to use as reference
+                ref_idx = None
+                if 0 in ids:
+                    ref_idx = np.where(ids == 0)[0][0]
+                    self.process_reference_marker(corners[ref_idx][0])
+                
+                # Process other markers relative to marker 0
+                for i, marker_id in enumerate(ids.flatten()):
+                    if marker_id in [4, 5]:  # Only process markers 4 and 5
+                        self.process_agent_marker(marker_id, corners[i][0], frame)
+        except Exception as e:
+            self.get_logger().error(f"Error in detect_and_publish_markers: {e}")
 
-                    # Define the 3D points of the marker corners in the marker's coordinate system
-                    marker_size = self.marker_length
-                    object_points = np.array([
-                        [-marker_size / 2, -marker_size / 2, 0],
-                        [ marker_size / 2, -marker_size / 2, 0],
-                        [ marker_size / 2,  marker_size / 2, 0],
-                        [-marker_size / 2,  marker_size / 2, 0]
-                    ], dtype=np.float32)
+    def process_reference_marker(self, corners):
+        """Process marker 0 and store its transform."""
+        try:
+            # Estimate pose of reference marker
+            object_points = self.get_marker_object_points()
+            success, rvec, tvec = cv2.solvePnP(
+                object_points, corners, self.camera_matrix, self.dist_coeffs)
+            
+            if success:
+                # Store the reference transform and pose data
+                self.ref_rvec = rvec
+                self.ref_tvec = tvec
+                
+                rot_matrix, _ = cv2.Rodrigues(rvec)
+                self.ref_transform = TransformStamped()
+                self.ref_transform.header.stamp = self.get_clock().now().to_msg()
+                self.ref_transform.header.frame_id = "camera_frame"
+                self.ref_transform.child_frame_id = "marker_0_frame"
+                
+                self.ref_transform.transform.translation.x = float(tvec[0])
+                self.ref_transform.transform.translation.y = float(tvec[1])
+                self.ref_transform.transform.translation.z = float(tvec[2])
+                
+                quat = self.rotation_matrix_to_quaternion(rot_matrix)
+                self.ref_transform.transform.rotation.x = quat[0]
+                self.ref_transform.transform.rotation.y = quat[1]
+                self.ref_transform.transform.rotation.z = quat[2]
+                self.ref_transform.transform.rotation.w = quat[3]
+                
+                # Broadcast TF
+                self.tf_broadcaster.sendTransform(self.ref_transform)
+        except Exception as e:
+            self.get_logger().error(f"Error in process_reference_marker: {e}")
 
-                    # Estimate pose using solvePnP
-                    success, rvec, tvec = cv2.solvePnP(
-                        object_points, marker_corners, self.camera_matrix, self.dist_coeffs
-                    )
-                    if success:
-                        # Create an Odometry message
-                        odom_msg = Odometry()
-                        odom_msg.header.stamp = self.get_clock().now().to_msg()
-                        odom_msg.header.frame_id = "camera_frame"
-                        odom_msg.child_frame_id = "base_link"
+    def process_agent_marker(self, marker_id, corners, frame):
+        """Process agent markers (4 and 5) relative to marker 0."""
+        try:
+            if self.ref_transform is None:
+                self.get_logger().warn("Reference marker 0 not found, skipping agent markers")
+                return
+                
+            # Estimate pose of agent marker
+            object_points = self.get_marker_object_points()
+            success, rvec, tvec = cv2.solvePnP(
+                object_points, corners, self.camera_matrix, self.dist_coeffs)
+            
+            if success:
+                # Convert to relative pose with respect to marker 0
+                agent_pos = np.array([tvec[0], tvec[1], tvec[2]], dtype=np.float32).reshape(3, 1)
+                ref_pos = np.array([
+                    self.ref_transform.transform.translation.x,
+                    self.ref_transform.transform.translation.y,
+                    self.ref_transform.transform.translation.z
+                ], dtype=np.float32).reshape(3, 1)
+                
+                relative_pos = agent_pos - ref_pos
+                
+                # Create Odometry message
+                odom_msg = Odometry()
+                odom_msg.header.stamp = self.get_clock().now().to_msg()
+                odom_msg.header.frame_id = "marker_0_frame"
+                odom_msg.child_frame_id = f"marker_{marker_id}_frame"
+                
+                # Set the pose (relative to marker 0)
+                odom_msg.pose.pose.position.x = float(relative_pos[0])
+                odom_msg.pose.pose.position.y = float(relative_pos[1])
+                odom_msg.pose.pose.position.z = float(relative_pos[2])
+                
+                rot_matrix, _ = cv2.Rodrigues(rvec)
+                quat = self.rotation_matrix_to_quaternion(rot_matrix)
+                odom_msg.pose.pose.orientation.x = quat[0]
+                odom_msg.pose.pose.orientation.y = quat[1]
+                odom_msg.pose.pose.orientation.z = quat[2]
+                odom_msg.pose.pose.orientation.w = quat[3]
+                
+                # Publish to the appropriate topic
+                if marker_id == 4:
+                    self.agent_0_odom_publisher.publish(odom_msg)
+                    log_msg = f'Marker 4 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
+                elif marker_id == 5:
+                    self.agent_1_odom_publisher.publish(odom_msg)
+                    log_msg = f'Marker 5 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
+                
+                self.get_logger().info(log_msg)
+                
+                if self.show_gui:
+                    # Draw marker outline and info
+                    color = (255, 0, 0) if marker_id == 4 else (0, 0, 255)
+                    cv2.polylines(frame, [corners.astype(int)], True, color, 2)
+                    text_pos = tuple(corners[0].astype(int))
+                    cv2.putText(frame, f"ID: {marker_id}", text_pos,
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                    cv2.putText(frame, f"X: {relative_pos[0][0]:.2f}", (text_pos[0], text_pos[1]+20),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                    cv2.putText(frame, f"Y: {relative_pos[1][0]:.2f}", (text_pos[0], text_pos[1]+40),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+        except Exception as e:
+            self.get_logger().error(f"Error in process_agent_marker: {e}")
 
-                        # Set the pose
-                        odom_msg.pose.pose.position.x = float(tvec[0])
-                        odom_msg.pose.pose.position.y = float(tvec[1])
-                        odom_msg.pose.pose.position.z = float(tvec[2])
-                        # Convert rotation vector to quaternion
-                        rot_matrix, _ = cv2.Rodrigues(rvec)
-                        quat = self.rotation_matrix_to_quaternion(rot_matrix)
-                        odom_msg.pose.pose.orientation.x = quat[0]
-                        odom_msg.pose.pose.orientation.y = quat[1]
-                        odom_msg.pose.pose.orientation.z = quat[2]
-                        odom_msg.pose.pose.orientation.w = quat[3]
-
-                        # Publish to the appropriate topic
-                        if marker_id == 4:
-                            self.agent_0_odom_publisher.publish(odom_msg)
-                            self.get_logger().info(f'Published odometry for marker {marker_id} to /agent_0/odom')
-                        elif marker_id == 5:
-                            self.agent_1_odom_publisher.publish(odom_msg)
-                            self.get_logger().info(f'Published odometry for marker {marker_id} to /agent_1/odom')
+    def get_marker_object_points(self):
+        """Return 3D points of marker corners in marker coordinate system."""
+        marker_size = self.marker_length
+        return np.array([
+            [-marker_size / 2, -marker_size / 2, 0],
+            [ marker_size / 2, -marker_size / 2, 0],
+            [ marker_size / 2,  marker_size / 2, 0],
+            [-marker_size / 2,  marker_size / 2, 0]
+        ], dtype=np.float32)
 
     @staticmethod
     def rotation_matrix_to_quaternion(R):
@@ -148,9 +263,22 @@ class ArucoDetector(Node):
             q[k] = (R[k, i] + R[i, k]) * t
         return q
 
+    def destroy_node(self):
+        self.cap.release()
+        if self.show_gui:
+            cv2.destroyAllWindows()
+        super().destroy_node()
+
 def main(args=None):
     rclpy.init(args=args)
     node = ArucoDetector()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()

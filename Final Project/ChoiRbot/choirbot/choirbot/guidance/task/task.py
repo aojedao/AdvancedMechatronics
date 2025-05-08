@@ -60,14 +60,18 @@ class TaskGuidance(OptimizationGuidance):
         self.optimization_thread.optimize(future)
     
     def _optimization_ended(self):
-        self.get_logger().info('Optimization ended')
-
-        # collect results
         result = self.optimizer.get_result()
-        self.get_logger().info('Assigned tasks {}'.format([task.seq_num for task in result]))
-        self.task_queue = result
-
-        # start new task
+        
+        # Add validation
+        valid_tasks = []
+        for task in result:
+            if not hasattr(task, 'seq_num'):
+                self.get_logger().error(f"Invalid task object received: {task}")
+                continue
+            valid_tasks.append(task)
+        
+        self.task_queue = valid_tasks
+        self.get_logger().info(f'Assigned valid tasks: {[t.seq_num for t in valid_tasks]}')
         self.task_gc.trigger()
     
     def start_new_task(self):
@@ -77,22 +81,42 @@ class TaskGuidance(OptimizationGuidance):
         
         # get task
         task = self.task_queue.pop(0)
+        
+        if task.id != self.agent_id:
+            self.get_logger().error(
+                f"Task ownership mismatch! Task {task.seq_num} "
+                f"belongs to agent {task.id} but assigned to {self.agent_id}"
+            )
+            return
 
         # check if task was already performed
+        #added to check if we are starting a new task when  one is exeu
+        if self.current_task is not None:
+            self.get_logger().warning('Attempted to start new task while current task still running')
+            return
         if task.seq_num in self.completed_tasks:
             # trigger new task and exit
+            #added to debug
+            self.get_logger().error(f"Agent {self.agent_id} received wrong task {task.seq_num} (owner: {task.id})")
             self.task_gc.trigger()
             return
 
         # execute task
-        self.get_logger().info('Got new task (seq_num {}) - starting execution'.format(task.seq_num))
+        self.get_logger().info('Got new task (seq_num {}) - starting execution'.format(task.seq_num)) #to say that we have gotten a new task
+        self.get_logger().info(
+        'Agent{} new task assigned (seq_num {}): Position {}'.format(
+            self.agent_id,
+            task.seq_num,
+            task.coordinates  # Assuming task has coordinates attribute
+            )
+            )#say that we have a new taks and the position for that task
         self.current_task = task
         self.task_executor.execute_async(self.current_task, self.task_ended)
     
     def task_ended(self):
         # log to console
         self.get_logger().info('Task completed (seq_num {})'.format(self.current_task.seq_num))
-
+        self.get_logger().info('Agent{} has reached the position (Task seq_num {} completed)'.format(self.agent_id, self.current_task.seq_num)) #says that we have reached a position
         # add task to list of completed tasks
         self.completed_tasks.append(self.current_task.seq_num)
 

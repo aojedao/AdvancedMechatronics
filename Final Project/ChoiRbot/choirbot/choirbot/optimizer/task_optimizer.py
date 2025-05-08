@@ -40,72 +40,93 @@ class TaskOptimizer(Optimizer):
         self.max_iterations = max_iterations
     
     def create_problem(self, task_list):
-        # prepare problem data (TODO spostare calcolo di task_positions in classe funzione di costo)
-        self.task_list = task_list
+        # Initialize task_list storage
+        if not hasattr(task_list, 'tasks'):
+            raise ValueError("Invalid task_list: missing 'tasks' attribute")
+        if not isinstance(task_list.tasks, list):
+            raise ValueError("task_list.tasks must be a list")
+        if not hasattr(self, 'task_list') or self.task_list is None:
+            self.task_list = type('', (), {'tasks': []})()  # Create object with empty tasks list
+        
+        # Filter tasks for this agent
+        self.task_list.tasks = [
+            {'task': t, 'owner': t.id == self.guidance.agent_id}
+            for t in task_list.tasks
+        ]
         self.n_tasks = self.guidance.n_agents
-        task_positions = np.array([np.array(t.coordinates) for t in task_list.tasks])
+        
+        # Validate tasks
+        if not self.task_list.tasks:
+            raise ValueError("No tasks available for optimization")
+        if any(t.id >= self.n_tasks for t in task_list.tasks):
+            raise ValueError(f"Task ID {t.id} exceeds max allowed ({self.n_tasks-1})")
+        
+        # Prepare problem data
+        task_positions = np.array([np.array(t['task'].coordinates) for t in self.task_list.tasks])
         task_indices = [t.id for t in task_list.tasks]
-        starting_position = self.guidance.current_pose.position[:-1]
+        starting_position = np.array(self.guidance.current_pose.position[:2])
 
-        # create problem matrices
+        # Generate cost and constraints
         c = self._generate_cost(task_positions, starting_position)
-        A, b = self._generate_constraints(task_indices)
+        A, b = self._generate_constraints()
 
-        # create problem object
+        # Create optimization problem
         x = Variable(len(self.task_list.tasks))
         obj = c @ x
         constr = A.transpose() @ x == b
         problem = LinearProblem(objective_function=obj, constraints=constr)
         self.agent.problem = problem
         
-        # set communicator label
+        # Set communication label
         self.guidance.communicator.current_label = int(task_list.label)
 
-        # create algorithm object
+        # Initialize algorithm
         self.algorithm = DistributedSimplex(self.agent, stop_iterations=self.stop_iterations)
 
     def _generate_cost(self, task_positions, starting_position):
-        if self.cost_function == 'euclidean':
-            cost_vector = np.empty((len(self.task_list.tasks), 1))
-            for idx, row in enumerate(task_positions):
-                cost_vector[idx, :] = np.linalg.norm(row - starting_position)
-
+        cost_vector = np.empty((len(self.task_list.tasks), 1))
+        for idx, row in enumerate(task_positions):
+            cost_vector[idx, :] = np.linalg.norm(row - starting_position)
         return cost_vector
 
-    def _generate_constraints(self, task_indices):
-        # TODO compute A as [A_1; A_2], where A_1 has a row of ones and A_2 is the identity (check column order)
-        N = self.guidance.n_agents
-        A = np.zeros((2*N, len(self.task_list.tasks)))
-        b = np.ones((2*N, 1))
+def _generate_constraints(self):
+    N = self.guidance.n_agents
+    M = len(self.task_list.tasks)
+    A = np.zeros((N + M, M))
+    b = np.ones((N + M, 1))
 
-        for idx, t in enumerate(task_indices):
-            A[self.guidance.agent_id, idx] = 1
-            A[self.n_tasks + t, idx] = 1
+    # Agent constraints
+    for task_idx, task_data in enumerate(self.task_list.tasks):
+        if task_data['owner']:
+            A[self.guidance.agent_id, task_idx] = 1
 
-        return A, b
+    # Task constraints
+    for task_idx in range(M):
+        A[N + task_idx, task_idx] = 1
 
+    return A, b
+        
     def optimize(self):
         self.algorithm.run(self.max_iterations, event=self._halt_event)
 
     def get_result(self):
-        x_basic = self.algorithm.x_basic
-        basis = self.algorithm.B
-
-        # cycle over basis columns where x_basic is nonzero
-        nonzero_basic = np.nonzero(x_basic)[0]
-        for idx in nonzero_basic:
-
-            # extract column
-            col = basis[1:, idx]
-
-            # check if this is the agent's assignment column
-            if col[self.guidance.agent_id]:
-
-                # get task id
-                task_id = np.nonzero(col)[0][-1] - self.n_tasks 
-
-                # return list with the task (there is only one because we assume N=M)
-                return [next(t for t in self.task_list.tasks if t.id == task_id)]
+        try:
+            x_basic = self.algorithm.x_basic
+            basis = self.algorithm.B
+            nonzero_basic = np.nonzero(x_basic)[0]
+            
+            assigned_tasks = []
+            for idx in nonzero_basic:
+                col = basis[1:, idx]
+                if col[self.guidance.agent_id] > 0.9:  # Threshold for assignment
+                    task_id = np.nonzero(col[self.n_tasks:])[0][0]
+                    # Return the actual task object, not the wrapper
+                    assigned_tasks.append(self.task_list.tasks[task_id]['task'])
+                    
+            return assigned_tasks
+        except Exception as e:
+            self.guidance.get_logger().error(f"Result error: {str(e)}")
+            return []
 
     def get_cost(self):
         return self.algorithm.J
