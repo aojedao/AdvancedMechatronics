@@ -15,7 +15,9 @@ class BLEBridge(Node):
         # Declare and get parameters
         self.declare_parameter('cmd_topic', '/agent0/cmd_vel')
         self.declare_parameter('ble_address', 'AA:BB:CC:DD:EE:FF')
+        #self.declare_parameter('ble_address', 'CD:EA:14:C3:CB:A5') #Pandebono MAC
         self.declare_parameter('ble_uuid', '0000ffe1-0000-1000-8000-00805f9b34fb')
+        #self.declare_parameter('ble_uuid', 'abcdefab-cdef-1234-5678-abcdef123456') #Pandobono UUID
 
         self.cmd_topic = self.get_parameter('cmd_topic').get_parameter_value().string_value
         self.ble_address = self.get_parameter('ble_address').get_parameter_value().string_value

@@ -29,7 +29,7 @@ class ArucoDetector(Node):
         self.get_logger().info('cv2 version: ' + cv2.__version__)
 
         # Parameters
-        self.declare_parameter('image_path', '~/Desktop/aruco_test/image1.jpeg')  # Path to test image
+        self.declare_parameter('image_path', '/home/robot4/Downloads/image1.jpg')  # Path to test image
         self.declare_parameter('marker_length', 0.07)  # meters
 
         # Load parameters
