@@ -29,6 +29,9 @@ class Turtlebot3Feedback(Node):
 
     def __init__(self, robot_id, pose_handler: str=None, pose_topic: str=None):
         super().__init__('agent_{}_turtlebot3_position_control'.format(robot_id))
+        
+        self.max_omega = 1.0  # Maximum angular velocity in rad/s
+
 
         """************************************************************
         ** Initialise variables
@@ -45,8 +48,8 @@ class Turtlebot3Feedback(Node):
         self.yaw = 0.0
         self.yaw_old = 0.0
         self.yaw_old_old = 0.0
-        self.k1 = 1
-        self.k2 = 10
+        self.k1 = 1 # linear velocity gain
+        self.k2 = 0.01 # Angular velocity gain
         self.init_odom_state = False  # To get the initial pose at the beginning
         self.robot_id = robot_id
         self.goal_point = None
@@ -106,6 +109,10 @@ class Turtlebot3Feedback(Node):
 
             omega = -(v/r)*(self.k2*(self.delta-np.arctan(-self.k1*self.goal_pose_theta)) + (1+ self.k1/(1 + (self.k1*self.goal_pose_theta)*(self.k1*self.goal_pose_theta)))*np.sin(self.delta))
             
+            # Cap the angular velocity
+            omega = np.clip(omega, -self.max_omega, self.max_omega)
+            
+            # Step 2: Move
             if r < 0.05:
                 current_pos = np.array([self.last_pose_x, self.last_pose_y])
                 self.get_logger().info('Reached goal - position {}'.format(current_pos))
@@ -115,7 +122,7 @@ class Turtlebot3Feedback(Node):
                 self.goal_pose_y = None
             else:
                 twist.linear.x = v
-                twist.angular.z = omega
+                twist.angular.z = omega/10000
 
             self.cmd_vel_pub.publish(twist)
 

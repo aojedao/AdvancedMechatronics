@@ -8,6 +8,10 @@
 #define SERVICE_UUID        "0000ffe1-0000-1000-8000-00805f9b34fb"
 #define CMD_CHAR_UUID       "0000ffe1-0000-1000-8000-00805f9b34fb" // RX
 
+bool stopped = false;
+const std::string STOP_MESSAGE = "0.00,0.00,0.00";
+
+
 // UART1 for Propeller communication
 HardwareSerial Propeller(1);
 
@@ -47,17 +51,25 @@ class CmdCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) override {
     std::string rxValue = pCharacteristic->getValue();
     if (rxValue.length() > 0) {
-       // Forward to Propeller as-is (already in tag:value format)
-      Propeller.print("cmdvel:"); // Tag for propeller parsing
-      Propeller.println(rxValue.c_str());
+      if (!stopped) {
+        // Always forward the message to the Propeller
+        Propeller.print("cmdvel:");
+        Propeller.println(rxValue.c_str());
+        Serial.print("Received BLE Command: ");
+        Serial.println(rxValue.c_str());
 
-      Serial.print("Received BLE Command: ");
-      Serial.println(rxValue.c_str());
-     
-      
+        // If this is the stop message, set the flag
+        if (rxValue == STOP_MESSAGE) {
+          stopped = true;
+          Serial.println("Stop message received. Further commands will be ignored.");
+        }
+      } else {
+        Serial.println("Command ignored (stopped).");
+      }
     }
   }
 };
+
 
 void setup() {
   Serial.begin(115200);

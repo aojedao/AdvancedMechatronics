@@ -90,14 +90,14 @@ class BLEBridge(Node):
             await asyncio.sleep(2)  # Check connection status every 2 seconds
 
     # Add these global variables at the class level
-    MESSAGE_RATE_LIMIT = 1.0  # seconds between messages (adjust as needed)
+    MESSAGE_RATE_LIMIT = 0.1  # seconds between messages (adjust as needed)
     last_sent_time = 0.0
 
     def cmd_callback(self, msg):
         """
         Callback for received Twist messages. Sends command over BLE.
         """
-        command = f"{msg.linear.x:.2f},{msg.linear.y:.2f},{msg.angular.z:.2f}\n"
+        command = f"{msg.linear.x:.2f},{msg.linear.y:.2f},{-msg.angular.z:.2f}\n"
         special_command = "0.00,0.00,0.00\n"
 
         now = time.time()
