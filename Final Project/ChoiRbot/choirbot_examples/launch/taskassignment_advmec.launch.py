@@ -11,7 +11,7 @@ import os
 
 
 def generate_launch_description():
-    N=2
+    N=3
     seed=3
     
     ble_devices = [
@@ -83,13 +83,15 @@ def generate_launch_description():
         ))
         
         # turtlebot spawner
-        #launch_description.append(Node(
-        #    package='choirbot_examples', executable='choirbot_turtlebot_spawner', output='screen',
-        #    parameters=[{'namespace': 'agent_{}'.format(i), 'position': position}]))
+
+        if i ==2:
+            launch_description.append(Node(
+                package='choirbot_examples', executable='choirbot_turtlebot_spawner', output='screen',
+                parameters=[{'namespace': 'agent_{}'.format(i), 'position': position}]))
     
     # include launcher for gazebo
-    #gazebo_launcher = os.path.join(get_package_share_directory('choirbot_examples'), 'gazebo.launch.py')
-    #launch_description.append(IncludeLaunchDescription(PythonLaunchDescriptionSource(gazebo_launcher)))
+    gazebo_launcher = os.path.join(get_package_share_directory('choirbot_examples'), 'gazebo.launch.py')
+    launch_description.append(IncludeLaunchDescription(PythonLaunchDescriptionSource(gazebo_launcher)))
     
     # Add ArUco detector node
     launch_description.append(Node(
@@ -100,16 +102,16 @@ def generate_launch_description():
     ))
 
     # Add Goal GUI node
-    launch_description.append(Node(
-        package='choirbot_io',
-        executable='goal_gui',
-        name='goal_gui',
-        output='screen'
-    ))
+    #launch_description.append(Node(
+    #    package='choirbot_io',
+    #    executable='goal_gui',
+    #    name='goal_gui',
+    #    output='screen'
+    #))
 
 
     # include delayed robot executables
-    timer_action = TimerAction(period=10.0, actions=[LaunchDescription(robot_launch)])
+    timer_action = TimerAction(period=15.0, actions=[LaunchDescription(robot_launch)])
     launch_description.append(timer_action)
         
     return LaunchDescription(launch_description)

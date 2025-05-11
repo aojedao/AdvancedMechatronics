@@ -31,7 +31,7 @@ class ArucoDetector(Node):
         self.declare_parameter('marker_length', 0.15)
         self.declare_parameter('show_gui', True)
         self.declare_parameter('calibration_file', 
-            '/home/robot_2004/Documents/Projects/AdvMec2025/AdvancedMechatronics/Final Project/ChoiRbot/choirbot_io/choirbot_io/calibration_data_usb_cam.npz')
+            '/home/user/Documents/NYU//AdvancedMechatronics/Final Project/ChoiRbot/choirbot_io/choirbot_io/calibration_data_usb_cam.npz')
 
         # Load parameters
         self.droidcam_url = self.get_parameter('droidcam_url').get_parameter_value().string_value

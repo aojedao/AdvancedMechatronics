@@ -111,7 +111,7 @@ class PositionTaskTable(TaskTable):
             agent for agents in self.bipartite_graph.values() 
             for agent in agents
             if not any(task for task in self.task_list if agent in self.bipartite_graph[task.seq_num])
-        )) or [0, 1]  # Default to all robots if empty
+        )) or [0, 1, 2]  # Default to all robots if empty
 
         # Clear only tasks for robots that need them (MODIFIED)
         self.task_list = [
@@ -128,10 +128,17 @@ class PositionTaskTable(TaskTable):
         # Original hardcoded tasks (UNCHANGED)
         tasks_agent0 = [[0.16, 0.95], [3.0, 1.5]]  # ArUco 4
         tasks_agent1 = [[0.48, -0.06], [-3.0, 0.5]]  # ArUco 5
+        tasks_agent2 = [[0.68, -0.16], [-2.8, 0.2]]  # ArUco 6
 
         # Only generate for robots needing tasks (MODIFIED)
         for robot_id in robots_needing_tasks:
-            tasks = tasks_agent0 if robot_id == 0 else tasks_agent1
+            if robot_id == 0:
+                tasks = tasks_agent0
+            elif robot_id == 1:
+                tasks = tasks_agent1
+            else:
+                tasks = tasks_agent2
+
             for coords in tasks:
                 task = PositionTask(
                     coordinates=coords,
@@ -140,7 +147,15 @@ class PositionTaskTable(TaskTable):
                 )
                 self.task_list.append(task)
                 self.bipartite_graph[task.seq_num] = [robot_id]
-                print(f'Assigned Task ID {task.id} (Seq {task.seq_num}) to ArUco ID {4 if robot_id == 0 else 5}: x={coords[0]}, y={coords[1]}')
+
+                if robot_id == 0:
+                    aruco_id = 2
+                elif robot_id == 1:
+                    aruco_id = 5
+                else:
+                    aruco_id = 6
+            
+                print(f'Assigned Task ID {task.id} (Seq {task.seq_num}) to ArUco ID {aruco_id}: x={coords[0]}, y={coords[1]}')
 
         # Original housekeeping (UNCHANGED)
         self.task_list_comm = self.task_list.copy()

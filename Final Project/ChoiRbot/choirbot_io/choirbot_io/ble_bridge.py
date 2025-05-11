@@ -110,14 +110,15 @@ class BLEBridge(Node):
             BLEBridge.last_sent_time = now
 
         if should_send:
-            self.get_logger().info(
-                f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
-            )
+            #self.get_logger().info(
+            #    f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
+            #)
             asyncio.run_coroutine_threadsafe(self.send_ble_command(command), self.loop)
         else:
-            self.get_logger().info(
-                f"[{self.cmd_topic}] Rate limit: Command not sent: {command.strip()}"
-            )
+            #self.get_logger().info(
+            #    f"[{self.cmd_topic}] Rate limit: Command not sent: {command.strip()}"
+            #)
+            pass
 
     async def send_ble_command(self, command):
         """

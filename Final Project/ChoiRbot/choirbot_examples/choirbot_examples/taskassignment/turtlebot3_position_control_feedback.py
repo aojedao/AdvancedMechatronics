@@ -122,7 +122,7 @@ class Turtlebot3Feedback(Node):
                 self.goal_pose_y = None
             else:
                 twist.linear.x = v
-                twist.angular.z = omega/10000
+                twist.angular.z = omega
 
             self.cmd_vel_pub.publish(twist)
 
