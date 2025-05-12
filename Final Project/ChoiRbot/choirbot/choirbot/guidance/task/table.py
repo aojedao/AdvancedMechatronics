@@ -126,9 +126,9 @@ class PositionTaskTable(TaskTable):
         }
 
         # Original hardcoded tasks (UNCHANGED)
-        tasks_agent0 = [[0.16, 0.95], [3.0, 1.5]]  # ArUco 4
-        tasks_agent1 = [[0.48, -0.06], [-3.0, 0.5]]  # ArUco 5
-        tasks_agent2 = [[0.68, -0.16], [-2.8, 0.2]]  # ArUco 6
+        tasks_agent0 = [[0.88, 0.47], [0.8, 0.5]]  # ArUco 4
+        tasks_agent1 = [[0.48, -0.06], [0.0, 0.0]]  # ArUco 5
+        tasks_agent2 = [[0.68, -0.16], [0.48, -0.02]]  # ArUco 6
 
         # Only generate for robots needing tasks (MODIFIED)
         for robot_id in robots_needing_tasks:

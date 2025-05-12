@@ -30,7 +30,7 @@ class Turtlebot3Feedback(Node):
     def __init__(self, robot_id, pose_handler: str=None, pose_topic: str=None):
         super().__init__('agent_{}_turtlebot3_position_control'.format(robot_id))
         
-        self.max_omega = 1.0  # Maximum angular velocity in rad/s
+        self.max_omega = 5.0  # Maximum angular velocity in rad/s
 
 
         """************************************************************
@@ -48,8 +48,8 @@ class Turtlebot3Feedback(Node):
         self.yaw = 0.0
         self.yaw_old = 0.0
         self.yaw_old_old = 0.0
-        self.k1 = 1 # linear velocity gain
-        self.k2 = 0.01 # Angular velocity gain
+        self.k1 = 4 # linear velocity gain
+        self.k2 = 10 # Angular velocity gain
         self.init_odom_state = False  # To get the initial pose at the beginning
         self.robot_id = robot_id
         self.goal_point = None
@@ -96,9 +96,9 @@ class Turtlebot3Feedback(Node):
 
         if self.goal_pose_x is not None:
             # Step 1: Turn
-            r = np.sqrt((self.goal_pose_x - self.last_pose_x)**2 + (self.goal_pose_y - self.last_pose_y)**2)
+            r = (np.sqrt((self.goal_pose_x - self.last_pose_x)**2 + (self.goal_pose_y - self.last_pose_y)**2))
 
-            v = min(0.1, r)
+            v = min(0.02, r)
 
             delta_new = -np.arctan2((self.goal_pose_y-self.last_pose_y),(self.goal_pose_x-self.last_pose_x))+self.yaw
             delta_array = np.array([self.delta_old_old, self.delta_old, delta_new])
@@ -111,7 +111,7 @@ class Turtlebot3Feedback(Node):
             
             # Cap the angular velocity
             omega = np.clip(omega, -self.max_omega, self.max_omega)
-            
+            v = np.clip(np.linalg.norm(r)*1, 0.01, 0.2)
             # Step 2: Move
             if r < 0.05:
                 current_pos = np.array([self.last_pose_x, self.last_pose_y])
