@@ -137,6 +137,7 @@ class Turtlebot3Feedback(Node):
 
             self.cmd_vel_pub.publish(twist)
     '''
+    uncomment this and comment the above function to use the unicycle pose control
     def generate_path(self):
         twist = Twist()
 

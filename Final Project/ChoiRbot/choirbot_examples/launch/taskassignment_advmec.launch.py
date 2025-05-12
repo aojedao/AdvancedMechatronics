@@ -8,16 +8,17 @@ import numpy as np
 import sys
 import argparse
 import os
+from nav_msgs.msg import Odometry
 
 
 def generate_launch_description():
-    N=3 #For three bots
+    N=2 #For three bots
     seed=3
     
     ble_devices = [
         {"name": "BLE_Arduino_Pandebono", "address": "CD:EA:14:C3:CB:A5", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
-        {"name": "BLE_Propeller_Mate"   , "address": "3C:71:BF:CF:14:1A", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"},
-        {"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
+        {"name": "BLE_Propeller_Mate"   , "address": "3C:71:BF:CF:14:1A", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}
+        #{"name": "BLE_Device_3", "address": "AA:BB:CC:DD:EE:03", "uuid": "0000ffe1-0000-1000-8000-00805f9b34fb"}, # Added for debugging with 3 agents
     ]
     
     for arg in sys.argv:
@@ -29,13 +30,22 @@ def generate_launch_description():
     # generate communication graph (this function also sets the seed)
     #--------------NEED TO CHANGE------------------------
     #this is enabled as a random graph but for real life sim we might have to change it in such a way that all robots are communicating
-    Adj = binomial_random_graph(N, 0.2, seed=seed)
+    #Adj = binomial_random_graph(N, 0.2, seed=seed)
+    #for two bots fully connected adjacency matrix
+
+    #Adj = np.ones((2, 2), dtype=int) - np.eye(2, dtype=int) #for two bots fully connected adjacency matrix
+
+    #Adj = np.ones((3, 3), dtype=int) - np.eye(3, dtype=int) #for two bots fully connected adjacency matrix
+
+    Adj = np.ones((N, N), dtype=int) - np.eye(N, dtype=int)
 
     # generate initial positions in [-3, 3] with z = 0
-    #this is initalizing the initial robot position randomly but this has to come from the aruco marker
-      #--------------NEED TO CHANGE------------------------
+
     P = np.zeros((N, 3))
     P[:, 0:2] = np.random.randint(-3, 3, (N, 2))
+
+
+
 
     # initialize launch description
     robot_launch = []       # launched after 10 sec (to let Gazebo open)
