@@ -1,70 +1,82 @@
 nishant@RoboMan:~/Github_Repo/AdvancedMechatronics/Final Project/ChoiRbot$ docker build -t swarm_v1 .
-[+] Building 1340.1s (7/19)                                                                                        docker:default
- => [internal] load build definition from Dockerfile                                                                         0.2s
- => => transferring dockerfile: 3.44kB                                                                                       0.0s
- => [internal] load metadata for docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04                                       0.4s
- => [internal] load .dockerignore                                                                                            0.1s
+[+] Building 1308.5s (7/16)                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                         0.6s
+ => => transferring dockerfile: 3.80kB                                                                                       0.0s
+ => [internal] load metadata for docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04                                       0.9s
+ => [internal] load .dockerignore                                                                                            0.9s
  => => transferring context: 2B                                                                                              0.0s
- => CACHED [ 1/16] FROM docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04@sha256:4480cecadba0bd3763d7c4934225620210527e  0.0s
- => [ 2/16] RUN apt-get update && apt-get install -y --no-install-recommends     lsb-release gnupg curl build-essential   1301.6s
- => [ 3/16] RUN locale-gen en_US en_US.UTF-8 &&     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8                       14.0s 
- => ERROR [ 4/16] RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr  20.0s 
+ => CACHED [ 1/13] FROM docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04@sha256:4480cecadba0bd3763d7c4934225620210527e  0.0s
+ => [ 2/13] RUN apt-get update && apt-get install -y --no-install-recommends     locales lsb-release gnupg curl build-es  1270.7s
+ => [ 3/13] RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archiv  12.4s 
+ => ERROR [ 4/13] RUN apt-get update && apt-get install -y --no-install-recommends     ros-humble-desktop     ros-humble-t  16.6s 
 ------                                                                                                                            
- > [ 4/16] RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg &&     echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" |     tee /etc/apt/sources.list.d/ros2.list > /dev/null &&     apt-get update &&     apt-get install -y ros-humble-desktop &&     rm -rf /var/lib/apt/lists/*:                                                                     
-3.730 Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]                                                             
-3.792 Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
-3.812 Get:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
-3.860 Get:4 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
-3.915 Get:5 http://packages.ros.org/ros2/ubuntu focal InRelease [4,685 B]
-3.947 Get:6 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
-4.266 Get:7 http://packages.ros.org/ros2/ubuntu focal/main i386 Packages [62.7 kB]
-4.422 Get:8 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1,078 kB]
-4.441 Get:9 http://packages.ros.org/ros2/ubuntu focal/main amd64 Packages [1,195 kB]
-4.751 Get:10 http://archive.ubuntu.com/ubuntu focal/restricted i386 Packages [10.1 kB]
-4.753 Get:11 http://archive.ubuntu.com/ubuntu focal/main i386 Packages [930 kB]
-4.818 Get:12 http://archive.ubuntu.com/ubuntu focal/multiverse i386 Packages [88.9 kB]
-4.830 Get:13 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
-4.830 Get:14 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
-4.843 Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1,275 kB]
-4.919 Get:16 http://archive.ubuntu.com/ubuntu focal/universe i386 Packages [5,999 kB]
-5.109 Get:17 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4,724 kB]
-5.387 Get:18 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
-5.388 Get:19 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,599 kB]
-5.488 Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4,883 kB]
-5.880 Get:21 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
-5.882 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4,921 kB]
-6.251 Get:23 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8,166 B]
-6.252 Get:24 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
-6.262 Get:25 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
-6.263 Get:26 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1,023 kB]
-6.330 Get:27 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9,592 B]
-6.330 Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1,370 kB]
-6.435 Get:29 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4,396 kB]
-6.442 Get:30 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [55.2 kB]
-6.448 Get:31 http://archive.ubuntu.com/ubuntu focal-backports/universe i386 Packages [15.4 kB]
-6.448 Get:32 http://archive.ubuntu.com/ubuntu focal-backports/main i386 Packages [43.4 kB]
-6.448 Get:33 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [28.6 kB]
-7.253 Get:34 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
-7.255 Get:35 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1,308 kB]
-7.544 Fetched 48.3 MB in 4s (12.6 MB/s)
-7.544 Reading package lists...
-8.692 Reading package lists...
-9.810 Building dependency tree...
-10.01 Reading state information...
-10.04 E: Unable to locate package ros-humble-desktop
+ > [ 4/13] RUN apt-get update && apt-get install -y --no-install-recommends     ros-humble-desktop     ros-humble-turtlebot3*     gazebo libgazebo-dev &&     rm -rf /var/lib/apt/lists/*:                                                                          
+5.334 Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]                                                   
+5.345 Get:2 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]                                                             
+5.346 Get:3 http://packages.osrfoundation.org/gazebo/ubuntu-stable focal InRelease [4,279 B]                                      
+5.371 Get:4 http://packages.ros.org/ros2/ubuntu focal InRelease [4,685 B]
+5.719 Get:5 http://packages.osrfoundation.org/gazebo/ubuntu-stable focal/main i386 Packages [40.1 kB]
+5.732 Get:6 http://packages.ros.org/ros2/ubuntu focal/main amd64 Packages [1,195 kB]
+5.760 Get:7 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+5.867 Get:8 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+5.874 Get:9 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
+5.973 Get:10 http://packages.osrfoundation.org/gazebo/ubuntu-stable focal/main amd64 Packages [134 kB]
+5.988 Get:11 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+6.276 Get:12 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
+6.508 Get:13 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1,078 kB]
+6.893 Get:14 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+6.900 Get:15 http://archive.ubuntu.com/ubuntu focal/main i386 Packages [930 kB]
+6.942 Get:16 http://archive.ubuntu.com/ubuntu focal/multiverse i386 Packages [88.9 kB]
+6.949 Get:17 http://archive.ubuntu.com/ubuntu focal/restricted i386 Packages [10.1 kB]
+6.949 Get:18 http://archive.ubuntu.com/ubuntu focal/universe i386 Packages [5,999 kB]
+7.338 Get:19 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+7.339 Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1,275 kB]
+7.346 Get:21 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4,724 kB]
+7.437 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,599 kB]
+7.570 Get:23 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
+7.575 Get:24 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4,921 kB]
+8.021 Get:25 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1,370 kB]
+8.061 Get:26 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
+8.130 Get:27 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
+8.130 Get:28 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9,592 B]
+8.131 Get:29 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4,883 kB]
+8.153 Get:30 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8,166 B]
+8.233 Get:31 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1,308 kB]
+8.439 Get:32 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4,396 kB]
+8.583 Get:33 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1,023 kB]
+8.676 Get:34 http://archive.ubuntu.com/ubuntu focal-backports/universe i386 Packages [15.4 kB]
+8.676 Get:35 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [28.6 kB]
+8.682 Get:36 http://archive.ubuntu.com/ubuntu focal-backports/main i386 Packages [43.4 kB]
+8.688 Get:37 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [55.2 kB]
+9.068 Fetched 48.4 MB in 4s (12.5 MB/s)
+9.068 Reading package lists...
+10.24 Reading package lists...
+11.36 Building dependency tree...
+11.56 Reading state information...
+11.67 Package gazebo is not available, but is referred to by another package.
+11.67 This may mean that the package is missing, has been obsoleted, or
+11.67 is only available from another source
+11.67 
+11.67 Package libgazebo-dev is not available, but is referred to by another package.
+11.67 This may mean that the package is missing, has been obsoleted, or
+11.67 is only available from another source
+11.67 
+11.67 E: Unable to locate package ros-humble-desktop
+11.67 E: Unable to locate package ros-humble-turtlebot3*
+11.67 E: Couldn't find any package by glob 'ros-humble-turtlebot3*'
+11.67 E: Couldn't find any package by regex 'ros-humble-turtlebot3*'
+11.67 E: Package 'gazebo' has no installation candidate
+11.67 E: Package 'libgazebo-dev' has no installation candidate
 ------
-Dockerfile:32
+Dockerfile:29
 --------------------
-  31 |     # 3. Install ROS 2 Humble
-  32 | >>> RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | \
-  33 | >>>     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-  34 | >>>     echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
-  35 | >>>     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | \
-  36 | >>>     tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
-  37 | >>>     apt-get update && \
-  38 | >>>     apt-get install -y ros-humble-desktop && \
-  39 | >>>     rm -rf /var/lib/apt/lists/*
-  40 |     
+  28 |     # ----------------- INSTALL ROS2 & GAZEBO -----------------
+  29 | >>> RUN apt-get update && apt-get install -y --no-install-recommends \
+  30 | >>>     ros-humble-desktop \
+  31 | >>>     ros-humble-turtlebot3* \
+  32 | >>>     gazebo libgazebo-dev && \
+  33 | >>>     rm -rf /var/lib/apt/lists/*
+  34 |     
 --------------------
-ERROR: failed to solve: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg &&     echo \"deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main\" |     tee /etc/apt/sources.list.d/ros2.list > /dev/null &&     apt-get update &&     apt-get install -y ros-humble-desktop &&     rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
+ERROR: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends     ros-humble-desktop     ros-humble-turtlebot3*     gazebo libgazebo-dev &&     rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
 
