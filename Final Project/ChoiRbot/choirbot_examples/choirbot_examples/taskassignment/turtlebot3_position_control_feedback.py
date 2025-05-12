@@ -53,6 +53,17 @@ class Turtlebot3Feedback(Node):
         self.init_odom_state = False  # To get the initial pose at the beginning
         self.robot_id = robot_id
         self.goal_point = None
+        '''
+        # Gains for pose control (from unicycle_pose)
+        self.k3_far = 0.2
+        self.k3_near = 0.1
+        self.min_velocity = 0.02
+        self.max_velocity = 0.1
+        self.target_tolerance = 0.02
+
+
+        
+        '''
         """************************************************************
         ** Initialise ROS publishers and subscribers
         ************************************************************"""
@@ -125,7 +136,45 @@ class Turtlebot3Feedback(Node):
                 twist.angular.z = omega
 
             self.cmd_vel_pub.publish(twist)
+    '''
+    def generate_path(self):
+        twist = Twist()
 
+        if self.goal_pose_x is not None and self.goal_pose_y is not None:
+            goal = np.array([self.goal_pose_x, self.goal_pose_y])
+            current = np.array([self.last_pose_x, self.last_pose_y])
+            dx, dy = goal - current
+            rho = np.linalg.norm([dx, dy])
+
+            # Avoid division by zero
+            if rho < 1e-5:
+                rho = 1e-5
+
+            # Control law (same logic from unicycle_pose.py)
+            alpha = -np.arctan2(dy, dx) + self.yaw
+            beta = -self.yaw - alpha
+
+            alpha = np.arctan2(np.sin(alpha), np.cos(alpha))
+            beta = np.arctan2(np.sin(beta), np.cos(beta))
+
+            v = np.clip(self.k3_far * rho, self.min_velocity, self.max_velocity)
+            omega = -(v / rho) * (self.k2 * (alpha - np.arctan(-self.k1 * 0.0)) + 
+                                (1 + self.k1 / (1 + (self.k1 * 0.0) ** 2)) * np.sin(alpha))
+
+            if rho < self.target_tolerance:
+                twist.linear.x = 0.0
+                twist.angular.z = 0.0
+                self.get_logger().info(f"Reached goal at {goal}")
+                self.goal_pose_x = None
+                self.goal_pose_y = None
+            else:
+                twist.linear.x = v
+                twist.angular.z = omega
+
+            self.cmd_vel_pub.publish(twist)
+
+    
+    '''
     def goal_callback(self, msg):
         # Print terminal message and get inputs
         goal = np.array([msg.x, msg.y])
