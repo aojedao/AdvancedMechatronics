@@ -10,31 +10,29 @@ ENV ROS_DISTRO=humble \
     ROS_DOMAIN_ID=30 \
     GAZEBO_MODEL_PATH=/opt/ros/humble/share/turtlebot3_gazebo/models
 
-# 1. Install all tools (including editors)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl gnupg2 lsb-release software-properties-common \
-    git wget xterm python3-pip python3-colcon-common-extensions \
-    python3-rosdep build-essential \
-    nano gedit \
-    && rm -rf /var/lib/apt/lists/*
-
-# 2. Setup ROS 2 and Gazebo repos
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+# 1. Add ROS 2 and Gazebo repositories (modern method)
+RUN apt-get update && apt-get install -y curl gnupg2 lsb-release && \
+    # ROS 2 repository
+    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2.list && \
-    curl -sSL http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list
+    # Gazebo repository (modern approach)
+    curl -sSL https://packages.osrfoundation.org/gazebo.key | gpg --dearmor > /usr/share/keyrings/gazebo.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/gazebo.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list
 
-# 3. Install ROS 2 and Gazebo
+# 2. Install tools and ROS 2 packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    git wget xterm python3-pip \
+    python3-colcon-common-extensions python3-rosdep2 \
+    build-essential nano gedit \
     ros-humble-desktop \
     ros-humble-turtlebot3* \
     gazebo libgazebo-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 4. Initialize rosdep
+# 3. Initialize rosdep
 RUN rosdep init || true && rosdep update
 
-# 5. Create user with passwordless sudo
+# 4. Create user with passwordless sudo
 RUN groupadd -g 1000 ubuntu && \
     useradd -m -s /bin/bash -u 1000 -g 1000 ubuntu && \
     usermod -aG sudo ubuntu && \
@@ -44,25 +42,24 @@ RUN groupadd -g 1000 ubuntu && \
 USER ubuntu
 WORKDIR /home/ubuntu
 
-# ----------------- CLONE PROJECT -----------------
-RUN git clone --single-branch --branch swarmIRL https://github.com/aojedao/AdvancedMechatronics.git
+# 5. Clone project and set up workspaces
+RUN git clone --single-branch --branch swarmIRL https://github.com/aojedao/AdvancedMechatronics.git && \
+    mkdir -p ~/AdvancedMechatronics/Final\ Project/ChoiRbot/dev_ws/src && \
+    cp -r ~/AdvancedMechatronics/Final\ Project/ChoiRbot/choirbot ~/AdvancedMechatronics/Final\ Project/ChoiRbot/dev_ws/src/
 
-# ----------------- SETUP DEV_WS -----------------
-WORKDIR /home/ubuntu/AdvancedMechatronics/Final Project/ChoiRbot
-RUN mkdir -p dev_ws/src && cp -r choirbot dev_ws/src/
+# 6. Install Python dependencies
+RUN pip3 install --upgrade pip && \
+    pip3 install -r ~/AdvancedMechatronics/Final\ Project/ChoiRbot/dev_ws/src/choirbot/requirements.txt && \
+    pip3 install disropt vcstool
 
-# ----------------- INSTALL PYTHON & BUILD TOOLS -----------------
-RUN pip3 install --upgrade pip && pip3 install -r dev_ws/src/choirbot/requirements.txt && pip3 install disropt colcon-common-extensions vcstool
-
-# 8. Setup turtlebot3_ws
-RUN bash -c "mkdir -p ~/turtlebot3_ws/src && \
-    cd ~/turtlebot3_ws/src && \
-    git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git && \
+# 7. Build turtlebot3_ws
+RUN mkdir -p ~/turtlebot3_ws/src && \
+    git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git ~/turtlebot3_ws/src/turtlebot3_simulations && \
+    bash -c "source /opt/ros/humble/setup.bash && \
     cd ~/turtlebot3_ws && \
-    source /opt/ros/$ROS_DISTRO/setup.bash && \
     colcon build --symlink-install"
 
-# 9. Configure environment
+# 8. Configure environment
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
     echo "source ~/dev_ws/install/setup.bash" >> ~/.bashrc && \
     echo "source ~/turtlebot3_ws/install/setup.bash" >> ~/.bashrc && \
@@ -71,6 +68,5 @@ RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=/opt/ros/humble/share/turtlebot3_gazebo/models" >> ~/.bashrc && \
     echo "alias build_ws='cd ~/dev_ws && colcon build --symlink-install'" >> ~/.bashrc
 
-# 10. Final setup
 WORKDIR /home/ubuntu/dev_ws
 ENTRYPOINT ["/bin/bash"]
