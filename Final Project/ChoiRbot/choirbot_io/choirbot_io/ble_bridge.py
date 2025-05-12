@@ -98,6 +98,10 @@ class BLEBridge(Node):
         Callback for received Twist messages. Sends command over BLE.
         """
         command = f"{msg.linear.x:.2f},{msg.linear.y:.2f},{-msg.angular.z:.2f}\n"
+        
+        if msg.linear.x == 0.0 and msg.linear.y == 0.0 and msg.angular.z == 0.0:
+            # If all values are zero, send a special command
+            command = "0.00,0.00,0.00\n"
         special_command = "0.00,0.00,0.00\n"
 
         now = time.time()
@@ -105,15 +109,23 @@ class BLEBridge(Node):
 
         if command == special_command:
             should_send = True
+            print("Sending special command")
+            asyncio.run_coroutine_threadsafe(self.send_ble_command(special_command), self.loop)
+            asyncio.run_coroutine_threadsafe(self.send_ble_command(special_command), self.loop)
+            asyncio.run_coroutine_threadsafe(self.send_ble_command(special_command), self.loop)
+            self.get_logger().info(
+                f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
+            )
         elif now - BLEBridge.last_sent_time >= BLEBridge.MESSAGE_RATE_LIMIT:
             should_send = True
             BLEBridge.last_sent_time = now
 
         if should_send:
-            #self.get_logger().info(
-            #    f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
-            #)
+            # self.get_logger().info(
+            #     f"[{self.cmd_topic}] Sending command over BLE: {command.strip()}"
+            # )
             asyncio.run_coroutine_threadsafe(self.send_ble_command(command), self.loop)
+        
         else:
             #self.get_logger().info(
             #    f"[{self.cmd_topic}] Rate limit: Command not sent: {command.strip()}"
@@ -124,10 +136,10 @@ class BLEBridge(Node):
         """
         Send a command string to the BLE device.
         """
-        try:
-            await self.ble_client.write_gatt_char(self.ble_uuid, command.encode())
-        except Exception as e:
-            self.get_logger().error(f"[{self.cmd_topic}] Failed to send BLE command: {e}")
+        #try:
+        await self.ble_client.write_gatt_char(self.ble_uuid, command.encode())
+        #except Exception as e:
+            #self.get_logger().error(f"[{self.cmd_topic}] Failed to send BLE command: {e}")
 
     def shutdown(self):
         """

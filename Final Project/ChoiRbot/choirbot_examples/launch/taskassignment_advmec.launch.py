@@ -82,19 +82,20 @@ def generate_launch_description():
             package='choirbot_examples', executable='choirbot_taskassignment_controller', output='screen',
             namespace='agent_{}'.format(i),
             parameters=[{'agent_id': i}]))
-        
-        ble_device = ble_devices[i]
-        launch_description.append(Node(
-            package='choirbot_io',
-            executable='ble_bridge',
-            name=f'ble_bridge_agent_{i}',
-            output='screen',
-            parameters=[
-                {'cmd_topic': f'/agent_{i}/cmd_vel'},
-                {'ble_address': ble_device["address"]},
-                {'ble_uuid': ble_device["uuid"]}
-            ]
-        ))
+
+        if i !=2:
+            ble_device = ble_devices[i]
+            launch_description.append(Node(
+                package='choirbot_io',
+                executable='ble_bridge',
+                name=f'ble_bridge_agent_{i}',
+                output='screen',
+                parameters=[
+                    {'cmd_topic': f'/agent_{i}/cmd_vel'},
+                    {'ble_address': ble_device["address"]},
+                    {'ble_uuid': ble_device["uuid"]}
+                ]
+            ))
         
         # turtlebot spawner
 

@@ -204,12 +204,12 @@ class ArucoDetector(Node):
                 # Publish to the appropriate topic
                 if marker_id == 4:
                     self.agent_0_odom_publisher.publish(odom_msg)
-                    log_msg = f'Marker 4 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
+                    #log_msg = f'Marker 4 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
                 elif marker_id == 5:
                     self.agent_1_odom_publisher.publish(odom_msg)
-                    log_msg = f'Marker 5 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
+                    #log_msg = f'Marker 5 odom (rel to 0): x={relative_pos[0][0]:.2f}, y={relative_pos[1][0]:.2f}, z={relative_pos[2][0]:.2f}'
                 
-                self.get_logger().info(log_msg)
+                #self.get_logger().info(log_msg)
                 
                 if self.show_gui:
                     # Draw marker outline and info

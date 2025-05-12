@@ -49,11 +49,11 @@ class Turtlebot3Feedback(Node):
         self.yaw_old = 0.0
         self.yaw_old_old = 0.0
         self.k1 = 4 # linear velocity gain
-        self.k2 = 10 # Angular velocity gain
+        self.k2 = 15 # Angular velocity gain
         self.init_odom_state = False  # To get the initial pose at the beginning
         self.robot_id = robot_id
         self.goal_point = None
-        '''
+        
         # Gains for pose control (from unicycle_pose)
         self.k3_far = 0.2
         self.k3_near = 0.1
@@ -63,7 +63,7 @@ class Turtlebot3Feedback(Node):
 
 
         
-        '''
+        
         """************************************************************
         ** Initialise ROS publishers and subscribers
         ************************************************************"""
@@ -101,7 +101,7 @@ class Turtlebot3Feedback(Node):
     def update_callback(self):
         if self.init_odom_state is True:
             self.generate_path()
-    '''
+    
     def generate_path(self):
         twist = Twist()
 
@@ -127,18 +127,21 @@ class Turtlebot3Feedback(Node):
             if r < 0.05:
                 current_pos = np.array([self.last_pose_x, self.last_pose_y])
                 self.get_logger().info('Reached goal - position {}'.format(current_pos))
-                twist.linear.x = 0.0
-                twist.angular.z = 0.0
+                twist.linear.x = 0.00
+                twist.linear.y = 0.00
+                twist.angular.z = 0.00
                 self.goal_pose_x = None
                 self.goal_pose_y = None
+                self.get_logger().info('Sending 0 vel to ID {}'.format(self.robot_id))
+                self.cmd_vel_pub.publish(twist)
             else:
                 twist.linear.x = v
                 twist.angular.z = omega
 
             self.cmd_vel_pub.publish(twist)
-    
-    uncomment this and comment the above function to use the unicycle pose control
     '''
+    uncomment this and comment the above function to use the unicycle pose control
+    
     def generate_path(self):
         twist = Twist()
 
@@ -174,6 +177,7 @@ class Turtlebot3Feedback(Node):
                 twist.angular.z = omega
 
             self.cmd_vel_pub.publish(twist)
+    '''
 
     
     

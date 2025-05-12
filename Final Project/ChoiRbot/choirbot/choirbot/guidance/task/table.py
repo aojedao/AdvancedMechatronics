@@ -107,7 +107,6 @@ class PositionTaskTable(TaskTable):
     def make_task_array(self, task_list):
         return PositionTaskArray(tasks=task_list)
     
-    '''
     def generate_tasks(self):
         """Generates tasks only for robots with empty queues, preserving all original structure"""
         # Store which robots need tasks (NEW)
@@ -130,9 +129,9 @@ class PositionTaskTable(TaskTable):
         }
 
         # Original hardcoded tasks (UNCHANGED)
-        tasks_agent0 = [[0.88, 0.47], [0.88, 0.47], [0.88, 0.47]]  # ArUco 4
-        tasks_agent1 = [[0.48, 0.26], [0.48, 0.26], [0.48, 0.26]]  # ArUco 5
-        tasks_agent2 = [[0.68, -0.16], [0.48, -0.02]]  # ArUco 6
+        tasks_agent0 = [[0.4, 0.78], [0.4, 0.78], [0.4, 0.78]]  # ArUco 4
+        tasks_agent1 = [[1.16, 0.98], [1.16, 0.98], [1.16, 0.98]]  # ArUco 5
+        tasks_agent2 = [[0.68, -0.16], [0.68, -0.16], [0.68, -0.16]]  # ArUco 6
 
         # Only generate for robots needing tasks (MODIFIED)
         for robot_id in robots_needing_tasks:
@@ -146,7 +145,7 @@ class PositionTaskTable(TaskTable):
             for coords in tasks:
                 task = PositionTask(
                     coordinates=coords,
-                    id=self.gen_task_id(),
+                    id=robot_id,
                     seq_num=self.gen_task_seq_num()
                 )
                 self.task_list.append(task)
@@ -166,70 +165,6 @@ class PositionTaskTable(TaskTable):
         self.task_list_comm = self.task_list.copy()
         self.times_tasks_generated += 1
         self.label += 1
-    #for generating 1 task for each robot
-    '''
-    
-    def generate_tasks(self):
-        """
-        Generates fixed tasks with manually specified positions and assigned agents.
-        Replace the task_data list below with your own task coordinates and agent IDs.
-        """
-        # Define your manual tasks here: (x, y, agent_id)
-        task_data = [
-            ([0.5, 1.0], 0),   # Task for robot 0
-            ([-1.2, 2.5], 1)   # Task for robot 1
-        ]
-
-        # Clear previous task list
-        self.task_list.clear()
-        self.bipartite_graph.clear()
-
-        for coords, agent_id in task_data:
-            task_id = self.gen_task_id()
-            task_seq_num = self.gen_task_seq_num()
-            task = PositionTask(coordinates=coords, id=task_id, seq_num=task_seq_num)
-            self.task_list.append(task)
-            self.bipartite_graph[task_seq_num] = [agent_id]
-
-            self.get_logger().info(
-                f'Assigned Task ID {task.id} (Seq {task.seq_num}) to Agent {agent_id}: x={coords[0]}, y={coords[1]}'
-            )
-
-        self.task_list_comm = self.task_list.copy()
-        self.times_tasks_generated += 1
-        self.label += 1
-        
-    #generate more than 1 task for each robot
-    '''
-    def generate_tasks(self):
-    """
-    Assigns the next task from the task queue for each robot that has no active task.
-    """
-    for robot_id, queue in self.robot_task_queues.items():
-        # Check if robot already has a task
-        has_task = any(
-            robot_id in self.bipartite_graph.get(task.seq_num, [])
-            for task in self.task_list
-        )
-        if has_task or not queue:
-            continue  # skip if robot has task or no tasks left
-
-        coords = queue.pop(0)  # get next task
-        task_id = self.gen_task_id()
-        task_seq_num = self.gen_task_seq_num()
-        task = PositionTask(coordinates=coords, id=task_id, seq_num=task_seq_num)
-        self.task_list.append(task)
-        self.bipartite_graph[task_seq_num] = [robot_id]
-
-        self.get_logger().info(
-            f'Assigned Task ID {task.id} (Seq {task.seq_num}) to Robot {robot_id}: x={coords[0]}, y={coords[1]}'
-        )
-
-    self.task_list_comm = self.task_list.copy()
-    self.times_tasks_generated += 1
-    self.label += 1
-
-    '''
 
     def can_generate_tasks(self):
         return len(self.task_list) < self.N #generate tasks when it is empty
