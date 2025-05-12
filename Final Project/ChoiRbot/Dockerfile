@@ -5,13 +5,23 @@ FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # 1. Install core dependencies
+
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    lsb-release gnupg curl build-essential \
+#    locales sudo git wget nano xterm python3-pip \
+#    python3-colcon-common-extensions python3-vcstool \
+#    python3-rosdep python3-rosinstall-generator python3-pyqt5 \
+#    dirmngr software-properties-common && \
+#    rm -rf /var/lib/apt/lists/*
+
+# 1. Install core dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release gnupg curl build-essential \
-    locales sudo git wget nano xterm python3-pip \
-    python3-colcon-common-extensions python3-vcstool \
+    locales sudo git wget nano gedit xterm python3-pip \
     python3-rosdep python3-rosinstall-generator python3-pyqt5 \
     dirmngr software-properties-common && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    pip3 install -U colcon-common-extensions vcstool
 
 # 2. Set locale
 RUN locale-gen en_US en_US.UTF-8 && \
@@ -71,7 +81,7 @@ RUN echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc && \
     echo 'source ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc && \
     echo 'export TURTLEBOT3_MODEL=burger' >> ~/.bashrc && \
     echo 'export ROS_DOMAIN_ID=30' >> ~/.bashrc && \
-    echo 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/home/ubuntu/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models' >> ~/.bashrc
+    echo 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/humble/share/turtlebot3_gazebo/models' >> ~/.bashrc
 
 ENTRYPOINT ["/bin/bash"]
 
