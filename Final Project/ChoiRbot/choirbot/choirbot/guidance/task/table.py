@@ -40,6 +40,9 @@ class TaskTable(Node):
     
     def task_completion_service(self, request, response):
         agent = request.agent_id
+
+        if agent==0:
+            self.get_logger().info("Agent 0 completed task")
         task_seq_num = request.task_seq_num
         task = next(t for t in self.task_list if t.seq_num == task_seq_num)
         
@@ -126,8 +129,8 @@ class PositionTaskTable(TaskTable):
         }
 
         # Original hardcoded tasks (UNCHANGED)
-        tasks_agent0 = [[0.88, 0.47], [0.8, 0.5]]  # ArUco 4
-        tasks_agent1 = [[0.48, 0.26], [0.0, 0.0]]  # ArUco 5
+        tasks_agent0 = [[0.88, 0.47], [0.88, 0.47], [0.88, 0.47]]  # ArUco 4
+        tasks_agent1 = [[0.48, 0.26], [0.48, 0.26], [0.48, 0.26]]  # ArUco 5
         tasks_agent2 = [[0.68, -0.16], [0.48, -0.02]]  # ArUco 6
 
         # Only generate for robots needing tasks (MODIFIED)
