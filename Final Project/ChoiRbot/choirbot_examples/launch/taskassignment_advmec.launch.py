@@ -11,7 +11,7 @@ import os
 
 
 def generate_launch_description():
-    N=3
+    N=3 #For three bots
     seed=3
     
     ble_devices = [
@@ -84,7 +84,7 @@ def generate_launch_description():
         
         # turtlebot spawner
 
-        if i ==2:
+        if i ==2: #Only if its the third bot itll be spawned in gazebo
             launch_description.append(Node(
                 package='choirbot_examples', executable='choirbot_turtlebot_spawner', output='screen',
                 parameters=[{'namespace': 'agent_{}'.format(i), 'position': position}]))

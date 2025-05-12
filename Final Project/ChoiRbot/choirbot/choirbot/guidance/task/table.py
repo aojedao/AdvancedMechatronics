@@ -127,7 +127,7 @@ class PositionTaskTable(TaskTable):
 
         # Original hardcoded tasks (UNCHANGED)
         tasks_agent0 = [[0.88, 0.47], [0.8, 0.5]]  # ArUco 4
-        tasks_agent1 = [[0.48, -0.06], [0.0, 0.0]]  # ArUco 5
+        tasks_agent1 = [[0.48, 0.26], [0.0, 0.0]]  # ArUco 5
         tasks_agent2 = [[0.68, -0.16], [0.48, -0.02]]  # ArUco 6
 
         # Only generate for robots needing tasks (MODIFIED)
@@ -149,7 +149,8 @@ class PositionTaskTable(TaskTable):
                 self.bipartite_graph[task.seq_num] = [robot_id]
 
                 if robot_id == 0:
-                    aruco_id = 2
+                    aruco_id = 4
+                    self.get_logger().info("Tasks for ID 0")
                 elif robot_id == 1:
                     aruco_id = 5
                 else:
