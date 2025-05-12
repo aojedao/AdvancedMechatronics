@@ -101,7 +101,7 @@ class Turtlebot3Feedback(Node):
     def update_callback(self):
         if self.init_odom_state is True:
             self.generate_path()
-
+    '''
     def generate_path(self):
         twist = Twist()
 
@@ -136,8 +136,9 @@ class Turtlebot3Feedback(Node):
                 twist.angular.z = omega
 
             self.cmd_vel_pub.publish(twist)
-    '''
+    
     uncomment this and comment the above function to use the unicycle pose control
+    '''
     def generate_path(self):
         twist = Twist()
 
@@ -175,7 +176,7 @@ class Turtlebot3Feedback(Node):
             self.cmd_vel_pub.publish(twist)
 
     
-    '''
+    
     def goal_callback(self, msg):
         # Print terminal message and get inputs
         goal = np.array([msg.x, msg.y])

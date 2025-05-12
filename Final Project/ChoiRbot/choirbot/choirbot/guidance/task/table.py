@@ -107,6 +107,7 @@ class PositionTaskTable(TaskTable):
     def make_task_array(self, task_list):
         return PositionTaskArray(tasks=task_list)
     
+    '''
     def generate_tasks(self):
         """Generates tasks only for robots with empty queues, preserving all original structure"""
         # Store which robots need tasks (NEW)
@@ -167,36 +168,37 @@ class PositionTaskTable(TaskTable):
         self.label += 1
     #for generating 1 task for each robot
     '''
+    
     def generate_tasks(self):
-    """
-    Generates fixed tasks with manually specified positions and assigned agents.
-    Replace the task_data list below with your own task coordinates and agent IDs.
-    """
-    # Define your manual tasks here: (x, y, agent_id)
-    task_data = [
-        ([0.5, 1.0], 0),   # Task for robot 0
-        ([-1.2, 2.5], 1)   # Task for robot 1
-    ]
+        """
+        Generates fixed tasks with manually specified positions and assigned agents.
+        Replace the task_data list below with your own task coordinates and agent IDs.
+        """
+        # Define your manual tasks here: (x, y, agent_id)
+        task_data = [
+            ([0.5, 1.0], 0),   # Task for robot 0
+            ([-1.2, 2.5], 1)   # Task for robot 1
+        ]
 
-    # Clear previous task list
-    self.task_list.clear()
-    self.bipartite_graph.clear()
+        # Clear previous task list
+        self.task_list.clear()
+        self.bipartite_graph.clear()
 
-    for coords, agent_id in task_data:
-        task_id = self.gen_task_id()
-        task_seq_num = self.gen_task_seq_num()
-        task = PositionTask(coordinates=coords, id=task_id, seq_num=task_seq_num)
-        self.task_list.append(task)
-        self.bipartite_graph[task_seq_num] = [agent_id]
+        for coords, agent_id in task_data:
+            task_id = self.gen_task_id()
+            task_seq_num = self.gen_task_seq_num()
+            task = PositionTask(coordinates=coords, id=task_id, seq_num=task_seq_num)
+            self.task_list.append(task)
+            self.bipartite_graph[task_seq_num] = [agent_id]
 
-        self.get_logger().info(
-            f'Assigned Task ID {task.id} (Seq {task.seq_num}) to Agent {agent_id}: x={coords[0]}, y={coords[1]}'
-        )
+            self.get_logger().info(
+                f'Assigned Task ID {task.id} (Seq {task.seq_num}) to Agent {agent_id}: x={coords[0]}, y={coords[1]}'
+            )
 
-    self.task_list_comm = self.task_list.copy()
-    self.times_tasks_generated += 1
-    self.label += 1
-    '''
+        self.task_list_comm = self.task_list.copy()
+        self.times_tasks_generated += 1
+        self.label += 1
+        
     #generate more than 1 task for each robot
     '''
     def generate_tasks(self):

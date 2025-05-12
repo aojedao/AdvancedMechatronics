@@ -1,3 +1,4 @@
+'''
 import numpy as np
 from disropt.algorithms import DistributedSimplex
 from disropt.functions import Variable
@@ -120,11 +121,11 @@ class TaskOptimizer(Optimizer):
 
     def get_cost(self):
         return self.algorithm.J
-    
-'''
+   
+
 
 this is the original code this should be replaced when changes are made to the table.py
-
+'''
 import numpy as np
 from disropt.algorithms import DistributedSimplex
 from disropt.functions import Variable
@@ -237,4 +238,3 @@ class TaskOptimizer(Optimizer):
     def get_cost(self):
         return self.algorithm.J
 
-'''
