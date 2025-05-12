@@ -1,4 +1,4 @@
-FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04
+FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu22.04
 
 # ----------------- ENVIRONMENT -----------------
 ENV DEBIAN_FRONTEND=noninteractive \
