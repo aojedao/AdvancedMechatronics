@@ -14,8 +14,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     locales lsb-release gnupg curl build-essential \
     sudo git wget nano gedit xterm python3-pip \
-    python3-rosdep python3-rosinstall-generator python3-pyqt5 \
+    python3-rosinstall-generator python3-pyqt5 \
     dirmngr software-properties-common && \
+    pip3 install -U rosdep && \
     locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
 
