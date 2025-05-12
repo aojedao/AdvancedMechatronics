@@ -15,10 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     locales lsb-release gnupg curl build-essential \
     sudo git wget nano gedit xterm python3-pip \
     python3-rosinstall-generator python3-pyqt5 \
-    python3-rosdep python3-rospkg python3-catkin-pkg python3-rosdistro \
+    python3-rospkg python3-catkin-pkg python3-rosdistro \
     dirmngr software-properties-common && \
+    pip3 install -U rosdep && \
     locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
+
 
 # ----------------- SETUP ROS & GAZEBO REPOS -----------------
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
