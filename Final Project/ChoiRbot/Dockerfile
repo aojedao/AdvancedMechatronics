@@ -14,7 +14,7 @@ ENV ROS_DISTRO=humble \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl gnupg2 lsb-release software-properties-common \
     git wget xterm python3-pip python3-colcon-common-extensions \
-    python3-rosdep build-essential \
+    python3-rosdep2 build-essential \
     nano gedit \
     && rm -rf /var/lib/apt/lists/*
 
