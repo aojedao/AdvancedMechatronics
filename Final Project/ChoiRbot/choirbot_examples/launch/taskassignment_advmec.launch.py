@@ -27,9 +27,13 @@ def generate_launch_description():
             seed = int(arg.split(":=")[1])
 
     # generate communication graph (this function also sets the seed)
+    #--------------NEED TO CHANGE------------------------
+    #this is enabled as a random graph but for real life sim we might have to change it in such a way that all robots are communicating
     Adj = binomial_random_graph(N, 0.2, seed=seed)
 
     # generate initial positions in [-3, 3] with z = 0
+    #this is initalizing the initial robot position randomly but this has to come from the aruco marker
+      #--------------NEED TO CHANGE------------------------
     P = np.zeros((N, 3))
     P[:, 0:2] = np.random.randint(-3, 3, (N, 2))
 
