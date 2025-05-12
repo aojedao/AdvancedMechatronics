@@ -1,80 +1,70 @@
 nishant@RoboMan:~/Github_Repo/AdvancedMechatronics/Final Project/ChoiRbot$ docker build -t swarm_v1 .
-[+] Building 48.0s (5/19)                                                                                          docker:default
+[+] Building 1340.1s (7/19)                                                                                        docker:default
  => [internal] load build definition from Dockerfile                                                                         0.2s
- => => transferring dockerfile: 3.06kB                                                                                       0.0s
- => [internal] load metadata for docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04                                       1.1s
- => [internal] load .dockerignore                                                                                            0.2s
+ => => transferring dockerfile: 3.44kB                                                                                       0.0s
+ => [internal] load metadata for docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04                                       0.4s
+ => [internal] load .dockerignore                                                                                            0.1s
  => => transferring context: 2B                                                                                              0.0s
- => [ 1/16] FROM docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04@sha256:4480cecadba0bd3763d7c4934225620210527e3d985d  18.1s
- => => resolve docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04@sha256:4480cecadba0bd3763d7c4934225620210527e3d985dff0  0.2s
- => => sha256:4480cecadba0bd3763d7c4934225620210527e3d985dff0e34855cb87e2fc1db 1.57kB / 1.57kB                               0.0s
- => => sha256:f797517ecdb0dbb6fe9c2347a854c419e473506b475f5051f85ae219f5731c15 4.51kB / 4.51kB                               0.0s
- => => sha256:99e889fa6c4ad2415b6772b3156796675da0a191c71ec924d69572771cca0581 186B / 186B                                   1.1s
- => => sha256:e063d0535ef5dd1d15d01925eae83bd8c0fbda4e23449f1326fd375eb0e70134 7.14MB / 7.14MB                               2.0s
- => => sha256:d5fd17ec1767521cf97f61568096bfc9a7cd9c2d149576a7b43930c5a97062b0 28.57MB / 28.57MB                             4.4s
- => => sha256:78e6f27730ac8afe01c2695276f7b9a576285df61fd0b521d52f6cdc3a559c41 6.43kB / 6.43kB                               1.6s
- => => sha256:c36ce0762ac10dd9cd9382508f688872febe6aaf076ceded60d18190fa9640ed 92.84MB / 92.84MB                            11.1s
- => => sha256:217ff97d3e0561b3034369e941d33c940341f843f439a2e868c2a9c69f4d79d1 299B / 299B                                   3.2s
- => => extracting sha256:d5fd17ec1767521cf97f61568096bfc9a7cd9c2d149576a7b43930c5a97062b0                                    0.6s
- => => extracting sha256:e063d0535ef5dd1d15d01925eae83bd8c0fbda4e23449f1326fd375eb0e70134                                    0.4s
- => => extracting sha256:99e889fa6c4ad2415b6772b3156796675da0a191c71ec924d69572771cca0581                                    0.0s
- => => extracting sha256:78e6f27730ac8afe01c2695276f7b9a576285df61fd0b521d52f6cdc3a559c41                                    0.0s
- => => extracting sha256:c36ce0762ac10dd9cd9382508f688872febe6aaf076ceded60d18190fa9640ed                                    1.3s
- => => extracting sha256:217ff97d3e0561b3034369e941d33c940341f843f439a2e868c2a9c69f4d79d1                                    0.0s
- => ERROR [ 2/16] RUN apt-get update && apt-get install -y --no-install-recommends     lsb-release gnupg curl build-essent  24.9s
+ => CACHED [ 1/16] FROM docker.io/nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04@sha256:4480cecadba0bd3763d7c4934225620210527e  0.0s
+ => [ 2/16] RUN apt-get update && apt-get install -y --no-install-recommends     lsb-release gnupg curl build-essential   1301.6s
+ => [ 3/16] RUN locale-gen en_US en_US.UTF-8 &&     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8                       14.0s 
+ => ERROR [ 4/16] RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr  20.0s 
 ------                                                                                                                            
- > [ 2/16] RUN apt-get update && apt-get install -y --no-install-recommends     lsb-release gnupg curl build-essential     locales sudo git wget nano xterm python3-pip     python3-colcon-common-extensions python3-vcstool     python3-rosdep python3-rosinstall-generator python3-pyqt5     dirmngr software-properties-common &&     rm -rf /var/lib/apt/lists/*:                                 
-6.202 Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]                                                             
-6.633 Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]                                                     
-6.734 Get:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
-6.845 Get:4 http://archive.ubuntu.com/ubuntu focal/multiverse i386 Packages [88.9 kB]
-6.866 Get:5 http://archive.ubuntu.com/ubuntu focal/universe i386 Packages [5999 kB]
-7.030 Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
-7.285 Get:7 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1308 kB]
-7.447 Get:8 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
-7.449 Get:9 http://archive.ubuntu.com/ubuntu focal/restricted i386 Packages [10.1 kB]
-7.451 Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1275 kB]
-7.522 Get:11 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
-7.534 Get:12 http://archive.ubuntu.com/ubuntu focal/main i386 Packages [930 kB]
-7.604 Get:13 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
-7.697 Get:14 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
-7.703 Get:15 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
-7.906 Get:16 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4724 kB]
-8.480 Get:17 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4921 kB]
-8.789 Get:18 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9592 B]
-8.789 Get:19 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1370 kB]
-8.882 Get:20 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1599 kB]
-8.991 Get:21 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1023 kB]
-9.066 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
-9.066 Get:23 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4883 kB]
-9.297 Get:24 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1078 kB]
-9.421 Get:25 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
-9.425 Get:26 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [55.2 kB]
-9.426 Get:27 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [28.6 kB]
-9.437 Get:28 http://archive.ubuntu.com/ubuntu focal-backports/universe i386 Packages [15.4 kB]
-9.437 Get:29 http://archive.ubuntu.com/ubuntu focal-backports/main i386 Packages [43.4 kB]
-9.565 Get:30 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4396 kB]
-9.993 Get:31 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8166 B]
-9.994 Get:32 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
-10.22 Fetched 47.0 MB in 7s (6509 kB/s)
-10.22 Reading package lists...
-11.33 Reading package lists...
-12.41 Building dependency tree...
-12.59 Reading state information...
-12.62 E: Unable to locate package python3-colcon-common-extensions
-12.62 E: Unable to locate package python3-vcstool
+ > [ 4/16] RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg &&     echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" |     tee /etc/apt/sources.list.d/ros2.list > /dev/null &&     apt-get update &&     apt-get install -y ros-humble-desktop &&     rm -rf /var/lib/apt/lists/*:                                                                     
+3.730 Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]                                                             
+3.792 Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+3.812 Get:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+3.860 Get:4 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+3.915 Get:5 http://packages.ros.org/ros2/ubuntu focal InRelease [4,685 B]
+3.947 Get:6 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+4.266 Get:7 http://packages.ros.org/ros2/ubuntu focal/main i386 Packages [62.7 kB]
+4.422 Get:8 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1,078 kB]
+4.441 Get:9 http://packages.ros.org/ros2/ubuntu focal/main amd64 Packages [1,195 kB]
+4.751 Get:10 http://archive.ubuntu.com/ubuntu focal/restricted i386 Packages [10.1 kB]
+4.753 Get:11 http://archive.ubuntu.com/ubuntu focal/main i386 Packages [930 kB]
+4.818 Get:12 http://archive.ubuntu.com/ubuntu focal/multiverse i386 Packages [88.9 kB]
+4.830 Get:13 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+4.830 Get:14 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+4.843 Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1,275 kB]
+4.919 Get:16 http://archive.ubuntu.com/ubuntu focal/universe i386 Packages [5,999 kB]
+5.109 Get:17 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4,724 kB]
+5.387 Get:18 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
+5.388 Get:19 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,599 kB]
+5.488 Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4,883 kB]
+5.880 Get:21 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
+5.882 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4,921 kB]
+6.251 Get:23 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8,166 B]
+6.252 Get:24 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
+6.262 Get:25 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
+6.263 Get:26 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1,023 kB]
+6.330 Get:27 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9,592 B]
+6.330 Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1,370 kB]
+6.435 Get:29 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4,396 kB]
+6.442 Get:30 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [55.2 kB]
+6.448 Get:31 http://archive.ubuntu.com/ubuntu focal-backports/universe i386 Packages [15.4 kB]
+6.448 Get:32 http://archive.ubuntu.com/ubuntu focal-backports/main i386 Packages [43.4 kB]
+6.448 Get:33 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [28.6 kB]
+7.253 Get:34 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
+7.255 Get:35 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1,308 kB]
+7.544 Fetched 48.3 MB in 4s (12.6 MB/s)
+7.544 Reading package lists...
+8.692 Reading package lists...
+9.810 Building dependency tree...
+10.01 Reading state information...
+10.04 E: Unable to locate package ros-humble-desktop
 ------
-Dockerfile:8
+Dockerfile:32
 --------------------
-   7 |     # 1. Install core dependencies
-   8 | >>> RUN apt-get update && apt-get install -y --no-install-recommends \
-   9 | >>>     lsb-release gnupg curl build-essential \
-  10 | >>>     locales sudo git wget nano xterm python3-pip \
-  11 | >>>     python3-colcon-common-extensions python3-vcstool \
-  12 | >>>     python3-rosdep python3-rosinstall-generator python3-pyqt5 \
-  13 | >>>     dirmngr software-properties-common && \
-  14 | >>>     rm -rf /var/lib/apt/lists/*
-  15 |     
+  31 |     # 3. Install ROS 2 Humble
+  32 | >>> RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | \
+  33 | >>>     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+  34 | >>>     echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+  35 | >>>     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | \
+  36 | >>>     tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+  37 | >>>     apt-get update && \
+  38 | >>>     apt-get install -y ros-humble-desktop && \
+  39 | >>>     rm -rf /var/lib/apt/lists/*
+  40 |     
 --------------------
-ERROR: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends     lsb-release gnupg curl build-essential     locales sudo git wget nano xterm python3-pip     python3-colcon-common-extensions python3-vcstool     python3-rosdep python3-rosinstall-generator python3-pyqt5     dirmngr software-properties-common &&     rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
+ERROR: failed to solve: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |     gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg &&     echo \"deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]     http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main\" |     tee /etc/apt/sources.list.d/ros2.list > /dev/null &&     apt-get update &&     apt-get install -y ros-humble-desktop &&     rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
 
