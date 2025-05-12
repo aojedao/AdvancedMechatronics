@@ -42,6 +42,8 @@ class MyServerCallbacks: public BLEServerCallbacks {
   void onDisconnect(BLEServer* pServer) override {
     deviceConnected = false;
     Serial.println("BLE Client Disconnected");
+    Propeller.println("cmdvel:0.00,0.00,0.00"); // Stop the robot
+    Serial.println("Stopping robot due to disconnection.");
     pServer->startAdvertising();
   }
 };
