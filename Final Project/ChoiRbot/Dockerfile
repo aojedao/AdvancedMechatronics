@@ -20,14 +20,28 @@ RUN apt-get update && apt-get install -y curl gnupg2 lsb-release && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/gazebo.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list
 
 # 2. Install tools and ROS 2 packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git wget xterm python3-pip \
-    python3-colcon-common-extensions python3-rosdep2 \
-    build-essential nano gedit \
-    ros-humble-desktop \
-    ros-humble-turtlebot3* \
-    gazebo libgazebo-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Update base image
+RUN apt-get update
+
+# Basic tools
+RUN apt-get install -y --no-install-recommends \
+    git wget xterm nano gedit python3-pip
+
+# ROS 2 build tools
+RUN apt-get install -y --no-install-recommends \
+    python3-colcon-common-extensions python3-rosdep2 build-essential
+
+# ROS 2 desktop and TurtleBot3 stack
+RUN apt-get install -y --no-install-recommends \
+    ros-humble-desktop ros-humble-turtlebot3*
+
+# Gazebo simulator and headers
+RUN apt-get install -y --no-install-recommends \
+    gazebo libgazebo-dev
+
+# Clean up apt cache to reduce layer size
+RUN rm -rf /var/lib/apt/lists/*
+
 
 # 3. Initialize rosdep
 RUN rosdep init || true && rosdep update
